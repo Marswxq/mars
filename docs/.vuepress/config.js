@@ -139,6 +139,7 @@ export default defineUserConfig({
     lang: 'en-US',
     title: 'Mars‘s doc',
     description: '丰碑无语，行胜于言',
+    base: '/docs/',
     head: [
         // 设置 favor.ico，.vuepress/public 下
         [
