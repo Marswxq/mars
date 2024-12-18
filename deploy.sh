@@ -14,7 +14,7 @@ cd docs/.vuepress/dist
 
 git init
 git add -A
-git commit -m 'init: blog'
+git commit -m 'init:blog'
 
 git push -f https://github.com/Marswxq/mars.git master:gh-pages
 

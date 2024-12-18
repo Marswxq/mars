@@ -140,18 +140,18 @@ const github={
 
 export default defineUserConfig({
     lang: 'en-US',
-    title: 'Mars‘s doc',
+    // title: 'Mars‘s doc',
     description: '丰碑无语，行胜于言',
     // 仓库名称
     base: '/mars/',
     head: [
         // 设置 favor.ico，.vuepress/public 下
         [
-            'link', {rel: 'icon', href: '/images/mars.png'}
+            'link', {rel: 'icon', href: './images/mars_header.png'}
         ]
     ],
     theme: defaultTheme({
-        logo: './images/mars_header.png',
+        logo: './images/mars_blue.png',
         sidebarDepth: 3,
         // 左侧导航
         sidebar: [technology, service, data, manager, book, other],
