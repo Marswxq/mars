@@ -1,7 +1,7 @@
 import {defaultTheme} from '@vuepress/theme-default'
 import {defineUserConfig} from 'vuepress'
 import {viteBundler} from '@vuepress/bundler-vite'
-import { searchPlugin } from '@vuepress/plugin-search'
+import {searchPlugin} from '@vuepress/plugin-search'
 import fs from "fs";
 import path from "path";
 // 获取该文件夹下的所有文件名
@@ -133,7 +133,7 @@ const other = {
     collapsible: true,
     children: getFileNames('/other/')
 }
-const github={
+const github = {
     text: 'GitHub',
     link: 'https://github.com/Marswxq/mars'
 }
@@ -147,16 +147,16 @@ export default defineUserConfig({
     head: [
         // 设置 favor.ico，.vuepress/public 下
         [
-            'link', {rel: 'icon', href: './images/mars_header.png'}
+            'link', {rel: 'icon', href: '/images/mars_header.png'}
         ]
     ],
     theme: defaultTheme({
-        logo: './images/mars_blue.png',
+        logo: '/images/mars_blue.png',
         sidebarDepth: 3,
         // 左侧导航
         sidebar: [technology, service, data, manager, book, other],
         // 头部导航栏
-        navbar: [home, technology, service, data, manager, book, other,github],
+        navbar: [home, technology, service, data, manager, book, other, github],
         lastUpdated: true,
         displayAllHeaders: true,// 默认值：false
         palette: path.resolve(__dirname, 'palette.scss'),//样式修改
@@ -173,8 +173,8 @@ export default defineUserConfig({
             isSearchable: (page) => page.path !== '/',
             // 允许搜索 Frontmatter 中的 `tags`
             getExtraFields: (page) => page.frontmatter.tags ?? [],
-            hotKeys:['s', '/'],
-            maxSuggestions:10,
+            hotKeys: ['s', '/'],
+            maxSuggestions: 10,
         }),
     ],
 
