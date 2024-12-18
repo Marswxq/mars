@@ -1,7 +1,6 @@
+$MQNarrow: 920px !default;
+$MQMobile: 719px !default;
+$MQMobileNarrow: 419px !default;
+
 @use 'vars';
 @use 'vars-dark';
-
-
-.theme-default-content {
-  --content-width: 920px !important;
-}
