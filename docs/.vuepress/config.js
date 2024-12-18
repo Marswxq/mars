@@ -137,7 +137,6 @@ const github = {
     text: 'GitHub',
     link: 'https://github.com/Marswxq/mars'
 }
-
 export default defineUserConfig({
     lang: 'en-US',
     // title: 'Mars‘s doc',
