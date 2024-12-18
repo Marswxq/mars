@@ -178,35 +178,35 @@ ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("proc
 
 1. 在`act_ru_execution`表产生一条数据，代表正在执行的流程对象，重点数据如下
 
-| 字段            | 说明           |
-|---------------|--------------|
-| ID_           | 正在执行的流程对象的ID |
-| PROC_INST_ID_ | 流程实例ID       |
-| PROC_DEF_ID_  | 流程定义ID       |
-| ACT_ID_       | 执行到流程任务节点的ID |
+| <div style="width: 200px">字段</div> | <div style="width: 300px">说明</div> |
+|------------------------------------|------------------------------------|
+| ID_                                | 正在执行的流程对象的ID                       |
+| PROC_INST_ID_                      | 流程实例ID                             |
+| PROC_DEF_ID_                       | 流程定义ID                             |
+| ACT_ID_                            | 执行到流程任务节点的ID                       |
 
 2. 在流程实例的历史表`act_hi_procinst`中产生一条数据
 
-| 字段            | 说明           |
-|---------------|--------------|
-| ID_           | 正在执行的流程对象的ID |
-| PROC_INST_ID_ | 流程实例ID       |
-| PROC_DEF_ID_  | 流程定义ID       |
-| ACT_ID_       | 执行到流程任务节点的ID |
-| START_TIME_   | 流程开始时间       |
-| END_TIME_     | 流程结束时间       |
+| <div style="width: 200px">字段   </div> | <div style="width: 300px">说明    </div> |
+|---------------------------------------|----------------------------------------|
+| ID_                                   | 正在执行的流程对象的ID                           |
+| PROC_INST_ID_                         | 流程实例ID                                 |
+| PROC_DEF_ID_                          | 流程定义ID                                 |
+| ACT_ID_                               | 执行到流程任务节点的ID                           |
+| START_TIME_                           | 流程开始时间                                 |
+| END_TIME_                             | 流程结束时间                                 |
 
 3. 在`act_ru_task`任务表生成一条数据（经常用的表），存储的流程上正在运行的节点任务，重点数据如下
 
-| 字段            | 说明                          |
-|---------------|-----------------------------|
-| EXECUTION_ID_ | 流程对象id（act_ru_execution表id） |
-| PROC_INST_ID_ | 流程实例id                      |
-| PROC_DEF_ID_  | 流程定义id                      |
-| NAME_         | 当前流程任务的名称（流程图任务节点自己设置的name） |
-| TASK_DEF_KEY_ | 当前流程任务的key（流程图任务节点自己设置的key） |
-| ASSIGNEE_     | 当前任务代办人                     |
-| CREATE_TIME_  | 任务节点的创建时间                   |
+| <div style="width:200px">字段</div> | <div style="width:200px">说明</div> |
+|-----------------------------------|-----------------------------------|
+| EXECUTION_ID_                     | 流程对象id（act_ru_execution表id）       |
+| PROC_INST_ID_                     | 流程实例id                            |
+| PROC_DEF_ID_                      | 流程定义id                            |
+| NAME_                             | 当前流程任务的名称（流程图任务节点自己设置的name）       |
+| TASK_DEF_KEY_                     | 当前流程任务的key（流程图任务节点自己设置的key）       |
+| ASSIGNEE_                         | 当前任务代办人                           |
+| CREATE_TIME_                      | 任务节点的创建时间                         |
 
 4. `act_hi_taskinst`历史任务实例表，流程所有节点任务历史存储表，生成时机：流程在`act_ru_task`
    创建的时候，同时也会在`act_hi_taskinst`创建一条。`endtime`暂时还没有。，重点数据如下
