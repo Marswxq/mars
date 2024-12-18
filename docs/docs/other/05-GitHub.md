@@ -6,6 +6,12 @@
 
 我的做法是上网找一个域名对应 ip 查询的网站，然后分别查询3个域名对应的 ip 列表，然后在列表中找到能够 ping 通的 ip，配置到 hosts 中。
 
+```
+20.205.243.166 github.com
+185.199.109.153 assets-cdn.github.com
+151.101.1.194 github.global.ssl.fastly.net
+```
+
 ## Github Pages
 
 > Gitee Pages 暂停服务后，Vuepress 文档没法使用了，只能含泪转移到 GitHub
