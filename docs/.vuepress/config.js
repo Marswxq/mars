@@ -27,7 +27,7 @@ const java = {
     text: '🍵Java',
     //可折叠侧边栏
     collapsible: true,
-    expanded: false,
+    expanded: true,
     children: getFileNames('/java/')
 };
 const jasper = {
@@ -139,7 +139,7 @@ const github = {
 }
 export default defineUserConfig({
     lang: 'en-US',
-    // title: 'Mars‘s doc',
+    title: 'Mars‘s doc',
     description: '丰碑无语，行胜于言',
     // 仓库名称
     base: '/mars/',

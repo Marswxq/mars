@@ -2,10 +2,10 @@
 home: true
 title: Home
 heroImage: ./images/wtf.png
-#actions:
-#  - text: 乱七八糟的东西
-#    link: ./docs/menu/乱七八糟的.html
-#    type: secondary
+actions:
+  - text: 乱七八糟的东西
+    link: ./docs/menu/乱七八糟的.html
+    type: secondary
 
 features:
   - title: 好好好
