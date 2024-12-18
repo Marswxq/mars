@@ -151,7 +151,7 @@ export default defineUserConfig({
         ]
     ],
     theme: defaultTheme({
-        logo: '/images/mars_blue.png',
+        logo: './images/mars_blue.png',
         sidebarDepth: 3,
         // 左侧导航
         sidebar: [technology, service, data, manager, book, other],

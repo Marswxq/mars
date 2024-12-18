@@ -220,6 +220,6 @@
 
 ### Q2. idea 创建 springboot 项目时，java 级别中没有8
 
-修改服务器URL配置，把spring换成阿里即可，https://start.aliyun.com。
+修改服务器URL配置，把spring换成阿里即可，`https://start.aliyun.com`。
 
 <img :src="$withBase('/images/other/idea_java_8.png')" alt="idea_java8">

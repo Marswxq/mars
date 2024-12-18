@@ -28,3 +28,6 @@ workbox.setConfig({
 | -XX:NewRatio                                    | 年轻代(包括Eden和两个Survivor区)与年老代的比值(除去持久代) |                 | -XX:NewRatio=4表示年轻代与年老代所占比值为1:4,年轻代占整个堆栈的1/5Xms=Xmx并且设置了Xmn的情况下，该参数不需要进行设置。                                                                                                                                                                                                                                     |
 | -XX:SurvivorRatio                               | Eden区与Survivor区的大小比值                  |                 | 设置为8,则两个Survivor区与一个Eden区的比值为2:8,一个Survivor区占整个年轻代的1/10                                                                                                                                                                                                                                                         |
 ```
+
+## GitHub Pages
+
