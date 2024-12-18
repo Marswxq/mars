@@ -94,8 +94,8 @@ const jenkins = {
 const home = {
     text: '🏠主页',
     link: '/',
-    // 该元素将一直处于激活状态
-    activeMatch: '/',
+    // // 该元素将一直处于激活状态
+    // activeMatch: '/',
 };
 const technology = {
     text: '🏫技术相关',
@@ -138,7 +138,7 @@ const github = {
     link: 'https://github.com/Marswxq/mars'
 }
 export default defineUserConfig({
-    lang: 'en-US',
+    lang: 'zh-CN',
     title: 'Mars‘s doc',
     description: '丰碑无语，行胜于言',
     // 仓库名称
@@ -157,8 +157,8 @@ export default defineUserConfig({
         // 头部导航栏
         navbar: [home, technology, service, data, manager, book, other, github],
         lastUpdated: true,
-        displayAllHeaders: true,// 默认值：false
-        palette: path.resolve(__dirname, 'palette.scss'),//样式修改
+        // 默认值：false
+        displayAllHeaders: true
     }),
 
     plugins: [
