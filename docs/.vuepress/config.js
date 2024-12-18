@@ -133,7 +133,10 @@ const other = {
     collapsible: true,
     children: getFileNames('/other/')
 }
-
+const github={
+    text: 'GitHub',
+    link: 'https://github.com/Marswxq/mars'
+}
 
 export default defineUserConfig({
     lang: 'en-US',
@@ -153,7 +156,7 @@ export default defineUserConfig({
         // 左侧导航
         sidebar: [technology, service, data, manager, book, other],
         // 头部导航栏
-        navbar: [home, technology, service, data, manager, book, other],
+        navbar: [home, technology, service, data, manager, book, other,github],
         lastUpdated: true,
         displayAllHeaders: true,// 默认值：false
         palette: path.resolve(__dirname, 'palette.scss'),//样式修改
@@ -172,7 +175,6 @@ export default defineUserConfig({
             getExtraFields: (page) => page.frontmatter.tags ?? [],
             hotKeys:['s', '/'],
             maxSuggestions:10,
-
         }),
     ],
 
