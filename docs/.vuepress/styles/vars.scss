@@ -85,6 +85,10 @@
   --sidebar-width-mobile: calc(var(--sidebar-width) * 0.82);
   --content-width: 820px;
   --homepage-width: 960px;
+
+  // 搜索框
+  --search-input-width: 10rem;
+
 }
 
 // 插件：返回顶部
@@ -147,3 +151,4 @@
   --search-item-text-color: var(--c-text-lighter);
   --search-item-focus-bg-color: var(--c-bg-light);
 }
+
