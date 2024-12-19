@@ -1277,3 +1277,17 @@ ufw enable
 ufw disable
 ```
 
+## DNS
+
+centos7 配置防火墙
+
+```bash
+vim /etc/resolv.conf
+```
+
+添加内容
+
+```
+nameserver 114.114.114.114
+nameserver 8.8.8.8
+```
