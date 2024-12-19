@@ -166,13 +166,18 @@ export default defineUserConfig({
             locales: {
                 '/': {
                     placeholder: 'Search',
-                }
+                },
+                '/zh/': {
+                    placeholder: '搜索',
+                },
             },
             // 排除首页
             isSearchable: (page) => page.path !== '/',
             // 允许搜索 Frontmatter 中的 `tags`
             getExtraFields: (page) => page.frontmatter.tags ?? [],
+            // 快捷键
             hotKeys: ['s', '/'],
+            // 搜索最大条数
             maxSuggestions: 10,
         }),
     ],

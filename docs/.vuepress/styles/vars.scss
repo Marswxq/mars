@@ -85,10 +85,6 @@
   --sidebar-width-mobile: calc(var(--sidebar-width) * 0.82);
   --content-width: 820px;
   --homepage-width: 960px;
-
-  // 搜索框
-  --search-input-width: 10rem;
-
 }
 
 // 插件：返回顶部
@@ -150,5 +146,14 @@
 
   --search-item-text-color: var(--c-text-lighter);
   --search-item-focus-bg-color: var(--c-bg-light);
+
+  --search-c-bg: var(--vp-c-bg);
+  --search-c-accent: var(--vp-c-accent);
+  --search-c-text: var(--vp-c-text);
+  --search-c-border: var(--vp-c-gutter);
+  --search-c-item-text: var(--vp-c-text-subtle);
+  --search-c-item-focus: var(--vp-c-bg-alt);
+  --search-input-width: 12rem;
+  --search-result-width: 20rem;
 }
 
