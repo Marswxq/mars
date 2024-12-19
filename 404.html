@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="generator" content="VuePress 2.0.0-rc.15" />
+    <style>
+      :root {
+        --vp-c-bg: #fff;
+      }
+
+      [data-theme='dark'] {
+        --vp-c-bg: #1b1b1f;
+      }
+
+      html,
+      body {
+        background-color: var(--vp-c-bg);
+      }
+    </style>
+    <script>
+      const userMode = localStorage.getItem('vuepress-color-scheme')
+      const systemDarkMode =
+        'matchMedia' in window
+          ? window.matchMedia('(prefers-color-scheme: dark)').matches
+          : false
+
+      if (userMode === 'light') {
+        document.documentElement.dataset.theme = 'light'
+      } else if (userMode === 'dark' || systemDarkMode) {
+        document.documentElement.dataset.theme = 'dark'
+      }
+    </script>
+    <link rel="icon" href="/images/mars_header.png"><title>Mars‘s doc</title><meta name="description" content="丰碑无语，行胜于言">
+    <link rel="preload" href="/mars/assets/style-CHH0G1uA.css" as="style"><link rel="stylesheet" href="/mars/assets/style-CHH0G1uA.css">
+    <link rel="modulepreload" href="/mars/assets/app-Dpj4uWZn.js"><link rel="modulepreload" href="/mars/assets/404.html-BsLb9zAq.js">
+    <link rel="prefetch" href="/mars/assets/index.html-muFUfpkR.js" as="script"><link rel="prefetch" href="/mars/assets/01-核心API.html-K_UoLH3H.js" as="script"><link rel="prefetch" href="/mars/assets/02-监听.html-BPeilndt.js" as="script"><link rel="prefetch" href="/mars/assets/03-数据库表介绍.html-DQCkjIRh.js" as="script"><link rel="prefetch" href="/mars/assets/04-常见问题.html-D2TD49vE.js" as="script"><link rel="prefetch" href="/mars/assets/01-设计模式之禅.html-CMuoSA1J.js" as="script"><link rel="prefetch" href="/mars/assets/02-领域驱动设计.html-CZACyI_S.js" as="script"><link rel="prefetch" href="/mars/assets/01-Mysql.html-DutGw0uV.js" as="script"><link rel="prefetch" href="/mars/assets/02-Clickhouse.html-DaS7M3P8.js" as="script"><link rel="prefetch" href="/mars/assets/03-Doris.html-uFgxtyfQ.js" as="script"><link rel="prefetch" href="/mars/assets/04-DRDS.html-DG4R7QTa.js" as="script"><link rel="prefetch" href="/mars/assets/01-Docker常用命令.html-SBGpyiyZ.js" as="script"><link rel="prefetch" href="/mars/assets/02-Dockerfile.html-B_J8tWMU.js" as="script"><link rel="prefetch" href="/mars/assets/03-Swarm.html-I2RGY2At.js" as="script"><link rel="prefetch" href="/mars/assets/04-Stack.html-B_AI90cJ.js" as="script"><link rel="prefetch" href="/mars/assets/05-Docker常见问题.html-DANSWR_8.js" as="script"><link rel="prefetch" href="/mars/assets/06-DockerCompose.html-M_Pxl_Za.js" as="script"><link rel="prefetch" href="/mars/assets/Git使用.html-1CM1pPXO.js" as="script"><link rel="prefetch" href="/mars/assets/01-JaspersoftStudio工具使用.html-DSmopmP2.js" as="script"><link rel="prefetch" href="/mars/assets/02-JasperReport集成.html-CjziuXPX.js" as="script"><link rel="prefetch" href="/mars/assets/01-Java8特性.html-DAJrfFtM.js" as="script"><link rel="prefetch" href="/mars/assets/02-多线程.html-Du3IMRBc.js" as="script"><link rel="prefetch" href="/mars/assets/03-Jar包.html-VVHso2pV.js" as="script"><link rel="prefetch" href="/mars/assets/04-Util.html-DX2mznM5.js" as="script"><link rel="prefetch" href="/mars/assets/05-validation注解.html-BUK2hoGx.js" as="script"><link rel="prefetch" href="/mars/assets/06-反编译.html-BnubFMme.js" as="script"><link rel="prefetch" href="/mars/assets/07-try-with-resource.html-Bj4Ir_aM.js" as="script"><link rel="prefetch" href="/mars/assets/08-ThreadLocal内存泄漏.html-Ck4U-1ZH.js" as="script"><link rel="prefetch" href="/mars/assets/09-Jvm.html-FA-GG4GU.js" as="script"><link rel="prefetch" href="/mars/assets/10-Excel.html-CJLXbYQq.js" as="script"><link rel="prefetch" href="/mars/assets/11-Lombook.html-xP2afX11.js" as="script"><link rel="prefetch" href="/mars/assets/12-条件注解.html-Dq-bYZEe.js" as="script"><link rel="prefetch" href="/mars/assets/13-WebMvcConfigurationSupport.html-ClZCHAOq.js" as="script"><link rel="prefetch" href="/mars/assets/14-WebMvcConfigurer.html-BvF29BZd.js" as="script"><link rel="prefetch" href="/mars/assets/15-分布式锁.html-B2BbOyCH.js" as="script"><link rel="prefetch" href="/mars/assets/16-Caffeine.html-Ba9W2Kgq.js" as="script"><link rel="prefetch" href="/mars/assets/17-DynamicDatasource.html-hQpg8yg7.js" as="script"><link rel="prefetch" href="/mars/assets/18-MybatisPlus.html-rIjYgU82.js" as="script"><link rel="prefetch" href="/mars/assets/19-Swagger.html-CgRNSbxk.js" as="script"><link rel="prefetch" href="/mars/assets/20-BeanPostProcessor.html-Dc8DQRvB.js" as="script"><link rel="prefetch" href="/mars/assets/21-BeanInit.html-C_8GfUsK.js" as="script"><link rel="prefetch" href="/mars/assets/22-ConfigurableApplicationContext.html-D8zufhS0.js" as="script"><link rel="prefetch" href="/mars/assets/23-常用注解.html-D3kQMFeq.js" as="script"><link rel="prefetch" href="/mars/assets/24-ApplicationListener.html-xoZwUQ0R.js" as="script"><link rel="prefetch" href="/mars/assets/25-JavaDoc.html-Cy99tbgX.js" as="script"><link rel="prefetch" href="/mars/assets/26-SpEL.html-BchKSiMR.js" as="script"><link rel="prefetch" href="/mars/assets/27-StopWatch耗时统计.html-CQvquwAr.js" as="script"><link rel="prefetch" href="/mars/assets/28-Word.html-aKWQY5zi.js" as="script"><link rel="prefetch" href="/mars/assets/29-Druid.html-DpjTC3SL.js" as="script"><link rel="prefetch" href="/mars/assets/30-OpenFeign.html-CjwlTCjL.js" as="script"><link rel="prefetch" href="/mars/assets/01-Node.html-CUfaNtbg.js" as="script"><link rel="prefetch" href="/mars/assets/02-VuePress.html-C-mnM99y.js" as="script"><link rel="prefetch" href="/mars/assets/03-Vue组件高度宽度.html-n_droriz.js" as="script"><link rel="prefetch" href="/mars/assets/04-显示器和屏幕高度.html-CN9FSl9l.js" as="script"><link rel="prefetch" href="/mars/assets/05-页面地址.html-BnY02aBZ.js" as="script"><link rel="prefetch" href="/mars/assets/06-归纳总结.html-DwEWn3Z5.js" as="script"><link rel="prefetch" href="/mars/assets/Jenkins使用.html-0YFMpWgm.js" as="script"><link rel="prefetch" href="/mars/assets/01-入门.html-CB2z6CZd.js" as="script"><link rel="prefetch" href="/mars/assets/02-js脚本.html-C7EPiWFC.js" as="script"><link rel="prefetch" href="/mars/assets/03-优化.html-BKaLD2Wg.js" as="script"><link rel="prefetch" href="/mars/assets/04-连接组件.html-DEC73JWa.js" as="script"><link rel="prefetch" href="/mars/assets/05-参数.html-BlpOlBhR.js" as="script"><link rel="prefetch" href="/mars/assets/06-工具.html-D5GTg3-n.js" as="script"><link rel="prefetch" href="/mars/assets/07-日志.html-PLPtwfvo.js" as="script"><link rel="prefetch" href="/mars/assets/08-流程组件.html-B1GTa2vV.js" as="script"><link rel="prefetch" href="/mars/assets/09-输入组件.html-Dwo538UG.js" as="script"><link rel="prefetch" href="/mars/assets/10-输出组件.html-CuOdKWBI.js" as="script"><link rel="prefetch" href="/mars/assets/11-转换组件.html-C-5i75UN.js" as="script"><link rel="prefetch" href="/mars/assets/01-Linux常用命令.html-Chu4wSIV.js" as="script"><link rel="prefetch" href="/mars/assets/02-Yum 源.html-DU08Emm5.js" as="script"><link rel="prefetch" href="/mars/assets/乱七八糟的.html-PTVeLfVz.js" as="script"><link rel="prefetch" href="/mars/assets/01-Maven使用.html-BjY8onvL.js" as="script"><link rel="prefetch" href="/mars/assets/02-Maven配置.html-C8UtQMRS.js" as="script"><link rel="prefetch" href="/mars/assets/01-Markdown语法.html-DMAhOg40.js" as="script"><link rel="prefetch" href="/mars/assets/02-Markdownemoji.html-CA8HigoR.js" as="script"><link rel="prefetch" href="/mars/assets/03-Idea.html-BiRL-jmQ.js" as="script"><link rel="prefetch" href="/mars/assets/04-HTML XML 转义.html-DI89olot.js" as="script"><link rel="prefetch" href="/mars/assets/05-GitHub.html-Cle6gMT9.js" as="script"><link rel="prefetch" href="/mars/assets/06-Nginx.html-DTeOk2Iv.js" as="script">
+  </head>
+  <body>
+    <div id="app"><!--[--><div class="vp-theme-container" vp-container data-v-463c2c5d><main class="page" data-v-463c2c5d><div class="theme-default-content" vp-content data-v-463c2c5d><h1 data-v-463c2c5d>404</h1><blockquote data-v-463c2c5d>That&#39;s a Four-Oh-Four.</blockquote><a class="route-link" href="/mars/" data-v-463c2c5d>Take me home</a></div></main></div><!--[--><!----><!--]--><!--]--></div>
+    <script type="module" src="/mars/assets/app-Dpj4uWZn.js" defer></script>
+  </body>
+</html>
