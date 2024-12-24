@@ -3,7 +3,6 @@ import {defineUserConfig} from 'vuepress'
 import {viteBundler} from '@vuepress/bundler-vite'
 import {searchPlugin} from '@vuepress/plugin-search'
 import fs from "fs";
-import path from "path";
 // 获取该文件夹下的所有文件名
 const getFileNames = (parentFileName) => {
     const results = []
@@ -179,7 +178,7 @@ export default defineUserConfig({
             hotKeys: ['s', '/'],
             // 搜索最大条数
             maxSuggestions: 10,
-        }),
+        })
     ],
 
     bundler: viteBundler(),
