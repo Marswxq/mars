@@ -2,6 +2,8 @@
 
 ## 慢，习惯就好
 
+### host
+
 使用 github 涉及到三个域名，github.com、 assets-cdn.github.com、 github.global.ssl.fastly.net
 
 我的做法是上网找一个域名对应 ip 查询的网站，然后分别查询3个域名对应的 ip 列表，然后在列表中找到能够 ping 通的 ip，配置到 hosts 中。
@@ -11,6 +13,10 @@
 185.199.109.153 assets-cdn.github.com
 151.101.1.194 github.global.ssl.fastly.net
 ```
+
+### 工具
+
+https://github.com/docmirror/dev-sidecar?tab=readme-ov-file
 
 ## Github Pages
 
