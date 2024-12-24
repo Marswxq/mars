@@ -51,3 +51,9 @@ git push -f https://github.com/Marswxq/mars.git master:gh-pages
 
 cd -
 ```
+
+如果是 windows 下，每次打开一个 git bash 确实有点烦，那就在来一个 bat
+
+```shell
+start 安装路径\git-bash.exe --cd=本地代码仓库路径 -c "sh deploy.sh"
+```
