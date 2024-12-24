@@ -292,6 +292,12 @@ tar -cJvf archive.tar.xz directory
 tar -xJvf archive.tar.xz
 ```
 
+tar 显示压缩进度，显示 mysql 文件夹压缩进度
+
+```bash
+tar -cf - mysql | pv -s $(($(du -sk mysql | awk '{print $1}') * 1024)) | gzip > mysql.tar.gz
+```
+
 ## pidstat
 
 查看IO情况
