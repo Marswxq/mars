@@ -298,6 +298,12 @@ tar 显示压缩进度，显示 mysql 文件夹压缩进度
 tar -cf - mysql | pv -s $(($(du -sk mysql | awk '{print $1}') * 1024)) | gzip > mysql.tar.gz
 ```
 
+tar 显示解压进度，显示 mysql.tar.gz 解压缩的进度
+
+```bash
+pv mysql.tar.gz | tar -zxf - -C /opt
+```
+
 ## pidstat
 
 查看IO情况
