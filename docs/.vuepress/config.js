@@ -12,7 +12,11 @@ const getFileNames = (parentFileName) => {
             // results.push('')
         } else {
             if (val.endsWith(".md")) {
-                let menu = {text: val.substring(0, val.length - 3), link: `/docs${parentFileName}` + val}
+                let menu = {
+                    text: val.substring(0, val.length - 3),
+                    link: `/docs${parentFileName}` + val,
+                    collapsible: true
+                }
                 results.push(menu)
             }
         }
@@ -53,12 +57,6 @@ const activiti = {
     collapsible: true,
     children: getFileNames('/activiti/')
 };
-const docker = {
-    text: '🐋Docker',
-    //可折叠侧边栏
-    collapsible: true,
-    children: getFileNames('/docker/')
-};
 const javascript = {
     text: '🎬JavaScript',
     //可折叠侧边栏
@@ -71,6 +69,18 @@ const linux = {
     collapsible: true,
     children: getFileNames('/linux/')
 }
+const docker = {
+    text: '🐋Docker',
+    //可折叠侧边栏
+    collapsible: true,
+    children: getFileNames('/docker/')
+};
+const nginx = {
+    text: '🌐Nginx',
+    collapsible: true,
+    children: getFileNames('/nginx/')
+}
+
 const maven = {
     text: '📝Maven',
     //可折叠侧边栏
@@ -106,7 +116,7 @@ const service = {
     text: '🏢服务器',
     //可折叠侧边栏
     collapsible: true,
-    children: [linux, docker]
+    children: [linux, docker, nginx]
 }
 const data = {
     text: '🏩数据相关',
@@ -132,10 +142,6 @@ const other = {
     collapsible: true,
     children: getFileNames('/other/')
 }
-const github = {
-    text: 'GitHub',
-    link: 'https://github.com/Marswxq/mars'
-}
 export default defineUserConfig({
     lang: 'zh-CN',
     title: 'Mars‘s doc',
@@ -150,11 +156,12 @@ export default defineUserConfig({
     ],
     theme: defaultTheme({
         logo: './images/mars_blue.png',
+        repo: "https://github.com/Marswxq/mars",
         sidebarDepth: 3,
         // 左侧导航
         sidebar: [technology, service, data, manager, book, other],
         // 头部导航栏
-        navbar: [home, technology, service, data, manager, book, other, github],
+        navbar: [home, technology, service, data, manager, book, other],
         lastUpdated: true,
         // 默认值：false
         displayAllHeaders: true

@@ -10,7 +10,7 @@
 
 创建一个git仓库，创建之后就会在当前目录生成一个.git的文件
 
-```git
+```bash
 git init
 ```
 
@@ -18,44 +18,44 @@ git init
 
 把文件添加到缓冲区
 
-```git
+```bash
 git add filename
 ```
 
 添加所有文件到缓冲区（从目前掌握的水平看，和后面加“.”的区别在于，加all可以添加被手动删除的文件，而加“.”不行）
 
-```git
+```bash
 git add .
 git add --all 或 git add -A
 ```
 
 ### 添加标签
 
-```git
+```bash
 git tag -a "标签名" -m "标签注释"
 ```
 
 ### 推送标签
 
-```git
+```bash
 git push origin "标签名"
 ```
 
 ### 删除本地标签
 
-```git
+```bash
 git tag -d 标签名
 ```
 
 ### 删除远端标签
 
-```git
+```bash
 git push origin :refs/tags/标签名
 ```
 
 ### 删除文件
 
-```git
+```bash
 git rm filename
 ```
 
@@ -63,7 +63,7 @@ git rm filename
 
 提交缓冲区的所有修改到仓库(注意：如果修改了文件但是没有add到缓冲区，也是不会被提交的)
 
-```git
+```bash
 git commit -m "提交的说明"
 ```
 
@@ -73,7 +73,7 @@ commit可以一次提交缓冲区的所有文件
 
 未提交的文件，分为两种，add过已经在缓冲区的，未add过的(git bash中绿色内容)
 
-```git
+```bash
 git status
 ```
 
@@ -81,86 +81,86 @@ git status
 
 如果文件修改了，还没有提交，就可以比较文件修改前后的差异
 
-```git
+```bash
 git diff filename
 ```
 
 查看暂存区文件和上次提交的快照之间的差异
 
-```git
+```bash
 git diff --cached
 ```
 
 显示出branch1和branch2中差异的部分
 
-```git
+```bash
 git diff branch1 branch2 --stat
 ```
 
 显示指定文件的详细差异
 
-```git
+```bash
 git diff branch1 branch2 具体文件路径
 ```
 
 显示出所有有差异的文件的详细差异
 
-```git
+```bash
 git diff branch1 branch2
 ```
 
 ### 查看日志
 
-```git
+```bash
 git log
 ```
 
 查看branch1分支有，而branch2中没有的log
 
-```git
+```bash
 git log branch1 ^branch2
 ```
 
 查看branch2中比branch1中多提交了哪些内容, 注意，列出来的是两个点后边（此处即dev）多提交的内容。
 
-```git
+```bash
 git log branch1..branch2
 ```
 
 不知道谁提交的多谁提交的少，单纯想知道有什么不一样
 
-```git
+```bash
 git log branch1...branch2
 ```
 
 在上述情况下，在显示出每个提交是在哪个分支上，注意 commit 后面的箭头，根据我们在 –left-right branch1…branch2
 的顺序，左箭头 < 表示是 branch1 的，右箭头 > 表示是branch2的。
 
-```git
+```bash
 git log -lefg-right branch1...branch2
 ```
 
 ### 版本回退
 
-```git
+```bash
 git reset
 ```
 
 第一种用法：回退到上一个版本（HEAD代表当前版本，有一个^代表上一个版本，以此类推）
 
-```git
+```bash
 git reset --hard HEAD^
 ```
 
 第二种用法：回退到指定版本(其中d7b5是想回退的指定版本号的前几位)
 
-```git
+```bash
 git reset --hard d7b5
 ```
 
 第三种用法：回退到当前最高版本
 
-```git
+```bash
 git reset --hard HEAD
 ```
 
@@ -168,7 +168,7 @@ git reset --hard HEAD
 
 查看仓库的操作历史
 
-```git
+```bash
 git reflog
 ```
 
@@ -176,67 +176,67 @@ git reflog
 
 ### 查看分支
 
-```git
+```bash
 git branch
 ```
 
 查看本地所有分支
 
-```git
+```bash
 git branch -a
 ```
 
 查看远端详情
 
-```git
+```bash
 git remote show origin
 ```
 
 分支跟踪信息
 
-```git
+```bash
 git branch -vv
 ```
 
 ### 创建分支
 
-```git
+```bash
 git branch 分支名
 ```
 
 ### 切换分支
 
-```git
+```bash
 git checkout 分支名
 ```
 
 快速切换到上一个分支
 
-```git
+```bash
 git checkout @{-1}
 ```
 
 快速切换到上一个分支简化写法
 
-```git
+```bash
 git checkout -
 ```
 
 ### 创建分支并切换到创建的分支
 
-```git
+```bash
 git checkout -b 分支名
 ```
 
 ### 合并某分支的内容到当前分支
 
-```git
+```bash
 git merge 分支名
 ```
 
 合并时难免有冲突 #调用图形化工具解决冲突
 
-```git
+```bash
 git mergetool
 ```
 
@@ -244,19 +244,19 @@ git mergetool
 
 删除前检查merge状态（其与上游分支或者与head）
 
-```git
+```bash
 git branch -d 分支名
 ```
 
 直接删除
 
-```git
+```bash
 git branch -D 分支名
 ```
 
 ### 查看分支合并图
 
-```git
+```bash
 git log --graph
 ```
 
@@ -264,13 +264,13 @@ git log --graph
 
 ### 添加远端仓库
 
-```git
+```bash
 git remote add origin git://127.0.0.1/abc.git
 ```
 
 ### 移除远端仓库
 
-```git
+```bash
 git remote remove origin移除远端仓库
 ```
 
@@ -278,7 +278,7 @@ git remote remove origin移除远端仓库
 
 -u 表示第一次推送master分支的所有内容，后面再推送就不需要-u了,跟commit的区别在于一个是提交到本地仓库，一个是提交到远程仓库
 
-```git
+```bash
 git push -u origin master
 ```
 
@@ -286,7 +286,7 @@ git push -u origin master
 
 取回远程仓库的变化，并与本地分支合并
 
-```git
+```bash
 git pull [remote] [branch]
 ```
 
@@ -294,7 +294,7 @@ git pull 命令用来更新代码，该命令相当于git fetch 和 git merge �
 
 ### 从远程仓库抓取数据
 
-```git
+```bash
 git fetch [remote-name]
 ```
 
@@ -302,7 +302,7 @@ fetch 命令只是将远端的数据拉到本地仓库，并不自动合并到�
 
 ### 别名
 
-```git
+```bash
 $ git config alias.st  "status"
 ```
 
@@ -310,19 +310,19 @@ $ git config alias.st  "status"
 
 # 检查配置信息
 
-```git
+```bash
 $ git config --list
 ```
 
 可以通过输入 `git config`： 来检查 Git 的某一项配置
 
-```git
+```bash
 $ git config user.name
 ```
 
 用vim编辑配置
 
-```git
+```bash
 $ git config –e
 ```
 
@@ -330,7 +330,7 @@ $ git config –e
 
 克隆仓库的命令是 `git clone` 。 比如，要克隆 Git 的链接库 `libgit2`，可以用下面的命令：
 
-```git
+```bash
 $ git clone https://github.com/libgit2/libgit2
 ```
 
@@ -339,7 +339,7 @@ $ git clone https://github.com/libgit2/libgit2
 文件夹，你会发现所有的项目文件已经在里面了，准备就绪等待后续的开发和使用。
 如果你想在克隆远程仓库的时候，自定义本地仓库的名字，你可以通过额外的参数指定新的目录名：
 
-```git
+```bash
 $ git clone https://github.com/libgit2/libgit2 mylibgit
 ```
 
@@ -349,7 +349,7 @@ $ git clone https://github.com/libgit2/libgit2 mylibgit
 
 可以用 `git status` 命令查看哪些文件处于什么状态。 如果在克隆仓库后立即使用此命令，会看到类似这样的输出：
 
-```git
+```bash
 $ git status
 On branch master
 Your branch is up-to-date with 'origin/master'.
@@ -358,13 +358,13 @@ nothing to commit, working directory clean
 
 # 跟踪新文件
 
-```git
+```bash
 $ git add README
 ```
 
 此时再运行 `git status` 命令，会看到 `README` 文件已被跟踪，并处于暂存状态：
 
-```git
+```bash
 $ git status
 On branch master
 Your branch is up-to-date with 'origin/master'.
@@ -383,7 +383,7 @@ Changes to be committed:
 现在我们来修改一个已被跟踪的文件。 如果你修改了一个名为 `CONTRIBUTING.md` 的已被跟踪的文件，然后运行 `git status`
 命令，会看到下面内容：
 
-```git
+```bash
 $ git status
 On branch master
 Your branch is up-to-date with 'origin/master'.
@@ -404,7 +404,7 @@ Changes not staged for commit:
 将这个命令理解为“精确地将内容添加到下一次提交中”而不是“将一个文件添加到项目中”要更加合适。 现在让我们运行 `git add`
 将“CONTRIBUTING.md”放到暂存区，然后再看看 `git status` 的输出：
 
-```git
+```bash
 $ git add CONTRIBUTING.md
 $ git status
 On branch master
@@ -419,7 +419,7 @@ new file:   README
 现在两个文件都已暂存，下次提交时就会一并记录到仓库。 假设此时，你想要在 `CONTRIBUTING.md` 里再加条注释。 重新编辑存盘后，准备好提交。
 不过且慢，再运行 `git status` 看看：
 
-```git
+```bash
 $ vim CONTRIBUTING.md
 $ git status
 On branch master
@@ -442,7 +442,7 @@ Changes not staged for commit:
 命令时的那个版本，而不是你运行 `git commit` 时，在工作目录中的当前版本。 所以，运行了 `git add`
 之后又作了修订的文件，需要重新运行 `git add` 把最新版本重新暂存起来：
 
-```git
+```bash
 $ git add CONTRIBUTING.md
 $ git status
 On branch master
@@ -484,14 +484,14 @@ doc/**/*.pdf
 否则提交的时候不会记录这些尚未暂存的变化。 这些已修改但未暂存的文件只会保留在本地磁盘。
 所以，每次准备提交前，先用 `git status` 看下，你所需要的文件是不是都已暂存起来了， 然后再运行提交命令 `git commit`：
 
-```git
+```bash
 $ git commit
 ```
 
 这样会启动你选择的文本编辑器来输入提交说明。
 也可以在 `commit` 命令后添加 `-m` 选项，将提交信息与命令放在同一行，如下所示：
 
-```git
+```bash
 $ git commit -m "Story 182: Fix benchmarks for speed"
 ```
 
@@ -501,7 +501,7 @@ $ git commit -m "Story 182: Fix benchmarks for speed"
 只要在提交的时候，给 `git commit` 加上 `-a` 选项，Git 就会自动把所有已经跟踪过的文件暂存起来一并提交，从而跳过 `git add`
 步骤：
 
-```git
+```bash
 $ git status
 On branch master
 Your branch is up-to-date with 'origin/master'.
@@ -524,7 +524,7 @@ $ git commit -a -m 'added new benchmarks'
 如果只是简单地从工作目录中手工删除文件，运行 `git status` 时就会在 “Changes not staged for commit” 部分（也就是
 _未暂存清单_）看到：
 
-```git
+```bash
 $ rm PROJECTS.md
 $ git status
 On branch master
@@ -540,7 +540,7 @@ no changes added to commit (use "git add" and/or "git commit -a")
 
 然后再运行 `git rm` 记录此次移除文件的操作：
 
-```git
+```bash
 $ git rm PROJECTS.md
 rm 'PROJECTS.md'
 $ git status
@@ -558,20 +558,20 @@ force 的首字母）。 这是一种安全特性，用于防止误删尚未添�
 Git 继续跟踪。 当你忘记添加 `.gitignore` 文件，不小心把一个很大的日志文件或一堆 `.a` 这样的编译生成文件添加到暂存区时，这一做法尤其有用。
 为达到这一目的，使用 `--cached` 选项：
 
-```git
+```bash
 $ git rm --cached README
 ```
 
 `git rm` 命令后面可以列出文件或者目录的名字，也可以使用 `glob` 模式。比如：
 
-```git
+```bash
 $ git rm log/\*.log
 ```
 
 注意到星号 `*` 之前的反斜杠 `\`， 因为 Git 有它自己的文件模式扩展匹配方式，所以我们不用 shell 来帮忙展开。
 此命令删除 `log/` 目录下扩展名为 `.log` 的所有文件。 类似的比如：
 
-```git
+```bash
 $ git rm \*~
 ```
 
@@ -589,7 +589,7 @@ git config user.password
 
 修改用户名、邮箱、密码方式
 
-```git
+```bash
 git config --global user.name "xxx(新的用户名)"
 git config --global user.email "123456@163.com(新的邮箱)"
 git config --global user.password "123456(新的密码)"
@@ -601,13 +601,13 @@ git config --global user.password "123456(新的密码)"
 不过 Git 非常聪明，它会推断出究竟发生了什么，至于具体是如何做到的，我们稍后再谈。
 既然如此，当你看到 Git 的 `mv` 命令时一定会困惑不已。 要在 Git 中对文件改名，可以这么做：
 
-```git
+```bash
 $ git mv file_from file_to
 ```
 
 它会恰如预期般正常工作。 实际上，即便此时查看状态信息，也会明白无误地看到关于重命名操作的说明：
 
-```git
+```bash
 $ git mv README.md README
 $ git status
 On branch master
@@ -620,7 +620,7 @@ Changes to be committed:
 
 其实，运行 `git mv` 就相当于运行了下面三条命令：
 
-```git
+```bash
 $ mv README.md README
 $ git rm README.md
 $ git add README
@@ -631,19 +631,19 @@ $ git add README
 
 # 版本
 
-```git
+```bash
 git --version
 ```
 
 # 升级
 
-```git
+```bash
 git update-git-for-windows
 ```
 
 # 本地项目上传至gitee仓库
 
-```git
+```bash
 // 初始化git
 git init
 
@@ -664,7 +664,7 @@ git pull origin master
 `git cherry` 默认比较HEAD本地分支和远程分支, 即当前分支和当前分支追踪的远程分支
 如果存在差异,比较结果如下
 
-```git
+```bash
 + 717cbc128c0e640f4f93ca8ad1118bd7f79ac728
 + f92324d7c3f3a47afbbb4c3877b323320d2871d4
 + edfaaede19bd2929b10505291266c772e9d1c934
@@ -676,7 +676,7 @@ git pull origin master
 
 `git cherry -v` 可以展示出提交的注释信息
 
-```git
+```bash
 + 717cbc128c0e640f4f93ca8ad1118bd7f79ac728 由于适应前端解析问题,返回一个string类型的userId
 + f92324d7c3f3a47afbbb4c3877b323320d2871d4 返回签到记录
 + edfaaede19bd2929b10505291266c772e9d1c934 读取plist配置获取默认背景逻辑编码
@@ -690,7 +690,7 @@ git pull origin master
 
 `git cherry -v origin/master`可以比较本地HEAD分支和远程master分支之间的差别
 
-```git
+```bash
 + 1f05a74c9a92e0faf5da96b17a7a15aa6c6e26e7 修复update的SQL错误
 + ad78159f828a148c3d1581b44e2b32cb45464031 修复SQL错误
 + 9d8a7471fb9408d7738b3a43f4f56a159619bfb0 增加逻辑:每次修改周期，保存一次未来提醒记录
@@ -719,31 +719,31 @@ git pull origin master
 
 1. 查看目前仓库可以远程更新的信息
 
-```git
+```bash
 git remote -v
 ```
 
 2. 配置一个远程更新链接，要拥有git仓库访问权限的
 
-```git
+```bash
 git remote add upstream git@github.com:xxx/xxx.git
 ```
 
 3. 拉取远程仓库的代码
 
-```git
+```bash
 git fetch upstream
 ```
 
 4. 合并远程仓库的代码
 
-```git
+```bash
 git merge upstream/master
 ```
 
 5. 把远程仓库的代码作为新源提交到自己的服务器仓库中
 
-```git
+```bash
 git push
 ```
 
@@ -751,7 +751,7 @@ git push
 
 ## 切换分支时报错： error: cannot stat ‘file’: Permission denied
 
-```git
+```bash
 $ git checkout f-wangxiaoquan-uiDev
 error: cannot stat 'src/modules/mbs/baseinfo/empmgt/emp-insu-reg': Permission denied
 error: cannot stat 'src/modules/mbs/baseinfo/empmgt/emp-insu-reg': Permission denied
@@ -765,20 +765,20 @@ error: cannot stat ‘file’: Permission denied
 
 1.退出合并状态
 
-```git
+```bash
 git merge --abort
 ```
 
 2.本地解决冲突
 查看本地状态可以看到哪些文件需要处理
 
-```git
+```bash
 git status
 ```
 
 3.将解决冲突的文件添加到本地暂存区
 
-```git
+```bash
 git add filename
 
 git commit -m ”冲突“
@@ -788,25 +788,25 @@ git commit -m ”冲突“
 
 1.查看log
 
-```git
+```bash
 git log
 ```
 
 2.回退本地
 
-```git
+```bash
 git reset id
 ```
 
 3.强行推到远程仓库
 
-```git
+```bash
 git push -f
 ```
 
 ## .gitignore文件并不生效
 
-```git
+```bash
 git rm -r --cached .
 git add .
 git commit -m 'update .gitignore'
@@ -816,14 +816,14 @@ git commit -m 'update .gitignore'
 
 修改了本地的代码，然后使用：
 
-```git
+```bash
 git add file
 git commit -m '修改原因'
 ```
 
 执行commit后，还没执行push时，想要撤销这次的commit，该怎么办？
 
-```git
+```bash
 git reset --soft HEAD^
 ```
 
@@ -838,7 +838,7 @@ HEAD^ 表示上一个版本，即上一次的commit，也可以写成HEAD~1
 
 ## commit注释修改
 
-```git
+```bash
 git commit --amend
 ```
 
@@ -850,19 +850,19 @@ git commit --amend
 解决：
 影响范围是系统当前用户
 
-```git
+```bash
 git config --global http.sslVerify false
 ```
 
 全局所有用户
 
-```git
+```bash
 git config --system http.sslverify false
 ```
 
 当前仓库
 
-```git
+```bash
 git config http.sslverify false
 ```
 
@@ -871,13 +871,13 @@ git config http.sslverify false
 原因：缺少了安全认证
 解决：`git bash`下执行
 
-```git
+```bash
 git config --global http.sslVerify true
 ```
 
 ## git add回退
 
-```git
+```bash
 #首先看看哪些文件加进去了  
 git status
 
@@ -892,6 +892,6 @@ git reset HEAD file
 
 解决：在自己的项目路径上加上自己的用户名。（输入密码后即拉取代码成功）
 
-```git
+```bash
 git clone http://用户名@125.01.02.03:10086/test/xiangmu.git
 ```
