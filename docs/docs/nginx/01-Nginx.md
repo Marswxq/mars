@@ -286,9 +286,9 @@ htpasswd -c /usr/local/nginx/conf/htpasswd username
 
 可以在 http 块、server 块、location 块中配置权限，具体根据个人需求
 
-```text
-      auth_basic "请输入账号密码";   # 登录框的提示信息
-      auth_basic_user_file /usr/local/nginx/conf/htpasswd; # 步骤2中配置的密码文件
+```conf
+auth_basic "请输入账号密码";   # 登录框的提示信息
+auth_basic_user_file /usr/local/nginx/conf/htpasswd; # 步骤2中配置的密码文件
 ```
 
 ### proxy_pass（反向代理）
