@@ -394,3 +394,14 @@ docker tag ubuntu:16.04 10.253.127.122:8080/test/ubuntu:16.04
 docker push 10.253.127.122:8080/test/ubuntu:16.04
 ```
 
+## 获取 docker 对象（容器、镜像、卷、网络等）信息
+
+```bash 
+docker inspect [OPTIONS] NAME|ID [NAME|ID...]
+```
+
+OPTIONS说明：
+
+* -f, --format: 使用 Go 模板语法格式化输出。
+
+* --type: * 返回指定类型的对象信息（可选类型：container、image、network、volume）。
