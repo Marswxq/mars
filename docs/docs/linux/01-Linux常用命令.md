@@ -1303,3 +1303,21 @@ vim /etc/resolv.conf
 nameserver 114.114.114.114
 nameserver 8.8.8.8
 ```
+
+## 最后启动时间
+
+```bash 
+who -b 
+```
+
+## 重启记录
+
+```bash
+last reboot 
+```
+
+## 运行时间
+
+```
+uptime
+```

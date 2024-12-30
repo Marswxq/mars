@@ -184,9 +184,9 @@ root@product-nginx:/# nginx -?
 Usage: nginx [-?hvVtTq] [-s signal] [-c filename] [-p prefix] [-g directives]
 
 Options:
-  -?,-h         : this help
-  -v            : show version and exit
-  -V            : show version and configure options then exit
+  -?,-h         : this help # 帮助
+  -v            : show version and exit # 查看版本
+  -V            : show version and configure options then exit # 查看版本和安装的插件
   -t            : test configuration and exit # 测试配置文件
   -T            : test configuration, dump it and exit # 测试配置文件并转存
   -q            : suppress non-error messages during configuration testing # 在配置测试期间禁止显示非错误消息
@@ -197,12 +197,6 @@ Options:
 ```
 
 ## 常用配置
-
-### 查看 nginx 插件
-
-```bash 
-nginx -V
-```
 
 ### https
 
@@ -295,6 +289,54 @@ htpasswd -c /usr/local/nginx/conf/htpasswd username
 ```text
       auth_basic "请输入账号密码";   # 登录框的提示信息
       auth_basic_user_file /usr/local/nginx/conf/htpasswd; # 步骤2中配置的密码文件
+```
+
+### proxy_pass（反向代理）
+
+```conf
+server {
+    listen  80;
+    server_name http://172.1.2.10:8080; # 代理ip，客户端能看到的，使用的ip
+    index index.html index.htm index.php;
+    access_log /var/log/nginx/99cdtop.access.log  main;
+    access_log on;
+    location / {
+        proxy_redirect off ; # 指定修改被代理服务器返回的响应头中的 location 头域或 refresh 头域数值 ，语法是proxy_redirect [default|off|redirect replacement]，用于重定向地址使用
+        proxy_set_header Host $host; # 确保了请求头中的 Host 字段被正确传递，避免了请求中的 Host 头被 Nginx 默认值覆盖
+        proxy_set_header X-Real-IP $remote_addr; # 用于存储客户端的真实 IP 地址
+        proxy_set_header REMOTE-HOST $remote_addr; 
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_connect_timeout 600;
+        proxy_send_timeout 600;
+        proxy_read_timeout 600;
+        proxy_buffer_size 1600k;
+        proxy_buffers 4 3200k;
+        proxy_busy_buffers_size 6400k;
+        proxy_temp_file_write_size 6400k;
+        proxy_max_temp_file_size 128m;
+        proxy_pass  http://127.0.0.10:8080; # 真实的ip，一般多是服务端ip
+    }
+}
+```
+
+### upstream（负载均衡）
+
+```conf
+upstream	node	{
+	server	你的IP:8081;
+	server	你的IP:8082;
+	server	你的IP:8083;
+}
+server	{
+	server_name	localhost;
+	listen	80;
+		location	/	{
+		proxy_pass	http://node;
+		proxy_set_header    Host    $http_host;
+		proxy_set_header    X-Real-IP   $remote_addr;
+		proxy_set_header    X-Forwarded-For $proxy_add_x_forwarded_for;
+	}
+}
 ```
 
 ## 常见问题
