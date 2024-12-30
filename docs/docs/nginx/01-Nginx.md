@@ -5,7 +5,7 @@
 首先看下 nginx 的默认配置，比较直观的可以发现 nginx
 配置分为三部分：全局（events{}、http{}之外的部分）、events{}、http{}，又叫做全局块、events块和http块。
 
-```conf
+```nginx
 worker_processes  1;
 events {
     worker_connections  1024;
@@ -68,14 +68,14 @@ http {
 * access_log：nginx 应答日志（我理解就是请求转发日志）。格式`access_log path [format [buffer=size]]`，path 为日志路径，format
   为日志格式配置，通过`log_format`参数配置，如果关闭日志使用`access_log off`
 * log_format：日志格式，只能在http块中进行配置。配置示例如下：
-    ```
+    ```nginx
     log_format  main '$remote_addr - $remote_user [$time_local] "$request" '
                      '$status $body_bytes_sent "$http_referer" '
                      '"$http_user_agent" "$http_x_forwarded_for"';
     ```
 
   结合`log_format`完成的`access_log`示例如下：
-    ```
+    ```nginx
     access_log  logs/access.log  main; 
     ```
 * sendfile：开启/关闭sendfile方式传输文件，格式`sendfile  on | off;`。
@@ -102,7 +102,7 @@ http {
 > server块中最重要的指令就是listen指令，这个指令有三种配置语法。这个指令默认的配置值是：listen *:80 | *:
 > 8000；只能在server块种配置这个指令。
 
-```
+```nginx
 # 第一种
 listen address[:port] [default_server] [ssl] [http2 | spdy] [proxy_protocol] [setfib=number] [fastopen=number] [backlog=number] [rcvbuf=size] [sndbuf=size] [accept_filter=filter] [deferred] [bind] [ipv6only=on|off] [reuseport] [so_keepalive=on|off|[keepidle]:[keepintvl]:[keepcnt]];
 
@@ -129,7 +129,7 @@ listen unix:path [default_server] [ssl] [http2 | spdy] [proxy_protocol] [backlog
 
 一些 listen 配置例子
 
-```
+```nginx
 # 只监听来自127.0.0.1这个IP，请求80端口的请求（不指定端口，默认80）
 listen 127.0.0.1;
 # 只监听来自127.0.0.1这个IP，请求8000端口的请求
@@ -148,13 +148,13 @@ listen *:8000;
 
 server_name 可以配置多个域名，多域名用空格分隔，如果 listen 配置了 ip，server_name 域名就会失去意义，如：
 
-```
+```nginx
 server_name abc.com www.baidu.com
 ```
 
 server_name 也支持通配符`*`和正则表达式，如：
 
-```
+```nginx
 server_name *.com www.*.com
 ```
 
@@ -166,7 +166,7 @@ server_name *.com www.*.com
 
 **配置格式**
 
-```
+```nginx
 location [ = | ~ | ~* | ^~ ] uri { ... }
 ```
 
@@ -200,7 +200,7 @@ Options:
 
 ### https
 
-```conf
+```nginx
 http {
 	server {
         listen       443 ssl; # https端口，支持自定义。ssl用于告诉Nginx在指定的端口上启用SSL/TLS加密
@@ -228,7 +228,7 @@ http {
 
 上面配置中有一段“将请求转成https”的方式，也可以使用如下方式
 
-```conf
+```nginx
 server {
     listen 80;
     server_name example.com;
@@ -240,7 +240,7 @@ server {
 
 [ngx_http_autoindex_module 官方文档](https://nginx.org/en/docs/http/ngx_http_autoindex_module.html)
 
-```conf
+```nginx
 localtion /download {
     alias /opt/share; # 文件存储路径
     # 开启或禁用目录浏览功能，默认是禁用
@@ -286,14 +286,14 @@ htpasswd -c /usr/local/nginx/conf/htpasswd username
 
 可以在 http 块、server 块、location 块中配置权限，具体根据个人需求
 
-```conf
+```nginx
 auth_basic "请输入账号密码";   # 登录框的提示信息
 auth_basic_user_file /usr/local/nginx/conf/htpasswd; # 步骤2中配置的密码文件
 ```
 
 ### proxy_pass（反向代理）
 
-```conf
+```nginx
 server {
     listen  80;
     server_name http://172.1.2.10:8080; # 代理ip，客户端能看到的，使用的ip
@@ -321,7 +321,7 @@ server {
 
 ### upstream（负载均衡）
 
-```conf
+```nginx
 upstream	node	{
 	server	你的IP:8081;
 	server	你的IP:8082;
@@ -347,7 +347,7 @@ server	{
 
 修改为
 
-```properties
+```nginx
 # 默认1m，根据使用场景据实修改
 client_max_body_size 10m 
 ```
