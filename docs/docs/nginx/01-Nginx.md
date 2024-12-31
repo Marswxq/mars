@@ -642,6 +642,40 @@ http
 }
 ```
 
+### stream (TCP/UDP数据流模块)
+
+> stream 模块一般用于tcp/UDP数据流的代理和负载均衡，可以通过stream模块代理转发TCP消息。 ngx_stream_core_module模块由1.9.0版提供。
+>
+> 可以实现负载均衡和 mysql 等 tcp 协议中间件的访问。
+
+```nginx
+# mysql 配置
+stream {
+  # nginx 监听服务
+  server {
+    listen 3307; 
+    proxy_connect_timeout 1s;
+    proxy_timeout 3s;
+    proxy_pass ip:port;    
+  }
+}
+
+# 或
+
+stream  {
+   # 可以实现负载
+   upstream mysql_socket {
+     server ip:port;
+   }
+   server {
+     listen 3307; 
+     proxy_connect_timeout 1s;
+     proxy_timeout 3s;
+     proxy_pass mysql_socket;
+   }
+}
+```
+
 ## 常见问题
 
 ### Q1.Http状态码413（Request Entity Too Large）
