@@ -128,20 +128,18 @@ public class MarsApplicationListener implements ApplicationListener<MarsAppicati
 ### @EventListener
 
 ```java
+@Service
 @Slf4j
-@Component
-public class MarsApplicationListener implements ApplicationListener<MarsAppicationEvent> {
+public class MarsApplicationListener4Annotation {
 
     /**
      * Handle an application event.
      *
      * @param event the event to respond to
      */
-    @Override
+    @EventListener(MarsAppicationEvent.class)
     public void onApplicationEvent(@NonNull MarsAppicationEvent event) {
         log.info("监听到 {}", event);
-        MarsEvent listener = event.getMarsEvent();
-        listener.run();
     }
 }
 ```
