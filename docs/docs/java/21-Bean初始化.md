@@ -1,4 +1,4 @@
-# BeanInit
+# Bean初始化
 
 **目录**
 
