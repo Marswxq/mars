@@ -201,7 +201,7 @@
 ```xml
 
 <component name="PropertiesComponent">
-    ……
+
 </component>
 ```
 
