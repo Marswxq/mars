@@ -3,6 +3,10 @@
 **目录**
 [[toc]]
 
+## 启动时自主选择项目
+
+![启动时自主选择项目](/images/other/idea_start_select.png)
+
 ## 快捷键
 
 ### Ctrl
