@@ -55,13 +55,16 @@ ExecStart=/usr/bin/dockerd --default-ulimit nofile=65536:65536
 ## Q2. dokcer 宿主机能够访问局域网内其他ip，但是 docker 容器访问不了
 
 ### Quession
+
 一个很奇怪的问题，在 docker 宿主机上可以 `ping`、`telnet` 同另外一台服务器，但是在 docker 容器内 `ping`、`telnet` 均不通。
 
 ### Answer
 
 #### 原因
 
-`/usr/lib/systemd/system/docker.service`中配置 `ExecStart=/usr/bin/dockerd -H fd:// --iptables=false --containerd=/run/containerd/containerd.sock`
+`/usr/lib/systemd/system/docker.service`
+中配置 `ExecStart=/usr/bin/dockerd -H fd:// --iptables=false --containerd=/run/containerd/containerd.sock`。
+因为 docker 默认使用 `iptables` 进行网络配置，如果禁用 `iptables` 会导致 docker 容器内部的网络无法使用宿主机网络转发。
 
 #### 解决
 
