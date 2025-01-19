@@ -1321,3 +1321,23 @@ last reboot
 ```
 uptime
 ```
+
+## 使用`.pem`登录
+
+授权
+
+```shell
+chmod 600 xxx.pem
+```
+
+登录 ssh
+
+```shell
+ssh -i xxx.pem 用户@ip
+```
+
+登录sftp
+
+```shell
+sftp -i xxx.pem 用户@ip
+```
