@@ -388,6 +388,15 @@ pidstat -t -p 2831
 
 ## tsar
 
+### 安装
+
+```shell
+git clone https://github.com/alibaba/tsar.git
+cd tsar
+make
+make install
+```
+
 ### 语法
 
 ```bash
