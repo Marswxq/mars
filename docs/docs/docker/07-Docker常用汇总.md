@@ -25,6 +25,12 @@ RUN sed -i 's/http:\/\/deb.debian.org/http:\/\/mirrors.aliyun.com/g' /etc/apt/so
 RUN apt update && apt install -y fontconfig && fc-cache -fv
 ```
 
+#### Centos Linux
+
+```dockerfile
+RUN yum -y install ttmkfdir
+```
+
 ## docker.service
 
 > docker.service 是 Docker 守护进程（Docker Daemon）在 Linux 系统上使用 systemd 作为初始化系统时的服务单元文件，它定义了
