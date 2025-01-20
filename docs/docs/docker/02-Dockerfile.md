@@ -503,8 +503,8 @@ WORKDIR /usr/local/bin
 CMD ["myapp"]
 ```
 
-在上面的例子中，我们使用两个构建阶段。第一个构建阶段使用Golang基础镜像来编译应用程序，第二个构建阶段使用Alpine
-Linux基础镜像，仅复制编译后的应用程序，并设置容器启动时的命令。
+在上面的例子中，我们使用两个构建阶段。第一个构建阶段使用 Golang 基础镜像来编译应用程序，第二个构建阶段使用 Alpine
+Linux 基础镜像，仅复制编译后的应用程序，并设置容器启动时的命令。
 
 ### 有效使用缓存
 
@@ -522,3 +522,54 @@ RUN apt-get update && apt-get install -y \
 ```
 
 这样可以将多个安装命令合并为一个镜像层，减少镜像大小。
+
+下面是基于 Alpine Linux openjdk-8 基础镜像构建一个包含中文宋体字库的镜像。
+
+```dockerfile
+FROM openjdk:8-alpine
+
+
+# 安装中文字体
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories  \
+    && apk add --update ttf-dejavu fontconfig  \
+    && rm -rf /var/cache/apk/* 
+
+# 添加宋体
+COPY SimSun-01.ttf /usr/share/fonts/ttf-dejavu
+COPY NSimSun-02.ttf /usr/share/fonts/ttf-dejavu
+
+# 建立字体索引
+RUN  mkfontscale  \
+    && mkfontdir  \
+    && fc-cache -fv
+```
+
+只要`docker build`即可得到一个新的镜像。
+
+```shell
+docker build -t alpine-jdk8:0.0.1 .
+```
+
+同理，如果我还需要 python 环境，那么我直接在安装一个 python 就可以了。
+
+```dockerfile
+FROM openjdk:8-alpine
+
+# 安装python
+RUN apk add python2
+
+# 安装中文字体
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories  \
+    && apk add --update ttf-dejavu fontconfig  \
+    && rm -rf /var/cache/apk/*  
+
+# 添加宋体
+COPY SimSun-01.ttf /usr/share/fonts/ttf-dejavu
+COPY NSimSun-02.ttf /usr/share/fonts/ttf-dejavu
+
+# 建立字体索引
+RUN  mkfontscale  \
+    && mkfontdir  \
+    && fc-cache -fv
+```
+
