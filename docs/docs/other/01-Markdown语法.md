@@ -610,7 +610,7 @@ Markdown 写 HTML。（在 HTML 语法中，你要手动把所有的 `<` 和 `&`
 
 在本文档中实现跳转，您可以通过`[连接说明](#文档中的标题)`方式来实现，注意`#`后面是 markdown 中的标题，尽量使用英文（本人用中文也可以，这个取决于您使用的 markdown 编辑器）且标题不重复。
 
-新建两个 markdown 文档如下，在 TestMarkdown.md 的锚点链接中可以到哪几种常见的跳转方式
+新建两个 markdown 文档如下，在 TestMarkdown.md 的锚点链接中可以到哪几种常见的跳转方式。
 
 TestMarkdown.md
 
