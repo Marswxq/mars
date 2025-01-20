@@ -1,0 +1,37 @@
+import{_ as n,c as e,d as a,o as i}from"./app-BnYMp7-V.js";const l={};function c(r,s){return i(),e("div",null,s[0]||(s[0]=[a(`<h1 id="docker常用汇总" tabindex="-1"><a class="header-anchor" href="#docker常用汇总"><span>Docker常用汇总</span></a></h1><h2 id="安装字体库" tabindex="-1"><a class="header-anchor" href="#安装字体库"><span>安装字体库</span></a></h2><h3 id="使用-dockerfile" tabindex="-1"><a class="header-anchor" href="#使用-dockerfile"><span>使用 DockerFile</span></a></h3><h4 id="alpine-linux" tabindex="-1"><a class="header-anchor" href="#alpine-linux"><span>Alpine Linux</span></a></h4><div class="language-docker line-numbers-mode" data-highlighter="prismjs" data-ext="docker" data-title="docker"><pre><code><span class="line"><span class="token comment"># 安装中文字体</span></span>
+<span class="line"><span class="token instruction"><span class="token keyword">RUN</span> sed -i <span class="token string">&#39;s/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g&#39;</span> /etc/apk/repositories  <span class="token operator">\\</span></span>
+<span class="line">    &amp;&amp; apk add --update ttf-dejavu fontconfig  <span class="token operator">\\</span></span>
+<span class="line">    &amp;&amp; rm -rf /var/cache/apk/*  <span class="token operator">\\</span></span>
+<span class="line">    &amp;&amp; mkfontscale  <span class="token operator">\\</span></span>
+<span class="line">    &amp;&amp; mkfontdir  <span class="token operator">\\</span></span>
+<span class="line">    &amp;&amp; fc-cache</span></span>
+<span class="line"><span class="token comment"># 添加宋体</span></span>
+<span class="line"><span class="token instruction"><span class="token keyword">COPY</span> ./script/simsun.ttc /usr/share/fonts/ttf-dejavu</span></span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h4 id="debian-linux" tabindex="-1"><a class="header-anchor" href="#debian-linux"><span>Debian Linux</span></a></h4><div class="language-docker line-numbers-mode" data-highlighter="prismjs" data-ext="docker" data-title="docker"><pre><code><span class="line"><span class="token instruction"><span class="token keyword">RUN</span> sed -i <span class="token string">&#39;s/http:\\/\\/deb.debian.org/http:\\/\\/mirrors.aliyun.com/g&#39;</span> /etc/apt/sources.list</span></span>
+<span class="line"><span class="token instruction"><span class="token keyword">RUN</span> apt update &amp;&amp; apt install -y fontconfig &amp;&amp; fc-cache -fv</span></span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div></div></div><h4 id="centos-linux" tabindex="-1"><a class="header-anchor" href="#centos-linux"><span>Centos Linux</span></a></h4><div class="language-docker line-numbers-mode" data-highlighter="prismjs" data-ext="docker" data-title="docker"><pre><code><span class="line"><span class="token instruction"><span class="token keyword">RUN</span> yum -y install ttmkfdir</span></span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div></div></div><h2 id="docker-service" tabindex="-1"><a class="header-anchor" href="#docker-service"><span>docker.service</span></a></h2><blockquote><p>docker.service 是 Docker 守护进程（Docker Daemon）在 Linux 系统上使用 systemd 作为初始化系统时的服务单元文件，它定义了 Docker 服务启动、停止和管理的方式。</p></blockquote><h3 id="配置说明" tabindex="-1"><a class="header-anchor" href="#配置说明"><span>配置说明</span></a></h3><div class="language-Cabal line-numbers-mode" data-highlighter="prismjs" data-ext="Cabal" data-title="Cabal"><pre><code><span class="line">[Unit]                    # Docker 服务的元数据信息</span>
+<span class="line">Description               # 对 Docker 服务的描述</span>
+<span class="line">Documentation             # Docker 在线文档链接</span>
+<span class="line">After                     # 指定 Docker 服务在哪些服务之后启动</span>
+<span class="line">Wants:                    # 指定 Docker 服务启动后，需要启动的服务</span>
+<span class="line">Requires                  # 指定 Docker 服务启动前，必须已启动的服务</span>
+<span class="line"> </span>
+<span class="line">[Service]                 # Docker 守护进程的行为和属性</span>
+<span class="line">Type                      # 指定 Docker 服务启动时的行为。notify 表示服务就绪后发送信号给 systemd</span>
+<span class="line">ExecStart                 # Docker 服务启动命令</span>
+<span class="line">ExecReload                # Docker 服务重载命令</span>
+<span class="line">LimitNOFILE               # 指定 Docker 服务最大文件句柄数，默认为 infinity 无限制</span>
+<span class="line">LimitNPROC                # 指定 Docker 服务最大进程数，默认为 infinity 无限制</span>
+<span class="line">LimitCORE                 # 指定 Docker 服务最大核心转存文件大小，默认为 infinity 无限制</span>
+<span class="line">TasksMax                  # 指定 Docker 服务最大任务数，默认为 infinity 无限制</span>
+<span class="line">TimeoutStartSec           # 指定启动 Docker 服务时等待的秒数</span>
+<span class="line">Delegate                  # 指定为 yes 时，systemd 不会重置容器的 cgroups</span>
+<span class="line">KillMode                  # 指定 Systemd 如何杀死 Docker 进程（control-group、process、mixed、none）</span>
+<span class="line">Restart                   # 指定 Docker 服务的重启策略，默认</span>
+<span class="line">StartLimitInterval        # 指定 Docker 服务启动失败计数的时间窗口</span>
+<span class="line">StartLimitBurst           # 指定 StartLimitInterval 时间内，Docker 服务可以启动失败的次数</span>
+<span class="line"> </span>
+<span class="line">[Install]                 # Docker 服务的安装位置和所属目标</span>
+<span class="line">WantedBy                  # 指定启动 Docker 服务的 target，默认为 multi-user.target</span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div>`,13)]))}const t=n(l,[["render",c],["__file","07-Docker常用汇总.html.vue"]]),p=JSON.parse('{"path":"/docs/docker/07-Docker%E5%B8%B8%E7%94%A8%E6%B1%87%E6%80%BB.html","title":"Docker常用汇总","lang":"zh-CN","frontmatter":{},"headers":[{"level":2,"title":"安装字体库","slug":"安装字体库","link":"#安装字体库","children":[{"level":3,"title":"使用 DockerFile","slug":"使用-dockerfile","link":"#使用-dockerfile","children":[]}]},{"level":2,"title":"docker.service","slug":"docker-service","link":"#docker-service","children":[{"level":3,"title":"配置说明","slug":"配置说明","link":"#配置说明","children":[]}]}],"git":{"updatedTime":1737352150000,"contributors":[{"name":"wangxiaoquan","email":"wxq","commits":4}]},"filePathRelative":"docs/docker/07-Docker常用汇总.md"}');export{t as comp,p as data};
