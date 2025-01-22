@@ -99,6 +99,28 @@ const jenkins = {
     collapsible: true,
     children: getFileNames('/jenkins/')
 }
+
+const raspi = {
+    text: '🍓树莓派',
+    //可折叠侧边栏
+    collapsible: true,
+    children: getFileNames('/raspberry/')
+}
+
+const md = {
+    text: '📘Markdown',
+    //可折叠侧边栏
+    collapsible: true,
+    children: getFileNames('/markdown/')
+}
+
+const other = {
+    text: '📇其他',
+    //可折叠侧边栏
+    collapsible: true,
+    children: getFileNames('/other/')
+}
+
 // 菜单
 const home = {
     text: '🏠主页',
@@ -136,11 +158,11 @@ const book = {
     collapsible: true,
     children: getFileNames('/book/')
 }
-const other = {
+const others = {
     text: '🏦其他',
     //可折叠侧边栏
     collapsible: true,
-    children: getFileNames('/other/')
+    children: [raspi, md, other]
 }
 export default defineUserConfig({
     lang: 'zh-CN',
@@ -159,9 +181,9 @@ export default defineUserConfig({
         repo: "https://github.com/Marswxq/mars",
         sidebarDepth: 3,
         // 左侧导航
-        sidebar: [technology, service, data, manager, book, other],
+        sidebar: [technology, service, data, manager, book, others],
         // 头部导航栏
-        navbar: [home, technology, service, data, manager, book, other],
+        navbar: [home, technology, service, data, manager, book, others],
         lastUpdated: true,
         // 默认值：false
         displayAllHeaders: true
