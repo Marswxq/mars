@@ -612,6 +612,16 @@ Markdown 写 HTML。（在 HTML 语法中，你要手动把所有的 `<` 和 `&`
 
 新建两个 markdown 文档如下，在 TestMarkdown.md 的锚点链接中可以到哪几种常见的跳转方式。
 
+[跳转二级标题A](../test/TestMarkdown.md#设置列宽)
+
+[跳转第一个三级级标题A](../test/TestMarkdown.md三级标题A)
+
+[跳转第二个三级级标题A](../test/TestMarkdown.md三级标题A-1)
+
+[跳转到外部文档的二级标题](../test/TestMarkdownGoTo.md#跳转到二级)
+
+[跳转到外部文档的第一个二级下面的第二个三级标题](../test/TestMarkdownGoTo.md#跳转到三级-1)
+
 TestMarkdown.md
 
 ```md

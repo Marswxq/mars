@@ -3,7 +3,7 @@
 ## 关机
 
 ```shell
-sudo shutdown -h now
+sudo shutdown -h 
 sudo halt
 sudo poweroff
 sudo init 0
@@ -21,3 +21,4 @@ shutdown -r now
 ```shell
 sudo raspi-config
 ```
+

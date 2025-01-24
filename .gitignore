@@ -23,4 +23,3 @@ pnpm-debug.log*
 /docs/.vuepress/.cache/
 /docs/.vuepress/.temp/
 
-/docs/docs/test/
