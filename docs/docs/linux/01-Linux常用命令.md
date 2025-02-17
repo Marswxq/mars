@@ -1188,7 +1188,9 @@ CentOS7 的防火墙配置跟以前版本有很大区别，CentOS7 这个版本�
 ```bash
 systemctl status firewalld
 ```
+
 或
+
 ```bash
 firewall-cmd --state
 ```
@@ -1243,7 +1245,9 @@ firewall-cmd --query-port=80/tcp
 ```bash
 firewall-cmd --zone=public --remove-port=80/tcp --permanent
 ```
+
 或
+
 ```bash
 firewall-cmd --permanent --remove-port=123/tcp
 ```
@@ -1253,6 +1257,7 @@ firewall-cmd --permanent --remove-port=123/tcp
 ```bash
 firewall-cmd --list-port
 ```
+
 * --zone #作用域
 * --add-port=80/tcp #添加端口，格式为：端口/通讯协议
 * --remove-port=80/tcp #移除端口，格式为：端口/通讯协议
@@ -1349,4 +1354,47 @@ ssh -i xxx.pem 用户@ip
 
 ```shell
 sftp -i xxx.pem 用户@ip
+```
+
+## 备份docker中的mysql
+
+根据脚本中的汉字按需修改
+
+```shell
+#!/bin/bash
+
+# 容器名称
+containerName=你的容器名称
+
+# 容器id
+containerId=`docker ps |grep $containerName |awk '{print $1}'`
+
+echo $containerId
+
+# 容器中备份路径（需要挂载到宿主机的路径）
+
+containerPath='你容器中的一个文件路径'
+
+dbPassword='你的mysql密码'
+# 备份的数据库
+dbNames=('你要备份的数据库名称1' 'mdm-你要备份的数据库名称2' '你要备份的数据库名称3')
+
+# docker备份
+for dbName in "${dbNames[@]}"; do
+   echo '开始执行docker备份:'$dbName
+   command="mysqldump -uroot -p$dbPassword -h127.0.0.1 --databases $dbName > $containerPath/你的备份文件前缀-$dbName-`date "+%Y%m%d"`.sql"
+   docker exec -it  $containerId bash -c "$command"
+done
+
+# 归档
+backupSourceDir="你宿主机路径，与containerPath挂载关联的宿主机路径"
+backupDir="你宿主机存放归档文件的路径"
+
+if [ ! -d "$backupDir" ]; then
+  mkdir $backupDir
+fi
+
+tar -zcvf $backupDir/你的备份文件前缀-`date "+%Y%m%d"`.tar.gz $backupSourceDir/你的备份文件前缀*.sql
+
+rm -rf $backupSourceDir/你的备份文件前缀*.sql
 ```
