@@ -65,3 +65,17 @@ StartLimitBurst           # 指定 StartLimitInterval 时间内，Docker 服务�
 WantedBy                  # 指定启动 Docker 服务的 target，默认为 multi-user.target
 ```
 
+## Docker Desktop 自定义安装
+
+```shell
+start /w "" "Docker Desktop Installer.exe" install -accept-license --installation-dir="D:\develop\DockerDesktop" --wsl-default-data-root="D:\develop\DockerDesktop\data" --windows-containers-default-data-root="D:\\develop\\DockerDesktop"
+```
+
+## 部署 opwen-webui
+
+Docker Desktop 部署 open-webui ， 连接本地 ollama ，实现 deepseek 本地部署。
+
+```bash
+docker run -d -p 3000:8080 --add-host=host.docker.internal:host-gateway -v D:\develop\deepseek\open-webui:/app/backend/data --name open-webui --restart always ghcr.io/open-webui/open-webui:main
+```
+
