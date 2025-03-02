@@ -79,3 +79,4 @@ Docker Desktop 部署 open-webui ， 连接本地 ollama ，实现 deepseek 本�
 docker run -d -p 3000:8080 --add-host=host.docker.internal:host-gateway -v D:\develop\deepseek\open-webui:/app/backend/data --name open-webui --restart always ghcr.io/open-webui/open-webui:main
 ```
 
+

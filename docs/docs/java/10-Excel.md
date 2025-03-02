@@ -127,3 +127,12 @@ public String upload(MultipartFile file) throws IOException {
 
 [EasyExcel官方文档](https://easyexcel.opensource.alibaba.com/docs/current/)
 
+## 案例
+
+### 自定义转换类
+
+以枚举为例，其他都大同小异
+
+```java
+
+```
