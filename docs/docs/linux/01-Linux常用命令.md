@@ -1377,7 +1377,7 @@ containerPath='你容器中的一个文件路径'
 
 dbPassword='你的mysql密码'
 # 备份的数据库
-dbNames=('你要备份的数据库名称1' 'mdm-你要备份的数据库名称2' '你要备份的数据库名称3')
+dbNames=('你要备份的数据库名称1' '你要备份的数据库名称2' '你要备份的数据库名称3')
 
 # docker备份
 for dbName in "${dbNames[@]}"; do

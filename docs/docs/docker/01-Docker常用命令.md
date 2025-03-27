@@ -373,6 +373,12 @@ docker system prune -a
 docker container prune
 ```
 
+### 清理 docker build 缓存
+
+```shell
+docker builder prune
+```
+
 ## 推送 image
 
 ### 语法

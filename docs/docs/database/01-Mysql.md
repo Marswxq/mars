@@ -654,3 +654,180 @@ FROM
 WHERE
 	b.TABLE_NAME IS NULL;
 ```
+
+### 汉字首字母
+
+```sql
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS `fun_pinyin`$$
+CREATE DEFINER=`root`@`%` FUNCTION `fun_pinyin`(in_string VARCHAR (4000)) RETURNS varchar(4000) CHARSET gbk
+    DETERMINISTIC
+BEGIN#截取字符串，每次做截取后的字符串存放在该变量中，初始为函数参数in_string值
+  DECLARE
+    tmp_str VARCHAR (4000) CHARSET gbk DEFAULT '';#tmp_str的长度
+  DECLARE
+    tmp_len SMALLINT DEFAULT 0;#tmp_str的长度
+  DECLARE
+    tmp_loc SMALLINT DEFAULT 0;#截取字符，每次 left(tmp_str,1) 返回值存放在该变量中
+  DECLARE
+    tmp_char VARCHAR (2) CHARSET gbk DEFAULT '';#结果字符串
+  DECLARE
+    tmp_rs VARCHAR (21845) CHARSET gbk DEFAULT '';#拼音字符，存放单个汉字对应的拼音首字符
+  DECLARE
+    tmp_cc VARCHAR (2) CHARSET gbk DEFAULT '';#初始化，将in_string赋给tmp_str
+  
+  SET tmp_str = in_string;#初始化长度
+  
+  SET tmp_len = LENGTH(tmp_str);#如果被计算的tmp_str长度大于0则进入该while
+  WHILE
+      tmp_len > 0 DO#获取tmp_str最左端的首个字符，注意这里是获取首个字符，该字符可能是汉字，也可能不是。
+      
+      SET tmp_char = LEFT(tmp_str, 1);#左端首个字符赋值给拼音字符
+      
+      SET tmp_cc = tmp_char;#获取字符的编码范围的位置，为了确认汉字拼音首字母是哪一个
+      
+      SET tmp_loc = INTERVAL(CONV(HEX(tmp_char), 16, 10), 0xB0A1, 0xB0C5, 0xB2C1, 0xB4EE, 0xB6EA, 0xB7A2, 0xB8C1, 0xB9FE, 0xBBF7, 0xBFA6, 0xC0AC, 0xC2E8, 0xC4C3, 0xC5B6, 0xC5BE, 0xC6DA, 0xC8BB, 0xC8F6, 0xCBFA, 0xCDDA, 0xCEF4, 0xD1B9, 0xD4D1);#判断左端首个字符是多字节还是单字节字符，要是多字节则认为是汉字且作以下拼音获取，要是单字节则不处理。如果是多字节字符但是不在对应的编码范围之内，即对应的不是大写字母则也不做处理，这样数字或者特殊字符就保持原样了
+      IF
+        (LENGTH(tmp_char) > 1 AND tmp_loc > 0 AND tmp_loc < 24) THEN#获得汉字拼音首字符
+          SELECT
+            ELT(tmp_loc, 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'W', 'X', 'Y', 'Z') INTO tmp_cc;
+          
+        END IF;#将当前tmp_str左端首个字符拼音首字符与返回字符串拼接
+      
+      SET tmp_rs = CONCAT(tmp_rs, tmp_cc);#将tmp_str左端首字符去除
+      
+      SET tmp_str = SUBSTRING(tmp_str, 2);#计算当前字符串长度
+      
+      SET tmp_len = LENGTH(tmp_str);
+      
+    END WHILE;#返回结果字符串
+  RETURN tmp_rs;
+  
+END $$
+
+DELIMITER ;
+```
+
+### 数字转（财务）汉字大写
+
+```sql
+DROP FUNCTION if EXISTS fun_convertm;
+DELIMITER $$
+CREATE FUNCTION fun_convertm(MONEY VARCHAR(150)) RETURNS VARCHAR(150) CHARSET utf8
+    DETERMINISTIC
+BEGIN
+    DECLARE
+RESULT VARCHAR(100);
+    DECLARE
+NUM_ROUND VARCHAR(100);
+    DECLARE
+NUM_LEFT VARCHAR(100);
+    DECLARE
+NUM_RIGHT VARCHAR(2);
+    DECLARE
+STR1 VARCHAR(10);
+    DECLARE
+STR2 VARCHAR(16);
+    DECLARE
+NUM_PRE INT;
+    DECLARE
+NUM_CURRENT INT;
+    DECLARE
+NUM_COUNT INT;
+    DECLARE
+NUM1 INT;
+    SET MONEY = CONVERT(
+            MONEY,
+        DECIMAL(14, 2));
+    SET NUM_ROUND = CONCAT(MONEY, '');
+    SET STR1 = '零壹贰叁肆伍陆柒捌玖';
+    SET STR2 = '圆拾佰仟万拾佰仟亿拾佰仟万拾佰仟';
+    SET NUM_PRE = 1;
+    SET NUM_COUNT = 0;
+    SET NUM_LEFT = FLOOR(MONEY);
+    SET NUM_RIGHT = REPLACE(NUM_ROUND, CONCAT(NUM_LEFT, '.'), '');
+    IF
+MONEY IS NULL THEN
+        SET RESULT = NULL;
+END IF;
+    IF
+LENGTH(NUM_LEFT) >= 8 THEN
+        SET NUM1 = CAST(SUBSTR(NUM_LEFT, - 8, 4) AS SIGNED);
+    ELSEIF LENGTH(NUM_LEFT) > 4 THEN
+        SET NUM1 = CAST(SUBSTR(NUM_LEFT, - LENGTH(NUM_LEFT), LENGTH(NUM_LEFT) - 4) AS SIGNED);
+ELSE
+        SET NUM1 = CAST(SUBSTR(NUM_LEFT, 1, 4) AS SIGNED);
+END IF;
+    IF
+LENGTH(NUM_LEFT) > 16 THEN
+        SET RESULT = '**********';
+END IF;
+    IF
+LENGTH(NUM_RIGHT) = 2 THEN
+        IF
+            CAST(SUBSTR(NUM_RIGHT, 1, 1) AS SIGNED) = 0 THEN
+            SET RESULT = CONCAT('零', SUBSTR(STR1, CAST(SUBSTR(NUM_RIGHT, 2, 1) AS SIGNED) + 1, 1), '分');
+        ELSE
+            SET RESULT = CONCAT(SUBSTR(STR1, CAST(SUBSTR(NUM_RIGHT, 1, 1) AS SIGNED) + 1, 1), '角',
+                                SUBSTR(STR1, CAST(SUBSTR(NUM_RIGHT, 2, 1) AS SIGNED) + 1, 1), '分');
+        END IF;
+ELSE
+        IF
+            LENGTH(NUM_RIGHT) = 1 THEN
+            SET RESULT = CONCAT(SUBSTR(STR1, CAST(SUBSTR(NUM_RIGHT, 1, 1) AS SIGNED) + 1, 1), '角整');
+        ELSE
+            SET RESULT = '整';
+        END IF;
+END IF;
+    myloop :
+    LOOP
+        SET NUM_COUNT = NUM_COUNT + 1;
+        SET NUM_CURRENT = CAST(SUBSTR(NUM_LEFT, LENGTH(NUM_LEFT) - NUM_COUNT + 1, 1) AS SIGNED);
+        IF
+NUM_CURRENT > 0 THEN
+            SET RESULT = CONCAT(SUBSTR(STR1, NUM_CURRENT + 1, 1), SUBSTR(STR2, NUM_COUNT, 1), RESULT);
+ELSE
+            IF
+                NUM_COUNT = 5 THEN
+                IF
+                    MOD(NUM_COUNT - 1, 4) = 0
+                        AND NUM1 <> 0 THEN
+
+                    SET RESULT = CONCAT(SUBSTR(STR2, NUM_COUNT, 1), RESULT);
+
+                    SET NUM_PRE = 0;
+END IF;
+ELSE
+                IF
+                    MOD(NUM_COUNT - 1, 4) = 0 THEN
+
+                    SET RESULT = CONCAT(SUBSTR(STR2, NUM_COUNT, 1), RESULT);
+
+                    SET NUM_PRE = 0;
+END IF;
+
+END IF;
+            IF
+NUM_PRE > 0
+                    OR LENGTH(NUM_LEFT) = 1 THEN
+                SET RESULT = CONCAT(SUBSTR(STR1, NUM_CURRENT + 1, 1), RESULT);
+END IF;
+END IF;
+        SET NUM_PRE = NUM_CURRENT;
+        IF
+NUM_COUNT >= LENGTH(NUM_LEFT) THEN
+            LEAVE myloop;
+END IF;
+END LOOP myloop;
+    IF
+MONEY < 0 THEN
+        SET RESULT = CONCAT('负', RESULT);
+END IF;
+    SET RESULT = REPLACE(RESULT, '零零分', '整');
+    SET RESULT = REPLACE(RESULT, '零分', '整');
+    SET RESULT = REPLACE(RESULT, '元整', '圆整');
+RETURN RESULT;
+END;
+$$
+```
