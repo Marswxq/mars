@@ -242,7 +242,7 @@ server {
 [ngx_http_autoindex_module 官方文档](https://nginx.org/en/docs/http/ngx_http_autoindex_module.html)
 
 ```nginx
-localtion /download {
+location /download {
     alias /opt/share; # 文件存储路径
     # 开启或禁用目录浏览功能，默认是禁用
     autoindex on;
