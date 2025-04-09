@@ -97,6 +97,12 @@ find . -type f -perm 644 -exec ls -l {} \;
 find / -type f -size 0 -exec ls -l {} \;
 ```
 
+查找文件夹下最新的文件
+
+```bash
+find /data -type f -print0 | xargs -0 stat -c '%Y %n' | sort -nr | head -n 1 | cut -d ' ' -f 2
+```
+
 ## cut
 
 ### 语法
@@ -491,6 +497,25 @@ tsar -d 2 -i 1
 
 ```bash
 export HISTTIMEFORMAT="%F %T `who -u am i 2>/dev/null| awk '{print $NF}'|sed \-e 's/[()]//g'` `whoami`"
+```
+
+永久生效，显示时间、ip、日期格式化、history 历史记录条数
+
+```bash
+cat >> ~/.bash_profile << 'EOF'
+HISTSIZE=10000
+HISTFILESIZE=10000
+USER_IP=`who -u am i 2>/dev/null| awk '{print $NF}'|sed -e 's/[()]//g'`
+if [ -z $USER_IP ]
+then
+  USER_IP=`hostname`
+fi
+HISTTIMEFORMAT="%F %T $USER_IP:`whoami` "
+export HISTTIMEFORMAT
+export TIME_STYLE='+%Y-%m-%d %H:%M:%S'
+EOF
+
+source ~/.bash_profile
 ```
 
 ## top
@@ -1397,4 +1422,31 @@ fi
 tar -zcvf $backupDir/你的备份文件前缀-`date "+%Y%m%d"`.tar.gz $backupSourceDir/你的备份文件前缀*.sql
 
 rm -rf $backupSourceDir/你的备份文件前缀*.sql
+```
+
+## 自动备份最新文件
+
+```shell
+#!/bin/bash
+# 备份服务器
+ip=备份服务器ip
+# 密钥文件
+rsa=密钥文件
+# 获取最新备份文件
+bakfiledir=最新备份文件所在路径
+# 通过 ssh 远程执行命令获取需要备份的文件
+bakfile=`ssh -i $rsa root@$ip "find $bakfiledir/*.tar.gz -type f -print0 | xargs -0 stat -c '%Y %n' | sort -nr | head -n 1 | cut -d ' ' -f 2"`
+# 备份文件存放地址
+targetdir=备份文件存放路径
+# 执行备份
+sudo scp -i $rsa root@$ip:$bakfile $targetdir
+```
+
+## linux 全局时间格式化
+
+```sehll
+cat >> ~/.bash_profile << 'EOF'
+export TIME_STYLE='+%Y-%m-%d %H:%M:%S'
+EOF
+source ~/.bash_profile
 ```

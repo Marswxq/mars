@@ -528,7 +528,6 @@ RUN apt-get update && apt-get install -y \
 ```dockerfile
 FROM openjdk:8-alpine
 
-
 # 安装中文字体
 RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories  \
     && apk add --update ttf-dejavu fontconfig  \
