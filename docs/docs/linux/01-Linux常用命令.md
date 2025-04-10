@@ -1424,7 +1424,9 @@ tar -zcvf $backupDir/你的备份文件前缀-`date "+%Y%m%d"`.tar.gz $backupSou
 rm -rf $backupSourceDir/你的备份文件前缀*.sql
 ```
 
-## 自动备份最新文件
+## 远程备份
+
+### 自动备份最新文件
 
 ```shell
 #!/bin/bash
@@ -1442,6 +1444,31 @@ targetdir=备份文件存放路径
 sudo scp -i $rsa root@$ip:$bakfile $targetdir
 ```
 
+### 备份并删除
+
+```shell
+#!/bin/bash
+# 备份服务器
+ip=备份服务器ip
+# 密钥
+rsa=密钥文件
+# 获取最新备份文件
+nexus='/data/nexus'
+# 备份文件路径
+targetnexus=/media/pi/Bakup/01-backup/01-hy/nexus
+if [ ! -d $targetnexus ];then
+	mkdir -p $targetnexus
+fi
+echo '开始执行'`basename $targetnexus`'备份'
+# 压缩
+nexusfilename=`basename $targetnexus`-`date +'%Y%m%d'`.tar.gz
+sudo ssh -i $rsa root@$ip "tar -zcf /data/backup/`basename $nexus`/$nexusfilename $nexus"
+# 备份
+sudo scp -i $rsa root@$ip:/data/backup/`basename $nexus`/$nexusfilename $targetnexus
+# 删除源备份文件
+sudo ssh -i $rsa root@$ip "rm -rf /data/backup/`basename $nexus`/$nexusfilename"
+```
+
 ## linux 全局时间格式化
 
 ```sehll
@@ -1450,3 +1477,4 @@ export TIME_STYLE='+%Y-%m-%d %H:%M:%S'
 EOF
 source ~/.bash_profile
 ```
+
