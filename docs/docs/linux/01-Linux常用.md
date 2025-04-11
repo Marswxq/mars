@@ -1,4 +1,4 @@
-# Linux 常用命令
+# Linux 常用
 
 **目录**
 
@@ -205,6 +205,7 @@ tar [参数] -f 归档文件名称.tar [文件...]
 
 ### 示例
 
+#### 常用参数示例
 创建归档文件：将文件 file1、file2 和 directory 打包到一个名为 archive.tar 的归档文件中。
 
 ```bash 
@@ -298,13 +299,17 @@ tar -cJvf archive.tar.xz directory
 tar -xJvf archive.tar.xz
 ```
 
-tar 显示压缩进度，显示 mysql 文件夹压缩进度
+#### 显示压缩进度
+
+tar 显示解压进度，显示 mysql.tar.gz 解压缩的进度
+
+方式一
 
 ```bash
 tar -cf - mysql | pv -s $(($(du -sk mysql | awk '{print $1}') * 1024)) | gzip > mysql.tar.gz
 ```
 
-tar 显示解压进度，显示 mysql.tar.gz 解压缩的进度
+方式二
 
 ```bash
 pv mysql.tar.gz | tar -zxf - -C /opt

@@ -108,8 +108,8 @@ sudo nft flush ruleset
 
 ### Raspberry Pi 9 `iptables`
 
-使用参考 [centos6](../linux/01-Linux常用命令.md#centos6)
+使用参考 [centos6](../linux/01-Linux常用#centos6)
 
 ### 自定义 `ufw`
 
-使用参考 [ubuntu](../linux/01-Linux常用命令.md#ubuntu)
+使用参考 [ubuntu](../linux/01-Linux常用#ubuntu)
