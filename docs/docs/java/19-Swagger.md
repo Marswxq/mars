@@ -18,3 +18,16 @@
     <version>1.5.21</version>
 </dependency>
 ```
+
+### Q2. 屏蔽 swagger 中的 v2/api-docs 和 v3/api-docs 防止恶意攻击
+
+生产环境中需要屏蔽 v2/api-docs 和 v3/api-docs ，防止恶意攻击和泄露漏洞。
+
+```yaml
+springfox:
+  documentation:
+    swagger-ui:
+      enabled: false
+    auto-startup: false
+```
+

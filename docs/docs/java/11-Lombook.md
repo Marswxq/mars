@@ -56,7 +56,7 @@
 
 ### class lombok.javac.apt.LombokProcessor
 
-问题：lombok访问不到jdk
+问题：lombok 访问不到 jdk
 
 ```java
 class lombok.javac.apt.LombokProcessor (in unnamed module @0x7d968ec1) cannot access class com.sun.tools.javac.processing.JavacProcessingEnvironment (in module jdk.compiler) because module jdk.compiler does not export com.sun.tools.javac.processing to unnamed module @0x7d968ec1
@@ -66,7 +66,6 @@ class lombok.javac.apt.LombokProcessor (in unnamed module @0x7d968ec1) cannot ac
 
 - 方式1：全局配置
 ```xml
-
 <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
@@ -91,5 +90,39 @@ class lombok.javac.apt.LombokProcessor (in unnamed module @0x7d968ec1) cannot ac
         </plugin>
     </plugins>
 </build>
-
 ```
+
+### java: You aren't using a compiler supported by lombok, so lombok will not work and has been disabled.
+
+问题： lombok 注解不识别
+
+```java
+java: You aren't using a compiler supported by lombok, so lombok will not work and has been disabled.
+  Your processor is: com.sun.proxy.$Proxy8
+  Lombok supports: sun/apple javac 1.6, ECJ
+```
+
+原因： lombok 版本过低
+
+解决：
+
+- 方式1：
+
+```xml
+<!-- 升级 lombok 版本 -->
+<dependency>
+    <groupId>org.projectlombok</groupId>
+    <artifactId>lombok</artifactId>
+    <version>1.18.24</version>
+</dependency>
+```
+
+- 方式2：
+
+修改 idea 编译参数，Compiler -> Shared build process VM options ，添加配置：
+
+```bash
+-Djps.track.ap.dependencies=false
+```
+
+

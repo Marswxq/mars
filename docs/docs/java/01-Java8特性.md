@@ -931,6 +931,25 @@ Map<String, List<YearendClrAdjmEvtCDTO>> reptMap = yearEndClrCrtfDDTOSSuccess.st
 staElemAppBDTOS.stream().collect(Collectors.toMap(StaElemAppBDTO::getStaElemCodg,StaElemAppBDTO::getStaElemName));
 ```
 
+**注意：** `Collectors.toMap`的 value 值也不能为空，具体如源码所示
+
+```java
+default V merge(K key, V value,
+        BiFunction<? super V, ? super V, ? extends V> remappingFunction) {
+    Objects.requireNonNull(remappingFunction);
+    Objects.requireNonNull(value);
+    V oldValue = get(key);
+    V newValue = (oldValue == null) ? value :
+               remappingFunction.apply(oldValue, value);
+    if(newValue == null) {
+        remove(key);
+    } else {
+        put(key, newValue);
+    }
+    return newValue;
+}
+```
+
 ### Collectors.groupingBy
 
 ```java
