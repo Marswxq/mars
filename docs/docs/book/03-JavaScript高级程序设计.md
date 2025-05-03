@@ -2118,8 +2118,110 @@ anotherPerson.sayHi(); // "hi"
 
 ```javascript
 // 类声明
-class Person { }
+class Person {
+}
+
 // 类表达式
-const Animal = class { };
+const Animal = class {
+};
 ```
+
+##### 类的构成
+
+> 类可以包含构造函数方法、实例方法、获取函数、设置函数和静态类方法，但这些都不是必需的。
+> 空的类定义照样有效。默认情况下，类定义中的代码都在严格模式下执行。
+
+#### 类构造函数
+
+> `constructor`关键字用于在类定义块内部创建类的构造函数。
+> 方法名`constructor`会告诉解释器在使用 new 操作符创建类的新实例时，应该调用这个函数。
+> 构造函数的定义不是必需的，不定义构造函数相当于将构造函数定义为空函数。
+
+##### 实例化
+
+> 使用`new`调用类的构造函数创建类实例的过程：
+>
+> (1) 在内存中创建一个新对象。
+>
+> (2) 这个新对象内部的`[[Prototype]]`指针被赋值为构造函数的`prototype`属性。
+>
+> (3) 构造函数内部的`this`被赋值为这个新对象（即`this`指向新对象）。
+>
+> (4) 执行构造函数内部的代码（给新对象添加属性）。
+>
+> (5) 如果构造函数返回非空对象，则返回该对象；否则，返回刚创建的新对象。
+
+```javascript
+class Animal {
+}
+
+class Person {
+    constructor() {
+        console.log('person ctor');
+    }
+}
+
+class Vegetable {
+    constructor() {
+        this.color = 'orange';
+    }
+}
+
+let a = new Animal();
+let p = new Person(); // person ctor
+let v = new Vegetable();
+console.log(v.color); // orange
+```
+
+有参构造
+
+```javascript
+class Person {
+    constructor(name, age) {
+        this.name = name;
+        this.age = age;
+    }
+}
+
+let person = new Person("张三", 18);
+console.log(`${person.name}今年${person.age}岁了。`); // 张三今年18岁了。
+
+let psn = new Person();
+console.log(`${psn.name}今年${psn.age}岁了。`); // undefined今年undefined岁了。
+```
+
+#### 继承
+
+```javascript
+class Vehicle {
+}
+
+// 继承类
+class Bus extends Vehicle {
+}
+
+let b = new Bus();
+console.log(b instanceof Bus); // true
+console.log(b instanceof Vehicle); // true
+function Person() {
+}
+
+// 继承普通构造函数
+class Engineer extends Person {
+}
+
+let e = new Engineer();
+console.log(e instanceof Engineer); // true
+console.log(e instanceof Person); // true
+```
+
+##### 构造函数、`HomeObject`和`super()`
+
+
+
+
+
+## 代理与反射
+
+
 

@@ -831,3 +831,34 @@ RETURN RESULT;
 END;
 $$
 ```
+
+### 开窗
+
+按照规则获取第一条数据
+
+```sql
+SELECT
+  * 
+FROM
+  (
+    SELECT
+      zpo.ZySerialNo,
+      zpo.OperationDateTime,
+      zpo.MainOperationFlag,
+      zpo.OperationDoctorDeptCode,
+      ( CASE WHEN @zsn = zpo.ZySerialNo THEN @seq := @seq + 1 ELSE @seq := 0 END ) flag,
+      @zsn := zpo.ZySerialNo 
+    FROM
+      stdDs_ZyPatOperation zpo,
+      ( SELECT @seq := 0, @zsn := '' ) tmp 
+    WHERE
+      zpo.OperationCode IN ( SELECT op_code FROM stdDs_Operation_Item WHERE op_type = '手术' AND vali_flag = '1' ) 
+      AND zpo.OperationDoctorDeptCode IS NOT NULL 
+    ORDER BY
+      zpo.ZySerialNo,
+      zpo.MainOperationFlag,
+      zpo.OperationDateTime 
+  ) tmp 
+WHERE
+  tmp.flag = 0
+```
