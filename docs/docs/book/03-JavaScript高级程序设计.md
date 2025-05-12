@@ -2850,6 +2850,550 @@ Object.keys(proxy);
 
 > `getPrototypeOf()`捕获器会在`Object.getPrototypeOf()`中被调用。对应的反射 API 方法为`Reflect.getPrototypeOf()`。
 
+```javascript
+const myTarget = {};
+const proxy = new Proxy(myTarget, {
+    getPrototypeOf(target) {
+        console.log('getPrototypeOf()');
+        return Reflect.getPrototypeOf(...arguments)
+    }
+});
+Object.getPrototypeOf(proxy);
+// getPrototypeOf()
+```
+
+##### 返回值
+
+> `getPrototypeOf()`必须返回对象或 null。
+
+##### 拦截的操作
+
+> - Object.getPrototypeOf(proxy)
+> - Reflect.getPrototypeOf(proxy)
+> - proxy.__proto__
+> - Object.prototype.isPrototypeOf(proxy)
+> - proxy instanceof Object
+
+##### 捕获器处理程序参数
+
+> target：目标对象。
+
+##### 捕获器不变式
+
+> 如果`target`不可扩展，则`Object.getPrototypeOf(proxy)`唯一有效的返回值就是`Object.getPrototypeOf(target)`的返回值。
+
+#### setPrototypeOf()
+
+> `setPrototypeOf()`捕获器会在`Object.setPrototypeOf()`中被调用。对应的反射 API 方法为`Reflect.setPrototypeOf()`。
+
+```javascript
+const myTarget = {};
+const proxy = new Proxy(myTarget, {
+    setPrototypeOf(target, prototype) {
+        console.log('setPrototypeOf()');
+        console.log(prototype);
+        console.log(prototype);
+        return Reflect.setPrototypeOf(...arguments)
+    }
+});
+Object.setPrototypeOf(proxy, Object);
+// setPrototypeOf()
+```
+
+##### 返回值
+
+> `setPrototypeOf()`必须返回布尔值，表示原型赋值是否成功。返回非布尔值会被转型为布尔值。
+
+##### 拦截的操作
+
+> - Object.setPrototypeOf(proxy)
+> - Reflect.setPrototypeOf(proxy)
+
+##### 捕获器处理程序参数
+
+> - proxy：目标对象。
+> - prototype：proxy 的替代原型，如果是顶级原型则为 null。
+
+##### 捕获器不变式
+
+> 如果`target`不可扩展，则唯一有效的`prototype`参数就是`Object.getPrototypeOf(target)`的返回值。
+
+#### isExtensible()
+
+> `isExtensible()`捕获器会在`Object.isExtensible()`中被调用。对应的反射 API 方法为`Reflect.isExtensible()`。
+
+```javascript
+const myTarget = {};
+const proxy = new Proxy(myTarget, {
+    isExtensible(target) {
+        console.log('isExtensible()');
+        return Reflect.isExtensible(...arguments)
+    }
+});
+Object.isExtensible(proxy);
+// isExtensible()
+```
+
+##### 返回值
+
+> `isExtensible()`必须返回布尔值，表示`target`是否可扩展。返回非布尔值会被转型为布尔值。
+
+##### 拦截的操作
+
+> - Object.isExtensible(proxy)
+> - Reflect.isExtensible(proxy)
+
+##### 捕获器处理程序参数
+
+> proxy：目标对象。
+
+##### 捕获器不变式
+
+> 如果`target`可扩展，则处理程序必须返回`true`。
+> 如果`target`不可扩展，则处理程序必须返回`false`。
+
+#### preventExtensions()
+
+> `preventExtensions()`捕获器会在`Object.preventExtensions()`中被调用。对应的反射 API 方法为
+`Reflect.preventExtensions()`。
+
+```javascript
+const myTarget = {};
+const proxy = new Proxy(myTarget, {
+    preventExtensions(target) {
+        console.log('preventExtensions()');
+        return Reflect.preventExtensions(...arguments)
+    }
+});
+Object.preventExtensions(proxy);
+// preventExtensions()
+```
+
+##### 返回值
+
+> `preventExtensions()`必须返回布尔值，表示 `target` 是否已经不可扩展。返回非布尔值会被转型为布尔值。
+
+##### 拦截的操作
+
+> - Object.preventExtensions(proxy)
+> - Reflect.preventExtensions(proxy)
+
+##### 捕获器处理程序参数
+
+> target：目标对象。
+
+##### 捕获器不变式
+
+> 如果`Object.isExtensible(proxy)`是`false`，则处理程序必须返回`true`。
+
+#### apply()
+
+> `apply()`捕获器会在调用函数时中被调用。对应的反射 API 方法为`Reflect.apply()`。
+
+```javascript
+const myTarget = () => {
+};
+const proxy = new Proxy(myTarget, {
+    apply(target, thisArg, ...argumentsList) {
+        console.log('apply()');
+        return Reflect.apply(...arguments)
+    }
+});
+proxy();
+// apply()
+```
+
+##### 返回值
+
+> 返回值无限制。
+
+##### 拦截的操作
+
+> - proxy(...argumentsList)
+> - Function.prototype.apply(thisArg, argumentsList)
+> - Function.prototype.call(thisArg, ...argumentsList)
+> - Reflect.apply(target, thisArgument, argumentsList)
+
+##### 捕获器处理程序参数
+
+> - target：目标对象。
+> - thisArg：调用函数时的 this 参数。
+> - argumentsList：调用函数时的参数列表
+
+##### 捕获器不变式
+
+> `target`必须是一个函数对象。
+
+#### construct()
+
+> `construct()`捕获器会在`new`操作符中被调用。对应的反射 API 方法为`Reflect.construct()`。
+
+```javascript
+const myTarget = function () {
+};
+const proxy = new Proxy(myTarget, {
+    construct(target, argumentsList, newTarget) {
+        console.log('construct()');
+        return Reflect.construct(...arguments)
+    }
+});
+new proxy;
+// construct()
+```
+
+##### 返回值
+
+> construct()必须返回一个对象。
+
+##### 拦截的操作
+
+> - new proxy(...argumentsList)
+> - Reflect.construct(target,argumentsList,newTarget)
+
+##### 捕获其处理程序参数
+
+> - target：目标构造函数。
+> - argumentsList：传给目标构造函数的参数列表。
+> - newTarget：最初被调用的构造函数。
+
+##### 捕获其不变式
+
+> `target`必须可以用作构造函数
+
+### 代理模式
+
+#### 跟踪属性访问
+
+> 通过捕获`get`、`set`和`has`等操作，可以知道对象属性什么时候被访问、被查询。
+> 把实现相应捕获器的某个对象代理放到应用中，可以监控这个对象何时在何处被访问过。
+
+```javascript
+const user = {
+    name: 'Jake'
+};
+const proxy = new Proxy(user, {
+    get(target, property, receiver) {
+        console.log(`Getting ${property}`);
+        return Reflect.get(...arguments);
+    },
+    set(target, property, value, receiver) {
+        console.log(`Setting ${property}=${value}`);
+        return Reflect.set(...arguments);
+    }
+});
+proxy.name; // Getting name
+proxy.age = 27; // Setting age=27
+```
+
+#### 隐藏属性
+
+> 代理的内部实现对外部代码是不可见的，因此要隐藏目标对象上的属性也轻而易举。
+
+```javascript
+const hiddenProperties = ['foo', 'bar'];
+const targetObject = {
+    foo: 1,
+    bar: 2,
+    baz: 3
+};
+const proxy = new Proxy(targetObject, {
+    get(target, property) {
+        if (hiddenProperties.includes(property)) {
+            return undefined;
+        } else {
+            return Reflect.get(...arguments);
+        }
+    },
+    has(target, property) {
+        if (hiddenProperties.includes(property)) {
+            return false;
+        } else {
+            return Reflect.has(...arguments);
+        }
+    }
+});
+// get()
+console.log(proxy.foo); // undefined
+console.log(proxy.bar); // undefined
+console.log(proxy.baz); // 3
+// has()
+console.log('foo' in proxy); // false
+console.log('bar' in proxy); // false
+console.log('baz' in proxy); // true
+```
+
+#### 属性验证
+
+> 因为所有赋值操作都会触发 `set()`捕获器，所以可以根据所赋的值决定是允许还是拒绝赋值。
+
+```javascript
+const target = {
+    onlyNumbersGoHere: 0
+};
+const proxy = new Proxy(target, {
+    set(target, property, value) {
+        if (typeof value !== 'number') {
+            return false;
+        } else {
+            return Reflect.set(...arguments);
+        }
+    }
+});
+proxy.onlyNumbersGoHere = 1;
+console.log(proxy.onlyNumbersGoHere); // 1
+proxy.onlyNumbersGoHere = '2';
+console.log(proxy.onlyNumbersGoHere); // 1
+```
+
+#### 函数与构造函数参数验证
+
+```javascript
+function median(...nums) {
+    return nums.sort()[Math.floor(nums.length / 2)];
+}
+
+const proxy = new Proxy(median, {
+    apply(target, thisArg, argumentsList) {
+        for (const arg of argumentsList) {
+            if (typeof arg !== 'number') {
+                console.error('Non-number argument provided');
+            }
+        }
+        return Reflect.apply(...arguments);
+    }
+});
+console.log(proxy(4, 7, 1)); // 4
+console.log(proxy(4, '7', 1)); // Error: Non-number argument provided
+```
+
+```javascript
+class User {
+    constructor(id) {
+        this.id_ = id;
+    }
+}
+
+const proxy = new Proxy(User, {
+    construct(target, argumentsList, newTarget) {
+        if (argumentsList[0] === undefined) {
+            throw 'User cannot be instantiated without id';
+        } else {
+            return Reflect.construct(...arguments);
+        }
+    }
+});
+new proxy(1);
+new proxy();
+// Error: User cannot be instantiated without id
+```
+
+#### 数据绑定与可观察对象
+
+```javascript
+const userList = [];
+
+class User {
+    constructor(name) {
+        this.name_ = name;
+    }
+}
+
+const proxy = new Proxy(User, {
+    construct() {
+        const newUser = Reflect.construct(...arguments);
+        userList.push(newUser);
+        return newUser;
+    }
+});
+new proxy('John');
+new proxy('Jacob');
+new proxy('Jingleheimerschmidt');
+console.log(userList); // [User {}, User {}, User{}]
+```
+
+```javascript
+const userList = [];
+
+function emit(newValue) {
+    console.log(newValue);
+}
+
+const proxy = new Proxy(userList, {
+    set(target, property, value, receiver) {
+        const result = Reflect.set(...arguments);
+        if (result) {
+            emit(Reflect.get(target, property, receiver));
+        }
+        return result;
+    }
+});
+proxy.push('John');
+// John
+proxy.push('Jacob');
+// Jacob
+```
+
+## 函数
+
+### 箭头函数
+
+> 箭头函数不能使用`arguments`、`super`和`new.target`，也不能用作构造函数。
+> 此外，箭头函数也没有`prototype`属性。
+
+### 函数名
+
+> 因为函数名就是指向函数的指针，所以它们跟其他包含对象指针的变量具有相同的行为。
+> 这意味着一个函数可以有多个名称。
+
+```javascript
+function sum(num1, num2) {
+    return num1 + num2;
+}
+
+console.log(sum(10, 10)); // 20
+let anotherSum = sum;
+console.log(anotherSum(10, 10)); // 20
+console.log(sum(10, 10)); // 20
+sum = null;
+console.log(anotherSum(10, 10)); // 20
+console.log(sum(10, 10)); // TypeError: sum is not a function
+```
+
+### 理解参数
+
+> ECMAScript 函数既不关心传入的参数个数，也不 关心这些参数的数据类型。定义函数时要接收两个参数，并不意味着调用时就传两个参数。
+> 你可以传一个、三个，甚至一个也不传，解释器都不会报错。
+
+```javascript
+function howManyArgs() {
+    let args = JSON.stringify(arguments)
+    console.log(`参数个数：${arguments.length}，参数：${args}`);
+}
+
+howManyArgs("string", 45); // 参数个数：2，参数：{"0":"string","1":45}
+howManyArgs(); // 参数个数：0，参数：{}
+howManyArgs(12); // 参数个数：1，参数：{"0":12}
+```
+
+> `arguments`对象可以跟命名参数一起使用。
+
+```javascript
+function howManyArgs(num1, num2) {
+    let args = JSON.stringify(arguments)
+    // num1+ num2 + arguments[0]+arguments[1] = 1 + 2 + 1 + 2
+    console.log(`num1+ num2 + arguments[0]+arguments[1] = ${num1} + ${num2} + ${arguments[0]} + ${arguments[1]}`)
+    return num1 + num2 + arguments[0] + arguments[1];
+}
+
+console.log(`运算结果：${howManyArgs(1, 2)}`); // 运算结果：6
+```
+
+**注意：** 如果函数是使用箭头语法定义的，那么传给函数的参数将不能使用`arguments`关键字访问，而只能通过定义的命名参数访问。
+
+### 默认参数值
+
+> 只要在函数定义中的参数后面用=就可以为参数赋一个默认值。
+
+```javascript
+function makeKing(name = 'Henry', numerals = 'VIII') {
+    return `King ${name} ${numerals}`;
+}
+
+let makeKingArrow = (name = 'Henry', numerals = 'VIII') => {
+    return `King ${name} ${numerals}`;
+}
+
+console.log(makeKing());                         // 'King Henry VIII'
+console.log(makeKing('Louis'));                  // 'King Louis VIII'
+console.log(makeKing(undefined, 'VI'));          // 'King Henry VI'
+
+console.log(makeKingArrow());                    // 'King Henry VIII'
+console.log(makeKingArrow('Louis'));             // 'King Louis VIII'
+console.log(makeKingArrow(undefined, 'VI'));     // 'King Henry VI'
+```
+
+### 参数扩展与收集
+
+#### 扩展参数
+
+在给函数传参时，有时候可能不需要传一个数组，而是要分别传入数组的元素。
+如果不使用扩展操作符，想把定义在这个函数这面的数组拆分，那么就得求助于`apply()`方法。
+
+```javascript
+let values = [1, 2, 3, 4];
+
+function getSum() {
+    let sum = 0;
+    for (let i = 0; i < arguments.length; ++i) {
+        sum += arguments[i];
+    }
+    return sum;
+}
+
+let sumArrow = (a, b, c = 0, d = 0) => {
+    return a + b + c + d;
+}
+
+console.log(getSum.apply(null, values)); // 10
+console.log(getSum(...values)) // 10
+console.log(getSum(...values, ...[4, 5, 6])) // 25
+console.log(sumArrow(...values)); // 10
+console.log(sumArrow(...[1, 2])); // 3
+console.log(sumArrow(...[1, 2, 4])); // 7
+console.log(sumArrow(...[1, 2, 4, 5])); // 12
+```
+
+#### 收集参数
+
+```javascript
+function collect(...values) {
+    console.log(values);
+}
+
+let collectArrow = (...value) => console.log(value);
+
+collect(1, 2, 3) // [ 1, 2, 3 ]
+collectArrow(4, 5, 6) // [ 4, 5, 6 ]
+```
+
+### 函数作为值
+
+> 因为函数名在 ECMAScript 中就是变量，所以函数可以用在任何可以使用变量的地方。
+> 这意味着不仅可以把函数作为参数传给另一个函数，而且还可以在一个函数中返回另一个函数。
+
+```javascript
+function callSomeFunction(someFunction, someArgument) {
+    return someFunction(someArgument);
+}
+
+function add10(num) {
+    return num + 10;
+}
+
+let result1 = callSomeFunction(add10, 10);
+console.log(result1);  // 20
+
+function getGreeting(name) {
+    return "Hello, " + name;
+}
+
+let result2 = callSomeFunction(getGreeting, "Nicholas");
+console.log(result2);  // "Hello, Nicholas"
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
