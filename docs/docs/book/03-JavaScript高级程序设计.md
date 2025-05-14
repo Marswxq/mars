@@ -3359,7 +3359,8 @@ collectArrow(4, 5, 6) // [ 4, 5, 6 ]
 ### 函数作为值
 
 > 因为函数名在 ECMAScript 中就是变量，所以函数可以用在任何可以使用变量的地方。
-> 这意味着不仅可以把函数作为参数传给另一个函数，而且还可以在一个函数中返回另一个函数。
+
+* 可以把函数作为参数传给另一个函数
 
 ```javascript
 function callSomeFunction(someFunction, someArgument) {
@@ -3381,28 +3382,267 @@ let result2 = callSomeFunction(getGreeting, "Nicholas");
 console.log(result2);  // "Hello, Nicholas"
 ```
 
+* 在一个函数中返回另一个函数
 
+```javascript
+function createComparisonFunction(propertyName) {
+    return function (object1, object2) {
+        let value1 = object1[propertyName];
+        let value2 = object2[propertyName];
+        if (value1 < value2) {
+            return -1;
+        } else if (value1 > value2) {
+            return 1;
+        } else {
+            return 0;
+        }
+    };
+}
 
+let data = [
+    {name: "Zachary", age: 28},
+    {name: "Nicholas", age: 29}
+];
+data.sort(createComparisonFunction("name"));
+console.log(data[0].name);  // Nicholas
+data.sort(createComparisonFunction("age"));
+console.log(data[0].name);  // Zachary
+```
 
+### 函数内部
 
+> 函数内部有几个特殊的对象：`arguments`、`this`、`new.target`。
 
+##### arguments
 
+> 它是一个类数组对象，包含调用函数时传入的所有参数。
+> 这个对象只有以`function`关键字定义函数（相对于使用箭头语法创建函数）时才会有。
+> 虽然主要用于包含函数参数，但`arguments`对象其实还有一个`callee`属性，是一个指向`arguments`对象所在函数的指针。
 
+```javascript
+function factorial(num) {
+    if (num <= 1) {
+        return 1;
+    } else {
+        return num * factorial(num - 1);
+    }
+}
 
+console.log(factorial(4)); // 24
+```
 
+等价于
 
+```javascript
+function factorial(num) {
+    if (num <= 1) {
+        return 1;
+    } else {
+        return num * arguments.callee(num - 1);
+    }
+}
 
+console.log(factorial(4)); // 24
+```
 
+##### this
 
+> 在标准函数中，`this`引用的是把函数当成方法调用的上下文对象，这时候通常称其为`this`值（在网页的全局上下文中调用函数时，
+`this`指向`windows`）。
 
+```javascript
+window.color = 'red';
+let o = {
+    color: 'blue'
+}
 
+function sayColor() {
+    console.log(this.color)
+}
 
+sayColor() // red
 
+o.sayColor = sayColor
+o.sayColor() // red
+```
 
+> 箭头函数中的this会保留定义该函数时的上下文
 
+```javascript
+function King() {
+    this.royaltyName = 'Henry';   // this引用King的实例
+    setTimeout(() => console.log(this.royaltyName), 1000);
+}
 
+function Queen() {
+    this.royaltyName = 'Elizabeth';   // this引用window对象
+    setTimeout(function () {
+        console.log(this.royaltyName);
+    }, 1000);
+}
 
+new King();  // Henry
+new Queen(); // undefined
+```
 
+##### caller
+
+> 这个属性引用的是调用当前函数的函数，或者如果是在全局作用域中调用的则为`null`。
+
+```javascript
+function outer() {
+    console.log("outer")
+    inner();
+}
+
+function inner() {
+    console.log("inner");
+    inner.caller
+}
+
+outer();
+// outer
+// inner
+```
+
+等价于
+
+```javascript
+function outer() {
+    console.log("outer")
+    inner();
+}
+
+function inner() {
+    console.log("inner");
+    arguments.callee.caller
+}
+
+outer();
+// outer
+// inner
+```
+
+##### new.target
+
+> 如果函数是正常调用的，则`new.target`的值是`undefined`；如果是使用`new`关键字调用的，则`new.target`将引用被调用的构造函数。
+
+```javascript
+function King() {
+    if (!new.target) {
+        throw 'King must be instantiated using "new"'
+    }
+    console.log('King instantiated using "new"');
+}
+
+new King(); // King instantiated using "new"
+King(); // Error: King must be instantiated using "new"
+```
+
+### 函数属性与方法
+
+> 每个函数都有两个属性：length和prototype。其中，length属性保存函数定义的命名参数的个数。
+
+```javascript
+function test(a, b) {
+}
+
+let testArrow = a => a * 1;
+console.log(test.length) // 2
+console.log(testArrow.length) // 1
+```
+
+> `prototype`是保存引用类型所有实例方法的地方，这意味着`toString()`、`valueOf()`等方法实际上都保存在`prototype`
+> 上，进而由所有实例共享。
+
+> 函数还有两个方法：`apply()`和`call()`。这两个方法都会以指定的`this`值来调用函数，即会设置调用函数时函数体内`this`对象的值。
+> `apply()`和`call()`的区别在于`apply()`接收一个数组类型的参数，而`call()`只能接收一个单独的对象参数。
+
+> ECMAScript 5 出于同样的目的定义了一个新方法：`bind()`。
+> `bind()`方法会创建一个新的函数实例，其this值会被绑定到传给bind()的对象。
+
+```javascript
+window.color = 'red';
+const o = {color: 'blue'};
+
+function sayColor() {
+    console.log(this.color);
+}
+
+let objectSayColor = sayColor.bind(o);
+objectSayColor();  // blue
+```
+
+### 函数表达式
+
+> 函数声明的关键特点是函数声明提升，即函数声明会在代码执行之前获得定义。
+> 这意味着函数声明可以出现在调用它的代码之后。
+
+```javascript
+sayHi() // Hi~~~
+
+function sayHi() {
+    console.log("Hi~~~")
+}
+```
+
+## 期约与异步函数
+
+### 期约
+
+> 期约（promise）是对尚不存在结果的一个替身。
+
+#### 期约的实例方法
+
+> 期约实例的方法是连接外部同步代码与内部异步代码之间的桥梁。
+> 这些方法可以访问异步操作返回的数据，处理期约成功和失败的结果，连续对期约求值，或者添加只有期约进入终止状态时才会执行的代码。
+
+> `Promise`类提供两个将多个期约实例组合成一个期约的静态方法：`Promise.all()`和`Promise.race()`。
+> 而合成后期约的行为取决于内部期约的行为。
+
+### 异步函数
+
+#### async
+
+> `async`关键字用于声明异步函数。这个关键字可以用在函数声明、函数表达式、箭头函数和方法上。
+
+#### await
+
+> `await`关键字必须在异步函数中使用，不能在顶级上下文如`<script>`标签或模块中使用。
+> 不过，定义并立即调用异步函数是没问题的。
+
+## BOM
+
+BOM ，Browser Object Model
+
+### window 对象
+
+> BOM 的核心是 window 对象，表示浏览器的实例。
+> window 对象在浏览器中有两重身份，一个是 ECMAScript 中的 Global 对象，另一个就是浏览器窗口的JavaScript接口。
+> 这意味着网页中定义的所有对象、变量和函数都以 window 作为其 Global 对象，都可以访问其上定义的`parseInt()`等全局方法。
+
+#### Global 作用域
+
+> 因为 window 对象被复用为 ECMAScript 的 Global 对象，所以通过`var`声明的所有全局变量和函数都会变成 window 对象的属性和方法。
+
+```javascript
+let age = 29;
+let sayAge = () => alert(this.age);
+console.log(window.age); // 29
+sayAge();          // 29 
+window.sayAge();   // 29
+```
+
+#### 窗口大小
+
+> 所有现代浏览器都支持4个属性：`innerWidth`、`innerHeight`、`outerWidth`和`outerHeight`。
+
+> * `outerWidth`和`outerHeight`返回浏览器窗口自身的大小（不管是在最外层window上使用，还是在窗格<frame>中使用）。
+> * `innerWidth`和`innerHeight`返回浏览器窗口中页面视口的大小（不包含浏览器边框和工具栏）。
+
+**注意：** 在移动设备上，window.innerWidth和window.innerHeight返回视口的大小，也就是屏幕上页面可视区域的大小。
+
+#### 视口位置
 
 
 
