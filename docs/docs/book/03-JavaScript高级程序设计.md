@@ -3637,19 +3637,327 @@ window.sayAge();   // 29
 
 > 所有现代浏览器都支持4个属性：`innerWidth`、`innerHeight`、`outerWidth`和`outerHeight`。
 
-> * `outerWidth`和`outerHeight`返回浏览器窗口自身的大小（不管是在最外层window上使用，还是在窗格<frame>中使用）。
+> * `outerWidth`和`outerHeight`返回浏览器窗口自身的大小（不管是在最外层`window`上使用，还是在窗格`<frame>`中使用）。
 > * `innerWidth`和`innerHeight`返回浏览器窗口中页面视口的大小（不包含浏览器边框和工具栏）。
 
 **注意：** 在移动设备上，window.innerWidth和window.innerHeight返回视口的大小，也就是屏幕上页面可视区域的大小。
 
 #### 视口位置
 
+##### 导航与打开新窗口
 
+> `windows.open()`方法可以用于导航到指定URL，也可以用于打开新浏览器窗口。
+> 这个方法接收4个参数：要加载的 URL 、目标窗口、特性字符串和表示新窗口在浏览器历史记录中是否替代当前加载页面的布尔值。
+> 通常，调用这个方法时只传前3个参数，最后一个参数只有在不打开新窗口时才会使用。
 
+### location 对象
 
+> `location`是最有用的 BOM 对象之一，提供了当前窗口中加载文档的信息，以及通常的导航功能。
+> 这个对象独特的地方在于，它既是`window`的属性，也是`document`的属性。也就是说，`window.location`和`document.location`
+> 指向同一个对象。
+> `location`对象不仅保存着当前加载文档的信息，也保存着把URL解析为离散片段后能够通过属性访问的信息。
 
+| 属性                | 值                                                        | 说明                                      |
+|-------------------|----------------------------------------------------------|-----------------------------------------|
+| location.hash     | "#contents"                                              | URL散列值（井号后跟零或多个字符），如果没有则为空字符串           |
+| location.host     | "ntp.msn.cn"                                             | 服务器名称及端口                                |
+| location.hostname | "ntp.msn.cn"                                             | 服务器名称                                   |
+| location.href     | "http://www.wrox.com:80/WileyCDA/?q=javascript#contents" | 当前加载页面的完整URL。location的toString()方法返回这个值 |
+| location.pathname | "/edge/ntp"                                              | URL 中的路径和（或）文件名                         |
+| location.port     | ''                                                       | 请求的端口。如果 URL 中没有端口，则返回空字符串              |
+| location.protocol | 'https:'                                                 | 业务使用的协议。通常是"http:"或"https:"             |
+| location.search   | "?q=javascript"                                          | URL的查询字符串。这个字符串以问号开头                    |
+| location.username | "foouser"                                                | 域名前指定的用户名                               |
+| location.password | "barpassword"                                            | 域名前指定的密码                                |
+| location.origin   | 'https://cn.bing.com'                                    | URL的源地址。只读                              |
 
+### navigator 对象
 
+> `navigator`对象的属性通常用于确定浏览器的类型。
+
+### screen 对象
+
+> `window`的另一个属性`screen`对象，是为数不多的几个在编程中很少用的 JavaScript 对象。
+> 这个对象中保存的纯粹是客户端能力信息，也就是浏览器窗口外面的客户端显示器的信息，比如像素宽度和像素高度。
+> 每个浏览器都会在`screen`对象上暴露不同的属性。
+
+| 属性          | 说明                               |
+|-------------|----------------------------------|
+| availHeight | 屏幕像素高度减去系统组件高度（只读）               |
+| availLeft   | 没有被系统组件占用的屏幕的最左侧像素（只读）           |
+| availTop    | 没有被系统组件占用的屏幕的最顶端像素（只读）           |
+| availWidth  | 屏幕像素宽度减去系统组件宽度（只读）               |
+| colorDepth  | 表示屏幕颜色的位数；多数系统是32（只读）            |
+| height      | 屏幕像素高度                           |
+| left        | 当前屏幕左边的像素距离                      |
+| pixelDepth  | 屏幕的位深（只读）                        |
+| top         | 当前屏幕顶端的像素距离                      |
+| width       | 屏幕像素宽度                           |
+| orientation | 返回 Screen Orientation API 中屏幕的朝向 |
+
+### history 对象
+
+> `history`对象表示当前窗口首次使用以来用户的导航历史记录。
+> 因为`history`是`window`的属性，所以每个`window`都有自己的`history`对象。
+> 出于安全考虑，这个对象不会暴露用户访问过的 URL ，但可以通过它在不知道实际 URL 的情况下前进和后退。
+
+#### 导航
+
+> `go()`方法可以在用户历史记录中沿任何方向导航，可以前进也可以后退。
+> 这个方法只接收一个参数，这个参数可以是一个整数，表示前进或后退多少步 。
+> 负值表示在历史记录中后退（类似点击浏览器的“后退”按钮），而正值表示在历史记录中前进（类似点击浏览器的“前进”按钮）。
+
+```javascript
+// 后退一页
+history.go(-1);
+// 前进一页
+history.go(1);
+// 前进两页
+history.go(2);
+
+// go()有两个简写方法：back()和forward()。顾名思义，这两个方法模拟了浏览器的后退按钮和前进按钮
+
+// 后退一页h
+istory.back();
+// 前进一页
+history.forward();
+```
+
+## DOM
+
+### 动态脚本
+
+```html
+
+<script>
+    function sayHi() {
+        alert("hi");
+    }
+
+    </script
+```
+
+使用 DOM 方式实现
+
+```javascript
+let script = document.createElement("script");
+script.appendChild(document.createTextNode("function sayHi(){alert('hi');}"));
+document.body.appendChild(script);
+```
+
+### 动态样式
+
+```html
+
+<link rel="stylesheet" type="text/css" href="styles.css">
+```
+
+使用 DOM 方式实现
+
+```javascript
+let link = document.createElement("link");
+link.rel = "stylesheet";
+link.type = "text/css";
+link.href = "styles.css";
+let head = document.getElementsByTagName("head")[0];
+head.appendChild(link);
+```
+
+### 操作表格
+
+```html
+
+<table border="1" width="100%">
+    <tbody>
+    <tr>
+        <td>Cell 1,1</td>
+        <td>Cell 2,1</td>
+    </tr>
+    <tr>
+        <td>Cell 1,2</td>
+        <td>Cell 2,2</td>
+    </tr>
+    </tbody>
+</table>
+```
+
+使用 DOM 方式实现
+
+```javascript
+// 创建表格
+let table = document.createElement("table");
+// 边框
+table.border = 1;
+table.width = "100%";
+// 创建表体
+let tbody = document.createElement("tbody");
+table.appendChild(tbody);
+// 创建第一行
+let row1 = document.createElement("tr");
+tbody.appendChild(row1);
+let cell1_1 = document.createElement("td");
+cell1_1.appendChild(document.createTextNode("Cell 1,1"));
+row1.appendChild(cell1_1);
+let cell2_1 = document.createElement("td");
+cell2_1.appendChild(document.createTextNode("Cell 2,1"));
+row1.appendChild(cell2_1);
+// 创建第二行
+let row2 = document.createElement("tr");
+tbody.appendChild(row2);
+let cell1_2 = document.createElement("td");
+cell1_2.appendChild(document.createTextNode("Cell 1,2"));
+row2.appendChild(cell1_2);
+let cell2_2 = document.createElement("td");
+cell2_2.appendChild(document.createTextNode("Cell 2,2"));
+row2.appendChild(cell2_2);
+```
+
+### MutationObserver 接口
+
+> `MutationObserver`接口，可以在 DOM 被修改时异步执行回调。使用`MutationObserver`可以观察整个文档、DOM 树的一部分，或某个元素。
+> 此外还可以观察元素属性、子节点、文本，或者前三者任意组合的变化。
+
+#### observe() 方法
+
+观察`<body>`属性的变化，当监听到`<body>`属性变化时，执行指定的回调函数。
+
+```javascript
+let observer = new MutationObserver(() => console.log('<body> attributes changed'));
+observer.observe(document.body, {attributes: true});
+document.body.className = 'foo';
+console.log('Changed body class');
+// Changed body class
+// <body> attributes changed 
+```
+
+#### 回调与 MutationRecord
+
+> 每个回调都会收到一个`MutationRecord`实例的数组。
+> `MutationRecord`实例包含的信息包括发生了什么变化，以及 DOM 的哪一部分受到了影响。
+> 因为回调执行之前可能同时发生多个满足观察条件的事件，所以每次执行回调都会传入一个包含按顺序入队的`MutationRecord`实例的数组。
+
+```javascript
+let observer = new MutationObserver((mutationRecords) => console.log(mutationRecords));
+observer.observe(document.body, {attributes: true});
+document.body.setAttribute('foo', 'bar');
+// [
+//   {
+//     addedNodes: NodeList [],
+// attributeName: "foo", 
+//     attributeNamespace: null, 
+//     nextSibling: null, 
+//     oldValue: null, 
+//     previousSibling: null 
+//     removedNodes: NodeList [], 
+// target: body 
+// type: "attributes" 
+//   } 
+// ]
+```
+
+## DOM 扩展
+
+### Selectors API
+
+> Selectors API Level 1 的核心是两个方法：`querySelector()`和`querySelectorAll()`。
+> 在兼容浏览器中，Document 类型和 Element 类型的实例上都会暴露这两个方法。
+>
+> Selectors API Level 2 规范在 Element 类型上新增了更多方法，比如`matches()`、`find()`和`findAll()`。
+
+#### querySelector()
+
+```javascript
+// 取得类名为"selected"的第一个元素
+let selected = document.querySelector(".selected");
+```
+
+#### querySelectorAll()
+
+> `querySelectorAll()`方法跟`querySelector()`一样，也接收一个用于查询的参数，但它会返回所有匹配的节点，而不止一个。
+> 这个方法返回的是一个 NodeList 的静态实例。
+
+```javascript
+// 取得ID为"myDiv"的<div>元素中的所有<em>元素
+let ems = document.getElementById("myDiv").querySelectorAll("em");
+// 取得所有类名中包含"selected"的元素
+let selecteds = document.querySelectorAll(".selected");
+// 取得所有是<p>元素子元素的<strong>元素
+let strongs = document.querySelectorAll("p strong");
+```
+
+## DOM2 和 DOM3
+
+### 元素尺寸
+
+#### 偏移尺寸
+
+> * `offsetHeight`，元素在垂直方向上占用的像素尺寸，包括它的高度、水平滚动条高度（如果可见）和上、下边框的高度。
+> * `offsetLeft`，元素左边框外侧距离包含元素左边框内侧的像素数。
+> * `offsetTop`，元素上边框外侧距离包含元素上边框内侧的像素数。
+> * `offsetWidth`，元素在水平方向上占用的像素尺寸，包括它的宽度、垂直滚动条宽度（如果可见）和左、右边框的宽度。
+
+![偏移尺寸](/images/book/js/box-offset.png)
+
+要确定一个元素在页面中的偏移量，可以把它的`offsetLeft`和`offsetTop`属性分别与`offsetParent`的相同属性相加，一直加到根元素。
+
+```javascript
+function getElementLeft(element) {
+    let actualLeft = element.offsetLeft;
+    let current = element.offsetParent;
+    while (current !== null) {
+        actualLeft += current.offsetLeft;
+        current = current.offsetParent;
+    }
+    return actualLeft;
+}
+
+function getElementTop(element) {
+    let actualTop = element.offsetTop;
+    let current = element.offsetParent;
+    while (current !== null) {
+        actualTop += current.offsetTop;
+        current = current.offsetParent;
+    }
+    return actualTop;
+}
+```
+
+#### 客户端尺寸
+
+> 客户端尺寸只有两个相关属性：`clientWidth`和`clientHeight`。
+> 其中，`clientWidth`是内容区宽度加左、右内边距宽度，`clientHeight`是内容区高度加上、下内边距高度。
+
+![客户端尺寸](/images/book/js/box-client.png)
+
+**注意：** 客户端尺寸实际上就是元素内部的空间，因此不包含滚动条占用的空间。
+这两个属性最常用于确定浏览器视口尺寸，即检测`document.documentElement`的`clientWidth`和`clientHeight`。
+这两个属性表示视口（`<html>`或`<body>`元素）的尺寸。
+
+#### 滚动尺寸
+
+> * `scrollHeight`，没有滚动条出现时，元素内容的总高度。
+> * `scrollLeft`，内容区左侧隐藏的像素数，设置这个属性可以改变元素的滚动位置。
+> * `scrollTop`，内容区顶部隐藏的像素数，设置这个属性可以改变元素的滚动位置。
+> * `scrollWidth`，没有滚动条出现时，元素内容的总宽度。
+
+![滚动尺寸](/images/book/js/box-scroll.png)
+
+检测元素是不是位于顶部，如果不是则把它滚动回顶部
+
+```javascript
+function scrollToTop(element) {
+    if (element.scrollTop != 0) {
+        element.scrollTop = 0;
+    }
+}
+```
+
+> 浏览器在每个元素上都暴露了`getBoundingClientRect()`方法，返回一个 DOMRect 对象，包含6个属性：`left`、`top`、`right`、`bottom`、`height`和`width`。
+> 这些属性给出了元素在页面中相对于视口的位置。
+
+![元素尺寸](/images/book/js/box-element.png)
+
+## 事件
 
 
 
