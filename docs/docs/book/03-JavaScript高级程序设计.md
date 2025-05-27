@@ -3957,7 +3957,7 @@ function scrollToTop(element) {
 
 ![元素尺寸](/images/book/js/box-element.png)
 
-## 事件
+
 
 
 
