@@ -40,7 +40,7 @@ services:
       - 21117:21117
       - 21119:21119
     image: rustdesk/rustdesk-server:1.1.14
-    command: hbbr -k 69OgsDLvb1z5diWZa74g1sqnOjS217BC
+    command: hbbr -k [key]
     volumes:
       - ./data:/root
     networks:
