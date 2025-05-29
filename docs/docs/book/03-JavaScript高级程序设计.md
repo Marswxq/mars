@@ -1,5 +1,9 @@
 # JavaScript 高级程序设计
 
+## 目录
+
+[[toc]]
+
 ## 语言基础
 
 ### 语法
@@ -3952,7 +3956,8 @@ function scrollToTop(element) {
 }
 ```
 
-> 浏览器在每个元素上都暴露了`getBoundingClientRect()`方法，返回一个 DOMRect 对象，包含6个属性：`left`、`top`、`right`、`bottom`、`height`和`width`。
+> 浏览器在每个元素上都暴露了`getBoundingClientRect()`方法，返回一个 DOMRect 对象，包含6个属性：`left`、`top`、`right`、
+`bottom`、`height`和`width`。
 > 这些属性给出了元素在页面中相对于视口的位置。
 
 ![元素尺寸](/images/book/js/box-element.png)
