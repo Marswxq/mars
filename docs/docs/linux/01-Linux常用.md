@@ -1390,6 +1390,8 @@ sftp -i xxx.pem 用户@ip
 
 根据脚本中的汉字按需修改
 
+### 固定备份模式
+
 ```shell
 #!/bin/bash
 
@@ -1427,6 +1429,120 @@ fi
 tar -zcvf $backupDir/你的备份文件前缀-`date "+%Y%m%d"`.tar.gz $backupSourceDir/你的备份文件前缀*.sql
 
 rm -rf $backupSourceDir/你的备份文件前缀*.sql
+```
+
+### 手动输入备份
+
+```shell
+#!/bin/bash
+
+# 需要修改的变量
+
+# 数据库容器名称（据实修改）
+containerName=mysql
+# 数据库密码（据实修改）
+dbpassword=你的mysql密码
+# 数据库用户
+dbuser='root'
+# 数据库端口
+dbport='3306'
+# 获取数据库容器id
+containerId=$(docker ps | grep $containerName | awk '{print $1}')
+# mysqldump初始脚本
+script="mysqldump -uroot -p$dbpassword -h127.0.0.1 -P$dbport"
+
+# 输入的变量
+db=''
+table=''
+bakdir=$(pwd)
+read -p "请输入要备份的数据库：" dbname
+
+if [ -z $dbname ]; then
+	db=$dbname
+	echo "输入为空，请重新输入"
+	exit 1
+else
+	db=$dbname
+	script=$script" --databases $db"
+fi
+
+read -p "请输入要备份的表（多个表使用空格分割），跳过请输入回车：" -a tablenames
+
+if [ -z $tablenames ]; then
+	echo "未指定备份表，将进行$db全库导出"
+else
+	for arg in "${tablenames[@]}"; do
+		table+="$arg "
+	done
+	# 拼接脚本
+	script=$script" --tables $table "
+fi
+
+# 是否导出建表语句
+read -p "是否导出create语句（是输入y/yes，否输入n/no，默认不导出create语句），跳过请输入回车：" createsql
+case $createsql in 
+	y|yes)
+		;;
+	*)
+		script=$script" --no-create-info"
+		;;
+esac
+
+# 备份文件名称
+filename=$db-$(date '+%Y%m%d%H%M%S')
+
+# mysqldump最终脚本
+script=$script" > /$filename.sql"
+
+read -p "请输入导出文件路径（默认当前路径），跳过请输入回车：" bakpath
+if [ ! -z $bakpath ]; then
+	bakdir=$bakpath
+fi
+
+# 执行导出
+docker exec -it $containerId bash -c "$script"
+
+if [ $? -eq 0 ]; then
+	echo "导出完成，准备开始执行压缩………………………………"
+else
+	echo "导出失败！！"
+	exit 2
+fi
+
+# 压缩
+docker exec -it $containerId bash -c "tar -zcvf $filename.tar.gz $filename.sql"
+
+if [ $? -eq 0 ]; then
+	echo "压缩完成，准备开始执行拷贝………………………………"
+else
+	echo "压缩失败！！"
+	exit 2
+fi
+
+# 拷贝
+docker cp $containerId:$filename.tar.gz $bakdir
+
+if [ $? -eq 0 ]; then
+	echo "拷贝完成，主备开始执行容器内备份清理………………………………"
+else
+	echo "拷贝失败！！"
+	exit 2
+fi
+
+# 清理容器中的文件
+docker exec -it $containerId bash -c "rm -rf $filename.tar.gz $filename.sql"
+
+if [ $? -eq 0 ]; then
+	echo "清理完成"
+else
+	echo "清理失败！！"
+	exit 2
+fi
+
+echo "备份完成，备份文件：$bakdir/$filename.tar.gz"
+
+exit 1
+
 ```
 
 ## 远程备份
@@ -1482,4 +1598,3 @@ export TIME_STYLE='+%Y-%m-%d %H:%M:%S'
 EOF
 source ~/.bash_profile
 ```
-
