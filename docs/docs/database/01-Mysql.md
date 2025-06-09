@@ -862,3 +862,35 @@ FROM
 WHERE
   tmp.flag = 0
 ```
+
+## mysqldump 
+
+
+
+### 导出语句中`/*!32312 IF NOT EXISTS*/`和`/*!40100 DEFAULT CHARACTER SET utf8mb4 */`
+
+使用 mysqldump 时经常能够看到语句中有一部分代码被注释块包裹，但神奇的是它还能生效？
+
+```sql
+CREATE DATABASE /*!32312 IF NOT EXISTS*/ `demo` /*!40100 DEFAULT CHARACTER SET utf8mb4 */
+```
+
+> 在 MySQL 中，形如 /*!32312 ... */ 的注释是一种特殊版本条件注释，其内容会被 MySQL 解析和执行。
+> 这种设计是为了确保 SQL 语句在不同 MySQL 版本间的兼容性。
+>
+> 例子语句中注释中的数字（如 32312、40100）代表 MySQL 版本号（格式：主版本.次版本.补丁版本，例如 32312 表示 3.23.12）。
+> 当 MySQL 服务器的版本 ≥ 指定版本 时，注释内的内容会被当作 有效 SQL 代码 执行。
+> 若服务器版本 < 指定版本，则整个注释（包括内部内容）被视为普通注释忽略。
+
+语句解析:
+
+- `/*!32312 IF NOT EXISTS*/`若服务器版本 ≥ 3.23.12，则解析为 IF NOT EXISTS，避免重复创建数据库
+- `/*!40100 DEFAULT CHARACTER SET utf8mb4 */`若服务器版本 ≥ 4.1.00，则解析为 DEFAULT CHARACTER SET utf8mb4，设置默认字符集。
+
+不同版本的执行结果：
+
+| MySQL 版本              | 实际执行的 SQL 语句                                                        |
+|-----------------------|---------------------------------------------------------------------|
+| ≥ 4.1.00	             | `CREATE DATABASE IF NOT EXISTS demo DEFAULT CHARACTER SET utf8mb4;` |
+| ≥ 3.23.12 但 < 4.1.00	 | `CREATE DATABASE IF NOT EXISTS demo;`（忽略字符集设置）                      |
+| < 3.23.12	            | 	`CREATE DATABASE demo;`（忽略全部条件注释）                                  |

@@ -227,3 +227,7 @@
 修改服务器URL配置，把spring换成阿里即可，`https://start.aliyun.com`。
 
 <img :src="$withBase('/images/other/idea_java_8.png')" alt="idea_java8">
+
+### Q3. Maven 资源编译器: 模块 'spring-boot-mars-design-pattern' 所需的 Maven 项目配置不可用。仅当从 IDE 启动外部构建时，才支持 Maven 项目编译。
+
+![idea maven Q3](/images/other/idea_Q3.png)
