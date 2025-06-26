@@ -133,7 +133,8 @@
 * Name：数据源名称
 * JDBC Driver：驱动名称，选 MySQL (com.mysql.jdbc.Driver)
 * JDBC
-  Url：数据库连接串，填如`jdbc:mysql://ip:port/db\_name?characterEncoding=utf8&useUnicode=true&zeroDateTimeBehavior=convertToNull&autoReconnect=true&failOverReadOnly=false&allowMultiQueries=true&connectTimeout=60000&socketTimeout=60000`
+  Url：数据库连接串，填如
+  `jdbc:mysql://ip:port/db\_name?characterEncoding=utf8&useUnicode=true&zeroDateTimeBehavior=convertToNull&autoReconnect=true&failOverReadOnly=false&allowMultiQueries=true&connectTimeout=60000&socketTimeout=60000`
   ，注意修改`ip:port/db\_name`内容
 * Username：数据库用户名
 * Password：数据库密码
@@ -369,3 +370,43 @@ table参数可以选择主数据的结果（Fields），也可以选择系统参
 预览
 
 <img :src="$withBase('/images/jasper/table_sum_variables3.png')" alt="table_sum_variables3">
+
+## JasperReport Frame
+
+Frame 元素，会根据内容自动拉伸显示的内容，实现动态文本高度。
+
+下面是一个简单的测试报表，在不配置字体和单元格的情况下，字体过长会被截断。
+
+![基础报表](/images/jasper/jasper_frame_基础报表.png)
+
+测试下效果，输入参数设置为一个长点的内容：
+
+```text
+2222222222222222222222222测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测1111111111111111111111111试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试4444444444444444444444444444444444444444
+```
+
+预览效果如下，可以发现文字显示不全
+
+![基础报表预览](/images/jasper/jasper_frame_基础报表预览.png)
+
+然后将入参文本属性设置为自适应高度，$P(text)->Text field->Text Adjust，将其属性设置为 StretchHeight
+
+![基础报表入参设置高度自适应](/images/jasper/jasper_frame_基础报表入参设置高度自适应.png)
+
+预览效果如下，发现文字内容确实自适应高度了，但是会覆盖下面单元格内容
+
+![基础报表自文本适应高度预览](/images/jasper/jasper_frame_基础报表自文本适应高度预览.png)
+
+引入 Frame ，并设置高度自适应
+
+![jasper_frame_元素](/images/jasper/jasper_frame_元素.png)
+
+![jasper_frame_配置1](/images/jasper/jasper_frame_配置1.png)
+
+![jasper_frame_配置2](/images/jasper/jasper_frame_配置2.png)
+
+最后预览效果如下
+
+![jasper_frame_预览](/images/jasper/jasper_frame_预览.png)
+
+***注意：*** 如果多选元素设置属性失败，需要逐个属性配置以上截图内容

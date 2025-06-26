@@ -626,7 +626,7 @@ WHERE
 	AND tab.TABLE_SCHEMA NOT IN ( 'mysql', 'information_schema', 'performance_schema', 'sys', 'sysdb' );
 ```
 
-### 索取没有主键的表
+### 获取没有主键的表
 
 ```sql
 SELECT
@@ -832,6 +832,26 @@ END;
 $$
 ```
 
+### mysql 表、索引、数据库占用存储
+
+```sql
+SELECT
+  table_schema AS '数据库',
+  table_name As '表',
+  sum(table_rows) AS '记录数',
+  sum(TRUNCATE(data_length / 1024 / 1024, 2)) AS '数据容量(MB)',
+  sum(TRUNCATE(index_length / 1024 / 1024, 2)) AS '索引容量(MB)',
+  sum(TRUNCATE(DATA_FREE / 1024 / 1024, 2)) AS '碎片占用(MB)'
+FROM
+  information_schema.TABLES
+GROUP BY
+  table_schema,
+  table_name
+ORDER BY
+  sum(data_length) DESC,
+  sum(index_length) DESC;
+```
+
 ### 开窗
 
 按照规则获取第一条数据
@@ -864,8 +884,6 @@ WHERE
 ```
 
 ## mysqldump 
-
-
 
 ### 导出语句中`/*!32312 IF NOT EXISTS*/`和`/*!40100 DEFAULT CHARACTER SET utf8mb4 */`
 
