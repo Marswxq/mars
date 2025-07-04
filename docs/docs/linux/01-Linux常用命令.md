@@ -206,6 +206,7 @@ tar [参数] -f 归档文件名称.tar [文件...]
 ### 示例
 
 #### 常用参数示例
+
 创建归档文件：将文件 file1、file2 和 directory 打包到一个名为 archive.tar 的归档文件中。
 
 ```bash 
@@ -540,6 +541,48 @@ top [-] [d] [p] [q] [c] [C] [S] [n]
 -s ：使top命令在安全模式中运行。这将去除交互命令所带来的潜在危险。
 -i： 使top不显示任何闲置或者僵死进程。
 -c： 显示整个命令行而不只是显示命令名
+
+## awk
+
+### 语法
+
+```bash
+awk options 'pattern {action}' file
+```
+
+### 参数说明
+
+* -F <分隔符> 或 --field-separator=<分隔符>： 指定输入字段的分隔符，默认是空格。使用这个选项可以指定不同于默认分隔符的字段分隔符。
+* -v <变量名>=<值>： 设置 awk 内部的变量值。可以使用该选项将外部值传递给 awk 脚本中的变量。
+* -f <脚本文件>： 指定一个包含 awk 脚本的文件。这样可以在文件中编写较大的 awk 脚本，然后通过 -f 选项将其加载。
+
+### 示例
+
+```bash
+# 获取第一列
+ps -aux | grep watchdog | awk '{print $1}'
+
+# 获取第一列，第二列，第三列
+ps -aux | grep watchdog | awk '{print $1, $2, $3}'
+
+# 获取第一行的第一列，第二列，第三列
+ps -aux | grep watchdog | awk 'NR==1{print $1, $2, $3}'
+
+# 获取行数NR
+ps -aux | grep watchdog | awk 'END{print NR}'
+
+# 获取列数NF（这里是获取最后一行的列数，注意每行的列数可能是不同的）
+ps -aux | grep watchdog | awk 'END{print NF}'
+
+# 获取最后一列
+ps -aux | grep watchdog | awk '{print $NF}'
+
+# 对文件进行操作
+awk '{print $1}' fileName
+
+# 指定分隔符（这里以:分割）
+ps -aux | grep watchdog |awk  -F':' '{print $1}'
+```
 
 ## sed
 

@@ -411,3 +411,65 @@ OPTIONS说明：
 * -f, --format: 使用 Go 模板语法格式化输出。
 
 * --type: * 返回指定类型的对象信息（可选类型：container、image、network、volume）。
+
+## 查看容器进程
+
+```bash
+docker top [OPTIONS] CONTAINER [ps OPTIONS]
+```
+
+示例
+
+查看 mysql 容器进程
+
+```bash
+docker ps |grep mysql | awk 'NR==1{print $1}'
+```
+
+## 查看集群信息
+
+```shell
+docker info
+```
+
+## docker service
+
+### 查看正在运行的服务
+
+```shell
+docker service ls
+```
+
+### 查看某个服务运行状态
+
+```shell
+docker service ps [servicename]
+```
+
+### 删除服务
+
+```shell
+docker service rm [servicename]
+```
+
+### 增加和删除端口映射
+
+* 增加端口映射
+
+```shell
+docker service update --publish-add 宿主机端口:容器端口 [servicename]
+```
+
+* 减少端口映射
+
+```shell
+docker service update --publish-rm 宿主机端口:容器端口 [servicename]
+```
+
+### 查看日志
+
+从日志末尾显示日志，并持续输出
+
+```shell
+docker service logs -f --tail 20 [servicename]
+```

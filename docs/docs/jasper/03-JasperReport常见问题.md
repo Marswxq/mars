@@ -33,7 +33,7 @@ Caused by: java.lang.NoClassDefFoundError: Could not initialize class net.sf.jas
 ### Answer
 
 问题原因是因为服务器操作系统（一般是 linux
-环境），没有安装中文字体库，具体安装方式可以参考[安装字体库](../docker/07-Docker常用汇总.md#安装字体库)（如果是非 docker
+环境），没有安装中文字体库，具体安装方式可以参考[安装字体库](../docker/07-Docker应用用汇总.md#安装字体库)（如果是非 docker
 下安装，去掉 `RUN` 即可）。
 
 ## Q2.net.sf.jasperreports.engine.util.JRFontNotFoundException: Font "宋体" is not available to the JVM. See the Javadoc for more details.
