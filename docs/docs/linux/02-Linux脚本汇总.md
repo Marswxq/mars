@@ -569,6 +569,31 @@ echo
 exit 0
 ```
 
+#### 如何替换导出语句种的 schema
+
+mysqldump 导出的 sql 文件种，一般会指定 schema
+
+```bash
+--
+-- Current Database: `mdm`
+--
+
+CREATE DATABASE /*!32312 IF NOT EXISTS*/ `mdm` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
+
+USE `mdm-server_6f433393d93d4ee9b49bcc1bd43b4c87`;
+```
+
+当文件过大时，vim 和普通的 sed 命令无法修改脚本，可以尝试使用如下脚本
+
+```bash
+perl -i -pe '
+if (!$replaced && /^\s*USE\s+`?mdm`?\s*;/) {
+	s/^(\s*)USE\s+`?mdm`?\s*;/$1USE `mdm-server_6f433393d93d4ee9b49bcc1bd43b4c87`;/;
+	$replaced = 1;
+}
+' mdm-20250710190956.sql
+```
+
 ### 还原备份
 
 ```shell
