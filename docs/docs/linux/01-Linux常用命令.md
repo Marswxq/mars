@@ -38,26 +38,28 @@ find 根据下列规则判断 path 和 expression，在命令列上第一个 - (
 是空字串则使用目前路径，如果 expression 是空字串则使用 -print 为预设 expression。
 expression 中可使用的选项有二三十个之多，在此只介绍最常用的部份。
 
-- -mount, -xdev : 只检查和指定目录在同一个文件系统下的文件，避免列出其它文件系统中的文件
-- -amin n : 在过去 n 分钟内被读取过
-- -anewer file : 比文件 file 更晚被读取过的文件
-- -atime n : 在过去n天内被读取过的文件
-- -cmin n : 在过去 n 分钟内被修改过
-- -cnewer file :比文件 file 更新的文件
-- -ctime n : 在过去n天内被修改过的文件
-- -empty : 空的文件-gid n or -group name : gid 是 n 或是 group 名称是 name
-- -ipath p, -path p : 路径名称符合 p 的文件，ipath 会忽略大小写
-- -name name, -iname name : 文件名称符合 name 的文件。iname 会忽略大小写
-- -size n : 文件大小 是 n 单位，b 代表 512 位元组的区块，c 表示字元数，k 表示 kilo bytes，w 是二个位元组。
-- -type c : 文件类型是 c 的文件。
-  d: 目录
-  c: 字型装置文件
-  b: 区块装置文件
-  p: 具名贮列
-  f: 一般文件
-  l: 符号连结
-  s: socket
-- -pid n : process id 是 n 的文件
+```
+-mount, -xdev : 只检查和指定目录在同一个文件系统下的文件，避免列出其它文件系统中的文件
+-amin n : 在过去 n 分钟内被读取过
+-anewer file : 比文件 file 更晚被读取过的文件
+-atime n : 在过去n天内被读取过的文件
+-cmin n : 在过去 n 分钟内被修改过
+-cnewer file :比文件 file 更新的文件
+-ctime n : 在过去n天内被修改过的文件
+-empty : 空的文件-gid n or -group name : gid 是 n 或是 group 名称是 name
+-ipath p, -path p : 路径名称符合 p 的文件，ipath 会忽略大小写
+-name name, -iname name : 文件名称符合 name 的文件。iname 会忽略大小写
+-size n : 文件大小 是 n 单位，b 代表 512 位元组的区块，c 表示字元数，k 表示 kilo bytes，w 是二个位元组。
+-type c : 文件类型是 c 的文件。
+      d : 目录
+      c : 字型装置文件
+      b : 区块装置文件
+      p : 具名贮列
+      f : 一般文件
+      l : 符号连结
+      s : socket
+-pid n : process id 是 n 的文件
+```
 
 ### 示例
 
@@ -113,23 +115,17 @@ cut [选项] [参数]
 
 ### 参数说明
 
-- -b：仅显示行中指定直接范围的内容；
-
-- -c：仅显示行中指定范围的字符；
-
-- -d：指定字段的分隔符，默认的字段分隔符为“TAB”；
-
-- -f：显示指定字段的内容；
-
-- -n：与“-b”选项连用，不分割多字节字符；
-
-- --complement：补足被选择的字节、字符或字段；
-
-- --out-delimiter=<字段分隔符>：指定输出内容是的字段分割符；
-
-- --help：显示指令的帮助信息；
-
-- --version：显示指令的版本信息。
+```
+-b：仅显示行中指定直接范围的内容；
+-c：仅显示行中指定范围的字符；
+-d：指定字段的分隔符，默认的字段分隔符为“TAB”；
+-f：显示指定字段的内容；
+-n：与“-b”选项连用，不分割多字节字符；
+--complement：补足被选择的字节、字符或字段；
+--out-delimiter=<字段分隔符>：指定输出内容是的字段分割符；
+--help：显示指令的帮助信息；
+--version：显示指令的版本信息。
+```
 
 ## route
 
@@ -147,61 +143,63 @@ tar [参数] -f 归档文件名称.tar [文件...]
 
 ### 参数说明
 
-- -c：创建一个新的归档文件。
-- -x：解压归档文件。
-- -t：列出归档文件的内容。
-- -r：向现有归档文件中追加文件。
-- -u：仅追加比归档文件中已有文件更新的文件。
-- -d：找到归档文件中与文件系统不同步的差异。
-- -A：将一个 .tar 文件追加到另一个 .tar 文件中。
-- -f `<file>`：指定归档文件的名称（必须放在选项列表的最后）。
-- -C `<directory>`：切换到指定目录进行操作。
-- --exclude=`<pattern>`：排除匹配指定模式的文件。
-- --exclude-from=`<file>`：从指定文件读取要排除的模式。
-- --exclude-caches：排除目录中的缓存文件。
-- --exclude-backups：排除以 ~ 结尾的备份文件。
-- --exclude-vcs：排除版本控制系统生成的文件（如 .git、.svn 等）。
-- -z：使用 gzip 压缩归档文件。
-- -j：使用 bzip2 压缩归档文件。
-- -J：使用 xz 压缩归档文件。
-- --lzip：使用 lzip 压缩归档文件。
-- --lzma：使用 lzma 压缩归档文件。
-- --lzop：使用 lzop 压缩归档文件。
-- --zstd：使用 zstd 压缩归档文件。
-- -a：自动选择压缩方式（基于归档文件的扩展名，如 .tar.gz、.tar.bz2 等）。
-- -I `<command>`：使用指定的压缩程序进行压缩或解压。
-- -v：显示详细操作过程（verbose）。
-- --progress：显示进度条（与 -v 一起使用时）。
-- -w 或 --interactive：在每次操作前询问用户确认。
-- --checkpoint：在处理每个文件后显示一个检查点。
-- --checkpoint-action=`<action>`：在检查点执行指定的动作，如 echo、dot 等。
-- --totals：在操作结束后显示处理的总字节数。
-- --verbose：详细显示处理的信息。
-- --quiet：尽可能少的输出信息。
-- -p：保留文件的原始权限（解压时）。
-- --same-owner：尝试将解压的文件设为原始所有者（需超级用户权限）。
-- --no-same-owner：不设置文件所有者。
-- --same-permissions：保留文件的原始权限（与 -p 相同）。
-- --no-same-permissions：不保留原始权限，使用当前用户的 umask 设置权限。
-- -m：在解压时不恢复文件的修改时间，而使用当前时间。
-- -k 或 --keep-old-files：解压时保留已有文件，不覆盖。
-- --overwrite：解压时强制覆盖已有文件。
-- --remove-files：归档成功后删除原始文件。
-- --delete：从归档文件中删除指定文件（仅限 gnu tar）。
-- --keep-newer-files：解压时保留比归档中较新的文件。
-- --listed-incremental=`<file>`：创建增量备份或从增量备份恢复。
-- -L `<N>`：分割大于 N 字节的归档文件（对于磁带机）。
-- --tape-length=`<number>`：指定磁带长度（对于磁带机）。
-- --multi-volume：创建或恢复多卷归档文件。
-- -M：与 --multi-volume 一起使用，处理多卷归档文件。
-- --use-compress-program=`<prog>`：使用指定的压缩程序。
-- --transform=`<expression>`：重命名归档中的文件。
-- --strip-components=`<number>`：解压时剥离指定数量的路径组件。
-- --ignore-failed-read：忽略读取错误并继续操作。
-- --occurrence=`<number>`：在归档中选择第 number 个出现的文件。
-- -S：处理稀疏文件（仅归档实际使用的块）。
-- --no-recursion：不递归进入目录。
-- -h 或 --dereference：归档符号链接指向的文件而非链接本身。
+```
+-c：创建一个新的归档文件。
+-x：解压归档文件。
+-t：列出归档文件的内容。
+-r：向现有归档文件中追加文件。
+-u：仅追加比归档文件中已有文件更新的文件。
+-d：找到归档文件中与文件系统不同步的差异。
+-A：将一个 .tar 文件追加到另一个 .tar 文件中。
+-f `<file>`：指定归档文件的名称（必须放在选项列表的最后）。
+-C `<directory>`：切换到指定目录进行操作。
+--exclude=`<pattern>`：排除匹配指定模式的文件。
+--exclude-from=`<file>`：从指定文件读取要排除的模式。
+--exclude-caches：排除目录中的缓存文件。
+--exclude-backups：排除以 ~ 结尾的备份文件。
+--exclude-vcs：排除版本控制系统生成的文件（如 .git、.svn 等）。
+-z：使用 gzip 压缩归档文件。
+-j：使用 bzip2 压缩归档文件。
+-J：使用 xz 压缩归档文件。
+--lzip：使用 lzip 压缩归档文件。
+--lzma：使用 lzma 压缩归档文件。
+--lzop：使用 lzop 压缩归档文件。
+--zstd：使用 zstd 压缩归档文件。
+-a：自动选择压缩方式（基于归档文件的扩展名，如 .tar.gz、.tar.bz2 等）。
+-I `<command>`：使用指定的压缩程序进行压缩或解压。
+-v：显示详细操作过程（verbose）。
+--progress：显示进度条（与 -v 一起使用时）。
+-w 或 --interactive：在每次操作前询问用户确认。
+--checkpoint：在处理每个文件后显示一个检查点。
+--checkpoint-action=`<action>`：在检查点执行指定的动作，如 echo、dot 等。
+--totals：在操作结束后显示处理的总字节数。
+--verbose：详细显示处理的信息。
+--quiet：尽可能少的输出信息。
+-p：保留文件的原始权限（解压时）。
+--same-owner：尝试将解压的文件设为原始所有者（需超级用户权限）。
+--no-same-owner：不设置文件所有者。
+--same-permissions：保留文件的原始权限（与 -p 相同）。
+--no-same-permissions：不保留原始权限，使用当前用户的 umask 设置权限。
+-m：在解压时不恢复文件的修改时间，而使用当前时间。
+-k 或 --keep-old-files：解压时保留已有文件，不覆盖。
+--overwrite：解压时强制覆盖已有文件。
+--remove-files：归档成功后删除原始文件。
+--delete：从归档文件中删除指定文件（仅限 gnu tar）。
+--keep-newer-files：解压时保留比归档中较新的文件。
+--listed-incremental=`<file>`：创建增量备份或从增量备份恢复。
+-L `<N>`：分割大于 N 字节的归档文件（对于磁带机）。
+--tape-length=`<number>`：指定磁带长度（对于磁带机）。
+--multi-volume：创建或恢复多卷归档文件。
+-M：与 --multi-volume 一起使用，处理多卷归档文件。
+--use-compress-program=`<prog>`：使用指定的压缩程序。
+--transform=`<expression>`：重命名归档中的文件。
+--strip-components=`<number>`：解压时剥离指定数量的路径组件。
+--ignore-failed-read：忽略读取错误并继续操作。
+--occurrence=`<number>`：在归档中选择第 number 个出现的文件。
+-S：处理稀疏文件（仅归档实际使用的块）。
+--no-recursion：不递归进入目录。
+-h 或 --dereference：归档符号链接指向的文件而非链接本身。
+```
 
 ### 示例
 
@@ -328,6 +326,7 @@ pidstat [ 选项 ] [ <时间间隔> ] [ <次数> ]
 
 ### 参数说明
 
+```
 -u：默认的参数，显示各个进程的cpu使用统计
 -r：显示各个进程的内存使用统计
 -d：显示各个进程的IO使用情况
@@ -338,6 +337,7 @@ pidstat [ 选项 ] [ <时间间隔> ] [ <次数> ]
 -h：在一行上显示了所有活动，这样其他程序可以容易解析。
 -I：在SMP环境，表示任务的CPU使用率/内核数量
 -l：显示命令名和所有参数
+```
 
 ### 示例
 
@@ -417,7 +417,7 @@ tsar [options]
 
 #### 参数说明
 
-**options**：
+```
 -check 查看最后一次的采集数据
 --check/-C 查看最后一次tsar的提醒信息，如：tsar --check/ tsar --check--cpu--io
 --cron/-c 使用crond模式来进行tsar监控
@@ -441,6 +441,7 @@ tsar [options]
 --partition 磁盘使用情况
 --tcpx TCP 连接相关的数据参数
 --load 系统负载情况
+```
 
 ### 示例
 
@@ -534,6 +535,7 @@ top [-] [d] [p] [q] [c] [C] [S] [n]
 
 ### 参数说明
 
+```
 -d： 指定每两次屏幕信息刷新之间的时间间隔。当然用户可以使用s交互命令来改变之。
 -p： 通过指定监控进程ID来仅仅监控某个进程的状态。
 -q：该选项将使top没有任何延迟的进行刷新。如果调用程序有超级用户权限，那么top将以尽可能高的优先级运行。
@@ -541,6 +543,7 @@ top [-] [d] [p] [q] [c] [C] [S] [n]
 -s ：使top命令在安全模式中运行。这将去除交互命令所带来的潜在危险。
 -i： 使top不显示任何闲置或者僵死进程。
 -c： 显示整个命令行而不只是显示命令名
+```
 
 ## awk
 
@@ -552,9 +555,11 @@ awk options 'pattern {action}' file
 
 ### 参数说明
 
-* -F <分隔符> 或 --field-separator=<分隔符>： 指定输入字段的分隔符，默认是空格。使用这个选项可以指定不同于默认分隔符的字段分隔符。
-* -v <变量名>=<值>： 设置 awk 内部的变量值。可以使用该选项将外部值传递给 awk 脚本中的变量。
-* -f <脚本文件>： 指定一个包含 awk 脚本的文件。这样可以在文件中编写较大的 awk 脚本，然后通过 -f 选项将其加载。
+```
+-F <分隔符> 或 --field-separator=<分隔符>： 指定输入字段的分隔符，默认是空格。使用这个选项可以指定不同于默认分隔符的字段分隔符。
+-v <变量名>=<值>： 设置 awk 内部的变量值。可以使用该选项将外部值传递给 awk 脚本中的变量。
+-f <脚本文件>： 指定一个包含 awk 脚本的文件。这样可以在文件中编写较大的 awk 脚本，然后通过 -f 选项将其加载。
+```
 
 ### 示例
 
@@ -592,13 +597,15 @@ ps -aux | grep watchdog |awk  -F':' '{print $1}'
 sed [-hnV][-e<script>][-f<script文件>][文本文件]
 ```
 
-#### 参数说明
+### 参数说明
 
+```
 -e`<script>`或`--expression=<script>` ：以选项中指定的`script`来处理输入的文本文件。
 -f`<script文件>或--file=<script文件>` ：以选项中指定的`script`文件来处理输入的文本文件。
 -n或--quiet或--silent ：仅显示`script`处理后的结果。
+```
 
-#### 示例
+### 示例
 
 ```bash
 # sed -n '/开始时间/,/结束时间/' 被截取日志原文件名称>截取后存储日志文件名称（时间格式参考日志中时间格式）
@@ -635,6 +642,7 @@ grep [-abcEFGhHilLnqrsvVwxy][-A<显示行数>][-B<显示列数>][-C<显示列数
 
 ### 参数说明
 
+```
 -a 或 --text : 不要忽略二进制的数据。
 -A<显示行数> 或 --after-context=<显示行数> : 除了显示符合范本样式的那一列之外，并显示该行之后的内容。
 -b 或 --byte-offset : 在显示符合样式的那一行之前，标示出该行第一个字符的编号。
@@ -662,6 +670,7 @@ grep [-abcEFGhHilLnqrsvVwxy][-A<显示行数>][-B<显示列数>][-C<显示列数
 -w 或 --word-regexp : 只显示全字符合的列。
 -x --line-regexp : 只显示全列符合的列。
 -y : 此参数的效果和指定"-i"参数相同。
+```
 
 ### 示例
 
@@ -774,6 +783,88 @@ grep "main()" . -r --exclude "README"
 grep "main()" . -r --exclude-from filelist
 ```
 
+## split
+
+### 语法
+
+```bash
+split [选项] [输入文件] [输出文件前缀]
+```
+
+### 参数说明
+
+```
+-b SIZE	按大小分割（如 -b 100M、-b 2G）
+-l NUM	按行数分割（如 -l 1000）
+-d	使用数字后缀（默认 00, 01, 02...）
+-a LEN	数字后缀长度（如 -a 3 → 000, 001）
+--numeric-suffixes=N	数字后缀从 N 开始（如 --numeric-suffixes=1 → 01, 02）
+--additional-suffix=SUF	添加额外后缀（如 --additional-suffix=.log）
+```
+
+### 示例
+
+1. 将 10GB 文件分割成 1GB 的分卷
+
+```bash
+split -b 1G large_file.tar.gz "split_file_"
+
+# 输出文件：
+# split_file_aa, split_file_ab, split_file_ac...
+```
+
+2. 每 1000 行分割为一个文件
+
+```bash
+split -l 1000 data.txt "split_data_"
+```
+
+3. 使用数字后缀
+
+```bash
+# 分割文件，后缀为 00, 01, 02...
+split -b 500M -d data.bin "part_"
+
+# 输出文件：
+# part_00, part_01, part_02...
+```
+
+4. 自定义后缀起始值和位数
+
+```bash
+# 后缀从 01 开始，占 2 位（01, 02...）
+split -b 200M --numeric-suffixes=1 -a 2 big_file.zip "file_part_"
+
+# 输出文件：
+# file_part_01, file_part_02...
+```
+
+5. 添加额外后缀
+
+```bash
+# 分割文件并添加 .part 后缀
+split -b 100M --additional-suffix=".part" archive.tar.gz "archive_"
+
+# 输出文件：
+# archive_aa.part, archive_ab.part...
+```
+
+6. 合并分割后的文件
+
+```bash
+# 合并所有 part_* 文件
+cat part_* > original_file.tar.gz
+
+# 如果后缀是字母（aa, ab...），按字典序合并
+cat split_file_* > original_file
+```
+
+7. 分卷压缩并分割
+
+```bash
+tar -czvf - /data | split -b 1G - "data_backup.tar.gz.part_"
+```
+
 ## 根据端口号获取PID
 
 ```bash
@@ -793,19 +884,20 @@ cat /etc/*-release
 
 ## 终端快捷键
 
-快捷键 作用
-ctrl+A 把光标移动到命令行开头。如果我们输入的命令过长，想要把光标移动到命令行开头时使用。
-ctrl+E 把光标移动到命令行结尾。
-ctrl+C 强制终止当前的命令。
-ctrl+L 清屏，相当于clear命令。
-ctrl+U 删除或剪切光标之前的命令。我输入了一.行很长的命令，不用使用退格键一个一个字符的删除，使用这个快捷键会更加方便
-ctrl+K 删除或剪切光标之后的内容。
-ctrl+Y 粘贴ctrl+U或ctrl+K剪切的内容。
-ctrl+R 在历史命令中搜索，按下ctrl+R之后，就会出现搜索界面，只要输入搜索内容，就会从历史命令中搜索。
-ctrl+D 退出当前终端。
-ctrl+Z 暂停，并放入后台。
-ctrl+S 暂停屏幕输出。
-ctrl+Q 恢复屏幕输出。
+| <div style="width:80px">快捷键</div> | <div style="width:300px">作用</div>                       |
+|-----------------------------------|---------------------------------------------------------|
+| ctrl+A                            | 把光标移动到命令行开头。如果我们输入的命令过长，想要把光标移动到命令行开头时使用。               |
+| ctrl+E                            | 把光标移动到命令行结尾。                                            |
+| ctrl+C                            | 强制终止当前的命令。                                              |
+| ctrl+L                            | 清屏，相当于clear命令。                                          |
+| ctrl+U                            | 删除或剪切光标之前的命令。我输入了一.行很长的命令，不用使用退格键一个一个字符的删除，使用这个快捷键会更加方便 |
+| ctrl+K                            | 删除或剪切光标之后的内容。                                           |
+| ctrl+Y                            | 粘贴ctrl+U或ctrl+K剪切的内容。                                   |
+| ctrl+R                            | 在历史命令中搜索，按下ctrl+R之后，就会出现搜索界面，只要输入搜索内容，就会从历史命令中搜索。       |
+| ctrl+D                            | 退出当前终端。                                                 |
+| ctrl+Z                            | 暂停，并放入后台。                                               |
+| ctrl+S                            | 暂停屏幕输出。                                                 |
+| ctrl+Q                            | 恢复屏幕输出。                                                 |
 
 ## 查看系统日志
 
