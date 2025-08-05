@@ -5,7 +5,7 @@
 set -e
 
 # 生成静态文件
-
+nvm use 20
 npm run docs:build
 
 # 进入生成的文件夹
