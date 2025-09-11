@@ -1,0 +1,26 @@
+import{_ as a,c as n,d as e,o as i}from"./app-CKtXyHQO.js";const l={};function t(p,s){return i(),n("div",null,s[0]||(s[0]=[e(`<h1 id="github" tabindex="-1"><a class="header-anchor" href="#github"><span>GitHub</span></a></h1><h2 id="慢-习惯就好" tabindex="-1"><a class="header-anchor" href="#慢-习惯就好"><span>慢，习惯就好</span></a></h2><h3 id="host" tabindex="-1"><a class="header-anchor" href="#host"><span>host</span></a></h3><p>使用 github 涉及到三个域名，github.com、 assets-cdn.github.com、 github.global.ssl.fastly.net</p><p>我的做法是上网找一个域名对应 ip 查询的网站，然后分别查询3个域名对应的 ip 列表，然后在列表中找到能够 ping 通的 ip，配置到 hosts 中。</p><div class="language-text line-numbers-mode" data-highlighter="prismjs" data-ext="text" data-title="text"><pre><code><span class="line">20.205.243.166 github.com</span>
+<span class="line">185.199.109.153 assets-cdn.github.com</span>
+<span class="line">151.101.1.194 github.global.ssl.fastly.net</span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="工具" tabindex="-1"><a class="header-anchor" href="#工具"><span>工具</span></a></h3><p>有点意思~~~</p><p>https://github.com/docmirror/dev-sidecar?tab=readme-ov-file</p><h2 id="github-pages" tabindex="-1"><a class="header-anchor" href="#github-pages"><span>Github Pages</span></a></h2><blockquote><p>Gitee Pages 暂停服务后，Vuepress 文档没法使用了，只能含泪转移到 GitHub</p></blockquote><p>折腾了很久，最后看到一个帖子，大概意思是，需要在本地把编译后的 dist 内容推送到 <code>gh-pages</code> 分支。</p><p>Tips:~~~人间清醒啊，使用 git bash 执行</p><div class="language-bash line-numbers-mode" data-highlighter="prismjs" data-ext="sh" data-title="sh"><pre><code><span class="line"><span class="token shebang important">#!/usr/bin/env sh</span></span>
+<span class="line"></span>
+<span class="line"><span class="token comment"># 确保脚本抛出遇到的错误</span></span>
+<span class="line"></span>
+<span class="line"><span class="token builtin class-name">set</span> <span class="token parameter variable">-e</span></span>
+<span class="line"></span>
+<span class="line"><span class="token comment"># 生成静态文件</span></span>
+<span class="line"></span>
+<span class="line"><span class="token function">npm</span> run docs:build</span>
+<span class="line"></span>
+<span class="line"><span class="token comment"># 进入生成的文件夹</span></span>
+<span class="line"></span>
+<span class="line"><span class="token builtin class-name">cd</span> docs/.vuepress/dist</span>
+<span class="line"></span>
+<span class="line"><span class="token function">git</span> init</span>
+<span class="line"><span class="token function">git</span> <span class="token function">add</span> <span class="token parameter variable">-A</span></span>
+<span class="line"><span class="token function">git</span> commit <span class="token parameter variable">-m</span> <span class="token string">&#39;init:blog&#39;</span></span>
+<span class="line"></span>
+<span class="line"><span class="token function">git</span> push <span class="token parameter variable">-f</span> https://github.com/Marswxq/mars.git master:gh-pages</span>
+<span class="line"></span>
+<span class="line"><span class="token builtin class-name">cd</span> -</span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>如果是 windows 下，每次打开一个 git bash 确实有点烦，那就在来一个 bat</p><div class="language-bash line-numbers-mode" data-highlighter="prismjs" data-ext="sh" data-title="sh"><pre><code><span class="line">start 安装路径<span class="token punctuation">\\</span>git-bash.exe <span class="token parameter variable">--cd</span><span class="token operator">=</span>本地代码仓库路径 <span class="token parameter variable">-c</span> <span class="token string">&quot;sh deploy.sh&quot;</span></span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div></div></div>`,16)]))}const d=a(l,[["render",t],["__file","02-GitHub.html.vue"]]),r=JSON.parse('{"path":"/docs/other/02-GitHub.html","title":"GitHub","lang":"zh-CN","frontmatter":{},"headers":[{"level":2,"title":"慢，习惯就好","slug":"慢-习惯就好","link":"#慢-习惯就好","children":[{"level":3,"title":"host","slug":"host","link":"#host","children":[]},{"level":3,"title":"工具","slug":"工具","link":"#工具","children":[]}]},{"level":2,"title":"Github Pages","slug":"github-pages","link":"#github-pages","children":[]}],"git":{"updatedTime":1737507484000,"contributors":[{"name":"wangxiaoquan","email":"wxq","commits":1}]},"filePathRelative":"docs/other/02-GitHub.md"}');export{d as comp,r as data};

@@ -1,0 +1,40 @@
+import{_ as n,c as e,d as a,o as l}from"./app-CKtXyHQO.js";const i="/mars/images/rustdesk/rustdesk-client.png",r="/mars/images/rustdesk/rustdesk-client-property.png",d="/mars/images/rustdesk/rustdesk-client-login.png",t={};function p(c,s){return l(),e("div",null,s[0]||(s[0]=[a(`<h1 id="rustdesk" tabindex="-1"><a class="header-anchor" href="#rustdesk"><span>Rustdesk</span></a></h1><blockquote><p><a href="https://github.com/rustdesk/rustdesk/blob/master/docs/README-ZH.md" target="_blank" rel="noopener noreferrer">github 官方文档</a></p></blockquote><h2 id="服务端" tabindex="-1"><a class="header-anchor" href="#服务端"><span>服务端</span></a></h2><p>使用<code>docker-compose</code>方式部署 Rustdesk 服务端</p><ol><li>创建 docker-compose.yml</li></ol><div class="language-bash line-numbers-mode" data-highlighter="prismjs" data-ext="sh" data-title="sh"><pre><code><span class="line"><span class="token function">cat</span> <span class="token operator">&gt;</span> docker-compose.yml <span class="token operator">&lt;&lt;</span> <span class="token string">&#39;EOF&#39;</span>
+<span class="line">version: &#39;3&#39;</span>
+<span class="line"></span>
+<span class="line">networks:</span>
+<span class="line">  rustdesk-net:</span>
+<span class="line">    external: false</span>
+<span class="line"></span>
+<span class="line">services:</span>
+<span class="line">  hbbs:</span>
+<span class="line">    container_name: hbbs</span>
+<span class="line">    ports:</span>
+<span class="line">      - 21115:21115</span>
+<span class="line">      - 21116:21116</span>
+<span class="line">      - 21116:21116/udp</span>
+<span class="line">      - 21118:21118</span>
+<span class="line">    image: rustdesk/rustdesk-server:1.1.14</span>
+<span class="line">    command: hbbs -r [中继服务器公网ip] -k [key]</span>
+<span class="line">    volumes:</span>
+<span class="line">      - ./data:/root</span>
+<span class="line">    networks:</span>
+<span class="line">      - rustdesk-net</span>
+<span class="line">    depends_on:</span>
+<span class="line">      - hbbr</span>
+<span class="line">    restart: unless-stopped</span>
+<span class="line"></span>
+<span class="line">  hbbr:</span>
+<span class="line">    container_name: hbbr</span>
+<span class="line">    ports:</span>
+<span class="line">      - 21117:21117</span>
+<span class="line">      - 21119:21119</span>
+<span class="line">    image: rustdesk/rustdesk-server:1.1.14</span>
+<span class="line">    command: hbbr -k [key]</span>
+<span class="line">    volumes:</span>
+<span class="line">      - ./data:/root</span>
+<span class="line">    networks:</span>
+<span class="line">      - rustdesk-net</span>
+<span class="line">    restart: unless-stopped</span>
+<span class="line">EOF</span></span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><strong>注意：</strong> [中继服务器公网ip] 和 [key] 在而客户端配置时会用到，只有填写了中继服务器和 key 才能使用自己服务器作为服务端</p><ol start="2"><li>启动服务</li></ol><div class="language-bash line-numbers-mode" data-highlighter="prismjs" data-ext="sh" data-title="sh"><pre><code><span class="line"><span class="token function">docker</span> compose up <span class="token parameter variable">-d</span> </span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div></div></div><h2 id="客户端" tabindex="-1"><a class="header-anchor" href="#客户端"><span>客户端</span></a></h2><p><a href="https://github.com/rustdesk/rustdesk/releases/tag/1.4.0" target="_blank" rel="noopener noreferrer">Rustdesk客户端下载</a></p><ol><li>中继服务器</li></ol><p><img src="`+i+'" alt="中继服务配置"></p><ol start="2"><li>ID/中继服务器</li></ol><p><img src="'+r+'" alt="ID/中继服务器"></p><ol start="3"><li>登录</li></ol><p><img src="'+d+'" alt="登录"></p>',17)]))}const u=n(t,[["render",p],["__file","09-Rustdesk.html.vue"]]),v=JSON.parse('{"path":"/docs/docker/09-Rustdesk.html","title":"Rustdesk","lang":"zh-CN","frontmatter":{},"headers":[{"level":2,"title":"服务端","slug":"服务端","link":"#服务端","children":[]},{"level":2,"title":"客户端","slug":"客户端","link":"#客户端","children":[]}],"git":{"updatedTime":1748335106000,"contributors":[{"name":"wangxiaoquan","email":"wxq","commits":2}]},"filePathRelative":"docs/docker/09-Rustdesk.md"}');export{u as comp,v as data};
