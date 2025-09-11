@@ -164,7 +164,7 @@ sudo vim /etc/fstab
 # <file system>         <mount point>   <type>  <options>           <dump>  <pass>
 UUID=d4c5b8a2...1d2e3f  /mnt/myhdd      ext4    defaults,noatime,nofail  0  2
 # 如果是 NTFS
-# UUID=5C1A-8A7B        /mnt/myhdd      ntfs    defaults,uid=1000,gid=1000,umask=000,nofail 0 0
+# UUID=56220F16E20F14A15 /home/Mars/data ntfs defaults,uid=1000,gid=1000,umask=000,nofail 0 0
 # 如果是 exFAT
 # UUID=5C1A-8A7B        /mnt/myhdd      exfat   defaults,uid=1000,gid=1000,umask=000,nofail 0 0
 ```
@@ -188,3 +188,48 @@ reboot
 ```shell
 df -h 
 ```
+
+## 部署 OpenMediaVault
+
+**注意:**部署 OpenMediaVault 需要使用 Raspberry Pi OS Lite ，桌面版本无法安装
+
+1. 更新 apt 源
+
+```shell
+sudo apt update
+```
+
+2. 通过 cdn 安装
+
+```shell
+wget -O - https://cdn.jsdelivr.net/gh/OpenMediaVault-Plugin-Developers/installScript@master/install | sudo bash
+```
+
+PS~~~ 漫长的等待
+
+3. 网络配置
+
+安装 OpenMediaVault 时，发现安装脚本把树莓派的网络移除了，尤其是 wifi 网络，安装后发现连不上树莓派了。
+
+这个步骤卡了很久，尝试过好多种修复方式，最后妥协了~~~
+
+找个显示器、键盘先连上树莓派，然后找个网线把树莓派和路由器脸上（由于我树莓派的位置不想放在路由器边上，随便再找个垃圾路由器，通过无线桥接到主路由，然后再通过网线连到树莓派）。
+这个时候就可以通过 PC 端连到树莓派了，也可以直接在树莓派上啊从做。接下来恢复树莓派的 wifi 网络。
+
+```shell
+sudo apt install -y dhcpcd5 network-manager
+sudo systemctl enable dhcpcd
+sudo systemctl start dhcpcd
+sudo reboot
+```
+
+4. 登录
+
+配置好 wifi 后，可以通过 PC 愉快的登录控制台了
+
+>地址：http://树莓派ip地址
+> 
+>用户：admin
+> 
+>密码：openmediavault
+
