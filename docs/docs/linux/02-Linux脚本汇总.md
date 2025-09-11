@@ -737,3 +737,61 @@ sudo scp -i $rsa root@$ip:/data/backup/`basename $nexus`/$nexusfilename $targetn
 sudo ssh -i $rsa root@$ip "rm -rf /data/backup/`basename $nexus`/$nexusfilename"
 ```
 
+## 分卷备份
+
+### 分卷压缩备份
+
+```bash
+#!/bin/bash
+
+# 获取当前日期
+backup_date=$(date +"%Y-%m-%d")
+
+# 备份目录
+backup_dir="/data/backup/mysql/tar"
+log_dir="/data/backup/mysql"
+mysql_dir="/data/mysql"
+
+# 判断备份目录是否存在，如果不存在则创建
+if [ ! -d "$backup_dir" ]; then
+  mkdir $backup_dir
+fi
+
+# 压缩备份文件，并将压缩文件存储到备份目录 : $backup_dir/mysql_$backup_date.tar.gz
+cd $backup_dir
+tar -cz $mysql_dir | split -b 10G -d -a 2 - "mysql_$backup_date.tar.gz.part_"
+
+
+# 记录备份日志，包括备份日期、备份文件名、备份文件大小等信息
+backup_size=$(du -h $backup_dir/mysql_$backup_date.tar.gz | awk '{print $1}')
+echo "$backup_date Backup Completed: mysql_$backup_date.tar.gz ($backup_size)" >> $log_dir/mysql_backup.log
+
+# 清理7天前的备份
+find $backup_dir -maxdepth 1 -mtime +7 -name "*" -exec \rm -rf {} \;
+```
+
+### 合并分卷
+
+```bash
+cat [分卷前缀].tar.gz.part_* > [分卷前缀].tar.gz
+```
+
+### 远程拉取分卷备份
+
+```bash
+#!/bin/bash
+# 备份服务器
+ip=服务器ip
+# 密钥
+rsa=服务器密钥
+# 获取最新备份文件
+bakfiledir=远端服务器备份文件位置
+# 备份文件
+sudo ssh -i $rsa root@$ip "find $bakfiledir/*.tar.gz.part_* -type f -print0 | xargs -0 stat -c '%Y %n' | sort -nr | head -n 10 | cut -d ' ' -f 2" | while IFS= read -r file; do
+  targetdir=本地备份文件存放位置
+  # 备份
+  sudo scp -i $rsa root@$ip:$file $targetdir
+  echo $file
+done
+exit 1
+```
