@@ -67,6 +67,8 @@ WantedBy                  # 指定启动 Docker 服务的 target，默认为 mul
 
 ## Docker Desktop 自定义安装
 
+在 windows cmd 下执行
+
 ```shell
 start /w "" "Docker Desktop Installer.exe" install -accept-license --installation-dir="D:\develop\DockerDesktop" --wsl-default-data-root="D:\develop\DockerDesktop\data" --windows-containers-default-data-root="D:\\develop\\DockerDesktop"
 ```
