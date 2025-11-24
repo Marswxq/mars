@@ -186,7 +186,14 @@ export default defineUserConfig({
         navbar: [home, technology, service, data, manager, book, others],
         lastUpdated: true,
         // 默认值：false
-        displayAllHeaders: true
+        displayAllHeaders: true,
+
+        // 添加以下配置来修复 Edit this page 链接
+        docsDir: 'docs', // 文档所在的目录，相对于仓库根目录
+        docsBranch: 'main', // 文档所在的分支，根据你的实际情况修改
+        editLink: true, // 启用编辑链接
+        editLinkText: '编辑此页面', // 自定义链接文本
+        lastUpdatedText: '上次更新'
     }),
 
     plugins: [

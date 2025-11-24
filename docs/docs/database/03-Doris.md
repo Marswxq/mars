@@ -767,7 +767,7 @@ ps：过程可能很久，需要等待~
 #### 1.  登录 harbor
 
 ```shell
-docker login -u service -p dEdeF2bAFa3C3A2e dev.huiyisoft.cn:9445 
+docker login -u service -p password dev.huiyisoft.cn:9445 
 ```
 
 #### 2.  标记镜像
