@@ -4,9 +4,17 @@
 
 ### Quession
 
-docker 启动报 `library initialization failed - unable to allocate file descriptor table - out of memory`
-或 docker
-容器内应用启动报 `library initialization failed - unable to allocate file descriptor table - out of memoryAborted (core dumped)`
+docker 启动报错：
+
+```text
+library initialization failed - unable to allocate file descriptor table - out of memory
+```
+
+或 docker 容器内应用启动报错：
+
+```text
+library initialization failed - unable to allocate file descriptor table - out of memoryAborted (core dumped)
+```
 
 ### Answer
 
@@ -69,3 +77,38 @@ ExecStart=/usr/bin/dockerd --default-ulimit nofile=65536:65536
 #### 解决
 
 删除 `--iptables=false`，重新启动 docker 。
+
+## Q3. Swarm TLS CA 证书过期
+
+### Quession
+
+docker 报错：
+```text
+Error grabbing logs: rpc error: code = Unknown desc = warning: incomplete log stream. some logs could not be retrieved for the following reasons: node tureas8p7he0j921fyeve5l2t is not available
+```
+
+### Answer
+
+#### 原因
+
+Swarm 默认证书有效期 90 天，过期节点间通信直接中断
+
+#### 解决
+
+Manager 执行
+
+```shell
+# 查看证书有效期
+docker system info | grep -A5 "CA Configuration"
+
+# 延长证书有效期（推荐设10年）
+docker swarm update --cert-expiry 87600h
+
+# 轮换证书，所有节点自动同步
+docker swarm ca --rotate
+
+# 再次查看证书有效期，验证结果
+docker system info | grep -A5 "CA Configuration"
+```
+
+轮换后重启所有节点 docker 生效。

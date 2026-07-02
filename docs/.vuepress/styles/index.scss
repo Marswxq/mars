@@ -1,11 +1,13 @@
+// 【必须放最顶部】导入变量
+@use 'vars';
+@use 'vars-dark';
+
+// 全局断点变量
 $MQNarrow: 920px !default;
 $MQMobile: 719px !default;
 $MQMobileNarrow: 419px !default;
 
-@use 'vars';
-@use 'vars-dark';
-
-
+// 原有首页样式
 #main-title {
   font-size: 0;
 }
@@ -29,7 +31,6 @@ $MQMobileNarrow: 419px !default;
   font-weight: bold;
   font-size: 1.05rem;
   font-family: 'Times New Roman', serif;
-  //color: rgb(13, 148, 231);
 }
 
 .vp-site-name {
@@ -42,3 +43,26 @@ $MQMobileNarrow: 419px !default;
   color: rgb(13, 148, 231);
 }
 
+// ========== 代码块自动换行 超高权重 ==========
+html.light .vp-doc main .vp-code pre,
+html.light .vp-doc main .vp-code pre > code,
+html.light .vp-doc main .vp-code .line,
+html.dark .vp-doc main .vp-code pre,
+html.dark .vp-doc main .vp-code pre > code,
+html.dark .vp-doc main .vp-code .line {
+  white-space: pre-wrap !important;
+  word-break: break-all !important;
+  overflow-wrap: anywhere !important;
+}
+
+// 隐藏横向滚动条
+html.light .vp-doc main .vp-code,
+html.dark .vp-doc main .vp-code {
+  overflow-x: hidden !important;
+}
+
+// 行内小段代码换行
+.vp-doc p :not(pre) > code,
+.vp-doc li :not(pre) > code {
+  word-break: break-all;
+}

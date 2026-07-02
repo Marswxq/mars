@@ -1,7 +1,7 @@
-import {defaultTheme} from '@vuepress/theme-default'
-import {defineUserConfig} from 'vuepress'
-import {viteBundler} from '@vuepress/bundler-vite'
-import {searchPlugin} from '@vuepress/plugin-search'
+import { defaultTheme } from '@vuepress/theme-default'
+import { defineUserConfig } from 'vuepress'
+import { viteBundler } from '@vuepress/bundler-vite'
+import { searchPlugin } from '@vuepress/plugin-search'
 import fs from "fs";
 // 获取该文件夹下的所有文件名
 const getFileNames = (parentFileName) => {
@@ -15,7 +15,7 @@ const getFileNames = (parentFileName) => {
                 let menu = {
                     text: val.substring(0, val.length - 3),
                     link: `/docs${parentFileName}` + val,
-                    collapsible: true
+                    collapsible: false
                 }
                 results.push(menu)
             }
@@ -29,95 +29,95 @@ const getFileNames = (parentFileName) => {
 const java = {
     text: '🍵Java',
     //可折叠侧边栏
-    collapsible: true,
+    collapsible: false,
     expanded: true,
     children: getFileNames('/java/')
 };
 const jasper = {
     text: '📊JasperReport',
     //可折叠侧边栏
-    collapsible: true,
+    collapsible: false,
     children: getFileNames('/jasper/')
 };
 const database = {
     text: "📈数据库",
-    collapsible: true,
+    collapsible: false,
     children: getFileNames("/database/")
 
 };
 const kettle = {
     text: '📉Kettle',
     //可折叠侧边栏
-    collapsible: true,
+    collapsible: false,
     children: getFileNames('/kettle/')
 };
 const activiti = {
     text: '🍻Activiti',
     //可折叠侧边栏
-    collapsible: true,
+    collapsible: false,
     children: getFileNames('/activiti/')
 };
 const javascript = {
     text: '🎬JavaScript',
     //可折叠侧边栏
-    collapsible: true,
+    collapsible: false,
     children: getFileNames('/javascript/')
 };
 const linux = {
     text: '💻Linux',
     //可折叠侧边栏
-    collapsible: true,
+    collapsible: false,
     children: getFileNames('/linux/')
 }
 const docker = {
     text: '🐋Docker',
     //可折叠侧边栏
-    collapsible: true,
+    collapsible: false,
     children: getFileNames('/docker/')
 };
 const nginx = {
     text: '🌐Nginx',
-    collapsible: true,
+    collapsible: false,
     children: getFileNames('/nginx/')
 }
 
 const maven = {
     text: '📝Maven',
     //可折叠侧边栏
-    collapsible: true,
+    collapsible: false,
     children: getFileNames('/maven/')
 }
 const git = {
     text: '🎨Git',
     //可折叠侧边栏
-    collapsible: true,
+    collapsible: false,
     children: getFileNames('/git/')
 }
 const jenkins = {
     text: '🎯Jenkins',
     //可折叠侧边栏
-    collapsible: true,
+    collapsible: false,
     children: getFileNames('/jenkins/')
 }
 
 const raspi = {
     text: '🍓树莓派',
     //可折叠侧边栏
-    collapsible: true,
+    collapsible: false,
     children: getFileNames('/raspberry/')
 }
 
 const md = {
     text: '📘Markdown',
     //可折叠侧边栏
-    collapsible: true,
+    collapsible: false,
     children: getFileNames('/markdown/')
 }
 
 const other = {
     text: '📇其他',
     //可折叠侧边栏
-    collapsible: true,
+    collapsible: false,
     children: getFileNames('/other/')
 }
 
@@ -131,38 +131,38 @@ const home = {
 const technology = {
     text: '🏫技术相关',
     //可折叠侧边栏
-    collapsible: true,
-    children: [activiti, jasper, javascript, java]
+    collapsible: false,
+    children: [ activiti, jasper, javascript, java ]
 }
 const service = {
     text: '🏢服务器',
     //可折叠侧边栏
-    collapsible: true,
-    children: [linux, docker, nginx]
+    collapsible: false,
+    children: [ linux, docker, nginx ]
 }
 const data = {
     text: '🏩数据相关',
     //可折叠侧边栏
-    collapsible: true,
-    children: [database, kettle]
+    collapsible: false,
+    children: [ database, kettle ]
 };
 const manager = {
     text: '🏬管理工具',
     //可折叠侧边栏
-    collapsible: true,
-    children: [git, maven, jenkins]
+    collapsible: false,
+    children: [ git, maven, jenkins ]
 }
 const book = {
     text: '🏯书籍笔记',
     //可折叠侧边栏
-    collapsible: true,
+    collapsible: false,
     children: getFileNames('/book/')
 }
 const others = {
     text: '🏦其他',
     //可折叠侧边栏
-    collapsible: true,
-    children: [raspi, md, other]
+    collapsible: false,
+    children: [ raspi, md, other ]
 }
 export default defineUserConfig({
     lang: 'zh-CN',
@@ -173,17 +173,22 @@ export default defineUserConfig({
     head: [
         // 设置 favor.ico，.vuepress/public 下
         [
-            'link', {rel: 'icon', href: '/images/mars_header.png'}
+            'link', { rel: 'icon', href: '/images/mars_header.png' }
         ]
     ],
+    markdown: {
+        code: {
+            lineNumbers: true, // 显示代码行号
+        },
+    },
     theme: defaultTheme({
         logo: './images/mars_blue.png',
         repo: "https://github.com/Marswxq/mars",
         sidebarDepth: 3,
         // 左侧导航
-        sidebar: [technology, service, data, manager, book, others],
+        sidebar: [ technology, service, data, manager, book, others ],
         // 头部导航栏
-        navbar: [home, technology, service, data, manager, book, others],
+        navbar: [ home, technology, service, data, manager, book, others ],
         lastUpdated: true,
         // 默认值：false
         displayAllHeaders: true,
@@ -211,12 +216,12 @@ export default defineUserConfig({
             // 允许搜索 Frontmatter 中的 `tags`
             getExtraFields: (page) => page.frontmatter.tags ?? [],
             // 快捷键
-            hotKeys: ['s', '/'],
+            hotKeys: [ 's', '/' ],
             // 搜索最大条数
             maxSuggestions: 10,
         })
     ],
 
-    bundler: viteBundler(),
+    bundler: viteBundler()
 })
 

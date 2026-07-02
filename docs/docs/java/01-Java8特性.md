@@ -35,12 +35,12 @@ list.stream();
 保留 boolean 为 true 的元素
 
 ```java
-保留年龄为 20 的 person 元素
+// 保留年龄为 20 的 person 元素
 list = list.stream()
             .filter(person -> person.getAge() == 20)
             .collect(toList());
 
-打印输出 [Person{name='jack', age=20}]
+// 打印输出 [Person{name='jack', age=20}]
 ```
 
 #### 3. distinct()
